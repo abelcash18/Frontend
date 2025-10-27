@@ -37,7 +37,7 @@ function ProfilePage() {
               />
             </span>
             <span>
-              Username: <b>{currentUser.name || "Dewgates Consult"}</b>
+              Username: <b>{currentUser.username || "Dewgates Consult"}</b>
             </span>
             <span>
               E-mail: <b>{currentUser.email || "DewgatesConsults@gmail.com"}</b>
