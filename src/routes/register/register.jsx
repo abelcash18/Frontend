@@ -18,13 +18,11 @@ const Register = () => {
     const email = formData.get("email");
     const password = formData.get("password");
         try {
-             const res = await apiRequest.post("http://localhost:8800/auth/register", {username, email, password });
-        
-              console.log(res);
-
-              if (res.status == 201) {
+            const res = await apiRequest.post("auth/register", { username, email, password });
+              console.log(res?.data ?? res);
+              if (res.status === 201) {
                 alert("Registration successful! Please log in.");
-                 navigate("/login");
+                navigate("/login");
               }
         } catch (err) {
           const message = err?.response?.data?.message || err?.message || "Something went wrong";

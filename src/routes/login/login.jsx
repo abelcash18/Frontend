@@ -17,7 +17,7 @@ function Login() {
     setError("");
     const formData = new FormData(e.target);
 
-    const username = formData.get("us ername");
+    const username = formData.get("username");
     const password = formData.get("password");
 
         try {
