@@ -16,16 +16,27 @@ function ProfileUpdatePage() {
     e.preventDefault();
     const formData = new FormData(e.target);
     const updatedData = Object.fromEntries(formData);
-    updateUser(updatedData);
-    const {username, email, password} = Object.fromEntries(formData);
+    // include avatar from state if available
+    if (avatar) updatedData.avatar = avatar;
+
+    const { username, email, password } = updatedData;
+
     try {
-     const res =  await apiRequest.put(`/users/${currentUser.id}`, {
-       username, email, password,}); 
-         updateUser(res.data);
-         navigate("/profile")
+      const res = await apiRequest.put(`/users/${currentUser.id}`, {
+        username,
+        email,
+        password,
+        avatar: updatedData.avatar,
+      });
+
+      // backend may return the updated user directly or under `user`
+      const newUser = res.data?.user || res.data;
+      updateUser(newUser);
+      navigate("/profile");
     } catch (err) {
-      console.log("Error updating user:", error);
-      setError(err.response.data.message);
+      console.error("Error updating user:", err);
+      const message = err?.response?.data?.message || err?.message || "Update failed";
+      setError(message);
     }
   };
 
@@ -49,8 +60,7 @@ function ProfileUpdatePage() {
             <input id="password" name="password" type="password" />
           </div>
           <button>Update</button>
-          {error && <span>console.error();
-          </span>}
+            {error && <span className="error">{error}</span>}
         </form>
       </div>
       <div className="sideContainer">

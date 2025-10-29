@@ -17,8 +17,8 @@ const Register = () => {
     const username = formData.get("username");
     const email = formData.get("email");
     const password = formData.get("password");
-        try {
-            const res = await apiRequest.post("auth/register", { username, email, password });
+    try {
+      const res = await apiRequest.post("auth/register", { username, email, password });
               console.log(res?.data ?? res);
               if (res.status === 201) {
                 alert("Registration successful! Please log in.");

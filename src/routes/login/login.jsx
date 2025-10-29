@@ -1,7 +1,6 @@
 import "./login.scss";
 import { Link, useNavigate } from "react-router-dom";
 import { useContext, useState } from "react";
-import apiRequest from "../../lib/apiRequest";
 import { AuthContext } from "../../context/AuthContext";
 
 
@@ -21,17 +20,30 @@ function Login() {
     const password = formData.get("password");
 
         try {
-             const res = await apiRequest.post("auth/login", {
-              username, password });
-        updateUser(res.data)
+          const res = await fetch("http://localhost:8800/backend/auth/login", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            credentials: "include",
+            body: JSON.stringify({ username, password }),
+          });
 
-        navigate("/")
-        } catch (err) {  
-          const message = err?.response?.data?.message || err?.message || "Something went wrong";
+          const payload = await res.json().catch(() => ({}));
+
+          if (!res.ok) {
+            const message = payload?.message || payload?.error || res.statusText || "Login failed";
+            throw new Error(message);
+          }
+
+          // payload may contain the user directly or under `user`
+          const newUser = payload?.user || payload;
+          updateUser(newUser);
+          navigate("/");
+        } catch (err) {
+          const message = err?.message || "Something went wrong";
           setError(message);
           console.error(err);
         } finally {
-          setIsLoading(false)
+          setIsLoading(false);
         }
   };
 
