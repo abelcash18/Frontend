@@ -16,10 +16,9 @@ function ProfileUpdatePage() {
     e.preventDefault();
     const formData = new FormData(e.target);
     const updatedData = Object.fromEntries(formData);
-    // include avatar from state if available
-    if (avatar) updatedData.avatar = avatar;
+        if (avatar) updatedData.avatar = avatar;
 
-    const { username, email, password } = updatedData;
+    const { username, email, password  } = updatedData;
 
     try {
       const res = await apiRequest.put(`/users/${currentUser.id}`, {

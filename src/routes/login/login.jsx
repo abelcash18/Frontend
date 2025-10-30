@@ -27,15 +27,14 @@ function Login() {
             body: JSON.stringify({ username, password }),
           });
 
-          const payload = await res.json().catch(() => ({}));
+          const payload = await res.json();
 
           if (!res.ok) {
             const message = payload?.message || payload?.error || res.statusText || "Login failed";
             throw new Error(message);
           }
-
-          // payload may contain the user directly or under `user`
-          const newUser = payload?.user || payload;
+         console.log("payload:", payload);
+         const newUser = payload?.user || payload;
           updateUser(newUser);
           navigate("/");
         } catch (err) {
@@ -60,7 +59,7 @@ function Login() {
         </form>
       </div>
       <div className="imgContainer">
-        <img src="/bg.png" alt="" />
+        <img src="/bg2.jpeg" alt="" />
       </div>
     </div>
   );

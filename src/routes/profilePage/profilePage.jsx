@@ -9,6 +9,7 @@ import { AuthContext } from "../../context/AuthContext";
 function ProfilePage() {
     const {updateUser, currentUser} =  useContext(AuthContext);
   const navigate = useNavigate();
+  console.log('cu:',currentUser)
   const handleLogout = async () =>{
     try {
        await apiRequest.get("/auth/logout");
