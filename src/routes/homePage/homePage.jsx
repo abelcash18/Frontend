@@ -5,7 +5,6 @@ import { AuthContext } from "../../context/AuthContext";
 
 function HomePage() {
   const { currentUser } = useContext(AuthContext);
-
   console.log(currentUser)
   return (
     <div className="homePage">
@@ -13,6 +12,7 @@ function HomePage() {
         <div className="wrapper">
           <h1 className="title">Find Real Estate & Get Your Dream Place</h1>
           <p>
+            Explore from Apartments, builder floors, villas and more
              
           </p>
           <SearchBar />

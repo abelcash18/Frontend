@@ -2,6 +2,7 @@ import apiRequest from "../../lib/apiRequest";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "./register.scss";
+import Loading from "../../components/Loading/Loading";
 
 const Register = () => {
   const [error, setError] = useState("");
@@ -11,6 +12,8 @@ const Register = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
+    // show global overlay
+    window.dispatchEvent(new CustomEvent('globalLoading', { detail: { loading: true } }));
     setError("");
     const formData = new FormData(e.target);
 
@@ -30,6 +33,8 @@ const Register = () => {
           console.error(err);
         } finally {
           setIsLoading(false);
+          // hide global overlay
+          window.dispatchEvent(new CustomEvent('globalLoading', { detail: { loading: false } }));
       }
     };
   return (
@@ -40,7 +45,13 @@ const Register = () => {
           <input name="username"  required type="text" placeholder="Username" />
           <input name="email" type="text" required placeholder="Email" />
           <input name="password" type="password" required placeholder="Password" />
-          <button disabled={isLoading}>Register</button>
+          <button disabled={isLoading}>
+            {isLoading ? (
+              <span className="loading-in-button"><Loading size={20} /></span>
+            ) : (
+              'Register'
+            )}
+          </button>
            {error && <span>{error}</span> }
           <Link to="/login">Do you have an account?</Link>
         </form>

@@ -1,6 +1,8 @@
 import "./login.scss";
 import { Link, useNavigate } from "react-router-dom";
 import { useContext, useState } from "react";
+ import Loading from "../../components/Loading/Loading";
+ // ensure global loader overlay is mounted in main.jsx; this component will dispatch global events
 import { AuthContext } from "../../context/AuthContext";
 
 
@@ -13,6 +15,8 @@ function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
+    // show global overlay
+    window.dispatchEvent(new CustomEvent('globalLoading', { detail: { loading: true } }));
     setError("");
     const formData = new FormData(e.target);
 
@@ -44,6 +48,8 @@ function Login() {
           console.error(err);
         } finally {
           setIsLoading(false);
+          // hide global overlay
+          window.dispatchEvent(new CustomEvent('globalLoading', { detail: { loading: false } }));
         }
   };
 
@@ -54,7 +60,13 @@ function Login() {
           <h1>Welcome back</h1>
           <input name="username" required type="text" placeholder="Username" />
           <input name="password" type="password" required placeholder="Password" />
-          <button disabled={isLoading}>Login</button>
+          <button disabled={isLoading}>
+            {isLoading ? (
+              <span className="loading-in-button"><Loading size={20} /></span>
+            ) : (
+              'Login'
+            )}
+          </button>
           {error && <span>{error}</span>}
           <Link to="/register">{"Don't"} you have an account?</Link>
         </form>
