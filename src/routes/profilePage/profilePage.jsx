@@ -12,7 +12,7 @@ function ProfilePage() {
   console.log('cu:',currentUser)
   const handleLogout = async () =>{
     try {
-       await apiRequest.get("/auth/logout");
+       await apiRequest.post("/auth/logout");
       updateUser(null);
       navigate("/");
     } catch (err) {

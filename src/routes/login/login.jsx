@@ -34,8 +34,9 @@ function Login() {
             throw new Error(message);
           }
          console.log("payload:", payload);
-         const newUser = payload?.user || payload;
-          updateUser(newUser);
+           const newUser = payload?.user || payload;
+           console.debug("newUser (normalized):", newUser);
+            updateUser(newUser);
           navigate("/");
         } catch (err) {
           const message = err?.message || "Something went wrong";

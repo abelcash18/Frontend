@@ -20,13 +20,23 @@ function ProfileUpdatePage() {
 
     const { username, email, password  } = updatedData;
 
+    // determine a reliable user id from possible response shapes
+    const userId =
+      currentUser?.id || currentUser?._id || currentUser?.user?.id || currentUser?.data?.id;
+
+    if (!userId) {
+      const msg = "Cannot update profile: user id is missing";
+      console.error(msg, { currentUser });
+      setError(msg);
+      return;
+    }
+
     try {
-      const res = await apiRequest.put(`/users/${currentUser.id}`, {
-        username,
-        email,
-        password,
-        avatar: updatedData.avatar,
-      });
+      const payload = { username, email, password, avatar: updatedData.avatar };
+      console.debug("Sending profile update for userId", userId, payload);
+      const res = await apiRequest.put(`/users/${userId}`, payload);
+
+      console.debug("Profile update response:", res.data);
 
       // backend may return the updated user directly or under `user`
       const newUser = res.data?.user || res.data;
