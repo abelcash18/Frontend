@@ -4,6 +4,7 @@ import {
   RouterProvider,
 } from "react-router-dom";
 import ListPage from "./routes/listPage/listPage";
+import Contact from "./routes/contact/contact";
 import  { Layout, RequireAuth } from "./routes/layout/layout";
 import SinglePage from "./routes/singlePage/singlePage";
 import ProfilePage from "./routes/profilePage/profilePage";
@@ -24,6 +25,10 @@ function App() {
         {
           path:"/list",
           element:<ListPage/>
+        },
+        {
+          path:"/contact",
+          element:<Contact/>
         },
         {
           path:"/:id",
