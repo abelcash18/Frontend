@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import  { useEffect, useState } from 'react';
 import Loading from './Loading';
 import './loading.scss';
+import image from '../../../public/Lottie Lego.gif';
 
-const GlobalLoading = ({ src, size = 160 }) => {
+const GlobalLoading = ({ src = image, size = 160 }) => {
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {

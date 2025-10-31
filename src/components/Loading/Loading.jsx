@@ -20,7 +20,7 @@ function ensureLottiePlayer() {
       resolve();
     };
     s.onerror = () => {
-      // still resolve to avoid hanging UI; element may not render
+     
       window.__lottiePlayerLoaded = false;
       resolve();
     };
