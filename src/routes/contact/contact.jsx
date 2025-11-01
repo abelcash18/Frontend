@@ -9,7 +9,6 @@ import markerIcon from 'leaflet/dist/images/marker-icon.png';
 import markerShadow from 'leaflet/dist/images/marker-shadow.png';
 import 'leaflet/dist/leaflet.css';
 
-// Fix Leaflet's default icon paths when bundlers (Vite) change asset locations
 delete L.Icon.Default.prototype._getIconUrl;
 L.Icon.Default.mergeOptions({
   iconRetinaUrl: markerIcon2x,
@@ -17,9 +16,9 @@ L.Icon.Default.mergeOptions({
   shadowUrl: markerShadow,
 });
 
-// Read contact endpoint from environment (Vite env variable) or fallback to 'contact'
+
 const CONTACT_ENDPOINT = import.meta.env.VITE_CONTACT_ENDPOINT || 'contact';
-// Endpoint to fetch markers (agents/offices). Can be an absolute URL or relative to apiRequest baseURL.
+
 const MARKERS_ENDPOINT = import.meta.env.VITE_MARKERS_ENDPOINT || 'agents';
 
 function Contact() {

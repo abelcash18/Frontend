@@ -14,8 +14,8 @@ function Navbar() {
           <img style={{ width: "170px", height: "50px" }} src="/logo 2.jpg" alt="" />
           <span></span>
         </a>
-        <a href="/">Home</a>
-        <a href="/">About</a>
+  <a href="/">Home</a>
+  <Link to="/about">About</Link>
         <a href="/contact">Contact</a>
         <a href="/">Agents</a>
       </div>
@@ -49,11 +49,11 @@ function Navbar() {
         </div>
         <div className={open ? "menu active" : "menu"}>
           <a href="/">Home</a>
-          <a href="/">About</a>
-          <a href="/contact">Contact</a>
-          <a href="/">Agents</a>
-          <a href="/login" className="sign in">Sign in</a>
-          <a href="/register" className="register">Sign up</a>
+          <Link to="/about">About</Link>
+          <Link to="/contact">Contact</Link>
+          <Link to="/">Agents</Link>
+          <Link to="/login" className="sign in">Login</Link>
+          <Link to="/register" className="register">Sign up</Link>
         </div>
       </div>
     </nav>
