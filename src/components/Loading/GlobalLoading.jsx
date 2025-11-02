@@ -3,7 +3,7 @@ import Loading from './Loading';
 import './loading.scss';
 import image from '../../../public/Lottie Lego.gif';
 
-const GlobalLoading = ({ src = image, size = 160 }) => {
+const GlobalLoading = ({  size = 160 }) => {
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
@@ -20,8 +20,8 @@ const GlobalLoading = ({ src = image, size = 160 }) => {
   return (
     <div className="global-loading-overlay">
       <div className="global-loading-inner">
-        <Loading src={src} size={size} />
-      </div>
+        <Loading src={image} size={size} />
+    </div>
     </div>
   );
 };

@@ -1,8 +1,9 @@
 import React, { useEffect } from 'react';
 import './loading.scss';
+import image from '../../../public/Lottie Lego.gif';
 
 // Ensure lottie-player script is loaded (from CDN) so <lottie-player> custom element works
-function ensureLottiePlayer() {
+function animation() {
   if (window.__lottiePlayerLoaded) return Promise.resolve();
   return new Promise((resolve) => {
     if (document.querySelector('script[data-lottie-player]')) {
@@ -16,11 +17,9 @@ function ensureLottiePlayer() {
     s.src = 'https://unpkg.com/@lottiefiles/lottie-player@1.5.7/dist/lottie-player.js';
     s.async = true;
     s.onload = () => {
-      window.__lottiePlayerLoaded = true;
-      resolve();
+      window.__lottiePlayerLoaded = true; resolve();
     };
-    s.onerror = () => {
-     
+    s.onerror = () => {     
       window.__lottiePlayerLoaded = false;
       resolve();
     };
@@ -30,7 +29,7 @@ function ensureLottiePlayer() {
 
 const Loading = ({ src, className, size = 24 }) => {
   useEffect(() => {
-    ensureLottiePlayer();
+    animation();
   }, []);
 
   const style = {
@@ -42,7 +41,7 @@ const Loading = ({ src, className, size = 24 }) => {
   const defaultSrc =
     'https://lottie.host/7372562d-14ba-4033-8cc6-ae25e435f0a8/F1XCuE7sni.lottie';
 
-  const [localSrc, setLocalSrc] = React.useState(null);
+  const [localSrc, setLocalSrc] = React.useState(image || defaultSrc);
 
   React.useEffect(() => {
     let cancelled = false;
@@ -77,22 +76,27 @@ const Loading = ({ src, className, size = 24 }) => {
     return () => {
       cancelled = true;
       if (localSrc && localSrc.startsWith('blob:')) URL.revokeObjectURL(localSrc);
+      if (animation && animation.__complete) {
+        animation.__complete();
+      }
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [src]);
+  }, [image]);
 
   return (
     <div className={className || 'loadingWrapper'} style={style}>
       {/* lottie-player is provided by the CDN script loaded by ensureLottiePlayer */}
       <lottie-player
-        src={localSrc || src || defaultSrc}
+        src={image}
         background="transparent"
         speed="1"
         loop
         autoplay
         style={{ width: '100%', height: '100%' }}
       ></lottie-player>
+    <div id="lottie-container"></div>
     </div>
+
   );
 };
 

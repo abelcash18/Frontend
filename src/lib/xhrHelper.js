@@ -3,19 +3,20 @@ export function readXhrResponse(xhr) {
   if (!xhr) return null;
 
   try {
-    const raw = xhr.responseType === 'json' ? xhr.response : xhr.responseText;
+    var jsonData = xhr.responseType === 'json' ? xhr.response : xhr.responseText;
 
-    if (typeof raw === 'string') {
+
+    if (typeof jsonData === 'string') {
       // Try to parse JSON strings, otherwise return the raw text
       try {
-        return JSON.parse(raw);
+        return JSON.parse(jsonData);
       } catch (e) {
-        return raw;
+        return jsonData;
       }
-    }
+           }
 
     // Already an object (parsed JSON) or other type
-    return raw;
+    return jsonData;
   } catch (err) {
     // Defensive: accessing responseText can throw if responseType is not compatible
     // Fallback to xhr.response if available, else null
