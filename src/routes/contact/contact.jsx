@@ -85,6 +85,8 @@ function Contact() {
     setError("");
     setSuccess("");
     setIsLoading(true);
+    // show global overlay
+    window.dispatchEvent(new CustomEvent('globalLoading', { detail: { loading: true } }));
     try {
       // send to backend; endpoint is configurable via VITE_CONTACT_ENDPOINT or defaults to /contact
       // We log the endpoint and payload to aid debugging when axios/network errors occur.
@@ -151,6 +153,8 @@ function Contact() {
       console.error('Contact submit final error:', err, { endpoint: CONTACT_ENDPOINT, status, respData });
     } finally {
       setIsLoading(false);
+      // hide global overlay
+      window.dispatchEvent(new CustomEvent('globalLoading', { detail: { loading: false } }));
     }
   };
 

@@ -4,16 +4,21 @@ import "./profileUpdatePage.scss";
 import apiRequest from "../../lib/apiRequest";
 import { useNavigate } from "react-router-dom"
 import UploadWidget from "../../components/uploadWidget/uploadWidget";
+import Loading from "../../components/Loading/Loading";
 
 function ProfileUpdatePage() {
   const {currentUser, updateUser } = useContext(AuthContext);
   const [error, setError] = useState("");
   const [avatar, setAvatar] = useState(currentUser.avatar );
+  const [isLoading, setIsLoading] = useState(false);
 
   const navigate = useNavigate()
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsLoading(true);
+    // show global overlay
+    window.dispatchEvent(new CustomEvent('globalLoading', { detail: { loading: true } }));
     const formData = new FormData(e.target);
     const updatedData = Object.fromEntries(formData);
         if (avatar) updatedData.avatar = avatar;
@@ -28,6 +33,8 @@ function ProfileUpdatePage() {
       const msg = "Cannot update profile: user id is missing";
       console.error(msg, { currentUser });
       setError(msg);
+      setIsLoading(false);
+      window.dispatchEvent(new CustomEvent('globalLoading', { detail: { loading: false } }));
       return;
     }
 
@@ -46,6 +53,10 @@ function ProfileUpdatePage() {
       console.error("Error updating user:", err);
       const message = err?.response?.data?.message || err?.message || "Update failed";
       setError(message);
+    } finally {
+      setIsLoading(false);
+      // hide global overlay
+      window.dispatchEvent(new CustomEvent('globalLoading', { detail: { loading: false } }));
     }
   };
 

@@ -3,20 +3,29 @@ import Chat from "../../components/chat/Chat";
 import List from "../../components/list/List";
 import apiRequest from "../../lib/apiRequest";
 import "./profilePage.scss";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { AuthContext } from "../../context/AuthContext";
+import Loading from "../../components/Loading/Loading";
 
 function ProfilePage() {
     const {updateUser, currentUser} =  useContext(AuthContext);
   const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(false);
   console.log('cu:',currentUser)
   const handleLogout = async () =>{
+    setIsLoading(true);
+    // show global overlay
+    window.dispatchEvent(new CustomEvent('globalLoading', { detail: { loading: true } }));
     try {
        await apiRequest.post("/auth/logout");
       updateUser(null);
       navigate("/");
     } catch (err) {
       console.log(err);
+    } finally {
+      setIsLoading(false);
+      // hide global overlay
+      window.dispatchEvent(new CustomEvent('globalLoading', { detail: { loading: false } }));
     }
   }
   return (    

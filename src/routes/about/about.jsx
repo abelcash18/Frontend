@@ -1,7 +1,7 @@
 import "./about.scss";
 
 function About() {
-  return (
+    return (
     <div className="aboutPage">
       <div className="container">
         <h1>About Our Real Estate Service</h1>

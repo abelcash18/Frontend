@@ -1,5 +1,4 @@
 .loadingWrapper{
-  display:flex;
   justify-content:center;
   align-items:center;
 }
@@ -9,7 +8,7 @@
 }
 
 .global-loading-overlay{
-  position:fixed;
+  position:absolute;
   top:0;
   left:0;
   right:0;
@@ -22,9 +21,9 @@
 }
 
 .global-loading-inner{
-  background:transparent;
-  border-radius:8px;
-  padding:8px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
 }
 
 .loading-in-button{
