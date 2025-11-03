@@ -16,7 +16,8 @@ function Card({ item }) {
           <span>{item.address}</span>
         </p>
         <p className="price">$ {item.price}</p>
-        <div className="bottom">
+        <div className="bottom">+
+          
           <div className="features">
             <div className="feature">
               <img src="/bed.png" alt="" />
