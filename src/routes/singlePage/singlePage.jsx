@@ -1,114 +1,260 @@
+import { useState, useEffect } from "react";
+import { useParams, useNavigate } from "react-router-dom";
 import "./singlePage.scss";
 import Slider from "../../components/slider/Slider";
 import Map from "../../components/map/Map";
-import { singlePostData, userData } from "../../lib/dummydata";
+import Loading from "../../components/Loading/Loading";
+import apiRequest from "../../lib/apiRequest";
+import ChatModal from "../../components/chat/ChatModal"; // Add this import
 
 function SinglePage() {
+  const { id } = useParams();
+  const navigate = useNavigate();
+  const [post, setPost] = useState(null);
+  const [user, setUser] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState("");
+  const [isSaving, setIsSaving] = useState(false);
+  const [showChatModal, setShowChatModal] = useState(false); // Add this state
+  const [clientId, setClientId] = useState(""); // Add this state
+
+  // Generate or get client ID from localStorage
+  useEffect(() => {
+    let existingClientId = localStorage.getItem('clientId');
+    if (!existingClientId) {
+      existingClientId = 'client_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+      localStorage.setItem('clientId', existingClientId);
+    }
+    setClientId(existingClientId);
+  }, []);
+
+  useEffect(() => {
+    const fetchPost = async () => {
+      try {
+        setIsLoading(true);
+        setError("");
+        const response = await apiRequest.get(`/posts/${id}`);
+        setPost(response.data);
+        
+        // If the post has user data populated, use it
+        if (response.data.userId && typeof response.data.userId === 'object') {
+          setUser(response.data.userId);
+        }
+      } catch (err) {
+        console.error("Failed to fetch post:", err);
+        setError("Property not found or unable to load details.");
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    if (id) {
+      fetchPost();
+    }
+  }, [id]);
+
+  const handleSavePost = async () => {
+    try {
+      setIsSaving(true);
+      // Implement save functionality here
+      console.log("Save functionality to be implemented");
+    } catch (err) {
+      console.error("Failed to save post:", err);
+    } finally {
+      setIsSaving(false);
+    }
+  };
+
+  const handleContact = () => {
+    setShowChatModal(true);
+  };
+
+  if (isLoading) {
+    return (
+      <div className="singlePage">
+        <div className="loadingContainer">
+          <Loading size="large" text="Loading property details..." />
+        </div>
+      </div>
+    );
+  }
+
+  if (error || !post) {
+    return (
+      <div className="singlePage">
+        <div className="errorContainer">
+          <div className="errorContent">
+            <img src="/error-icon.svg" alt="Error" />
+            <h2>Property Not Found</h2>
+            <p>{error || "The property you're looking for doesn't exist."}</p>
+            <button onClick={() => navigate("/list")} className="backBtn">
+              Browse Properties
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="singlePage">
       <div className="details">
         <div className="wrapper">
-          <Slider images={singlePostData.images} />
+          <Slider images={post.images || []} />
           <div className="info">
             <div className="top">
               <div className="post">
-                <h1>{singlePostData.title}</h1>
-                <div className="address">
-                  <img src="/pin.png" alt="" />
-                  <span>{singlePostData.address}</span>
+                <div className="badges">
+                  <span className="typeBadge">{post.type}</span>
+                  <span className="propertyBadge">{post.propertyType}</span>
                 </div>
-                <div className="price">$ {singlePostData.price}</div>
+                <h1>{post.title}</h1>
+                <div className="address">
+                  <img src="/pin.png" alt="Location" />
+                  <span>{post.address}, {post.city}</span>
+                </div>
+                <div className="price">${post.price.toLocaleString()}</div>
               </div>
               <div className="user">
-                <img src={userData.img} alt="" />
-                <span>{userData.name}</span>
+                <img 
+                  src={user?.avatar || "/noavatar.jpg"} 
+                  alt={user?.username || "User"} 
+                />
+                <div className="userInfo">
+                  <span className="userName">{user?.username || "Unknown User"}</span>
+                  <span className="userRole">Property Owner</span>
+                </div>
               </div>
             </div>
-            <div className="bottom">{singlePostData.description}</div>
+            <div className="bottom">
+              <h3>Description</h3>
+              <p>{post.description || "No description provided."}</p>
+            </div>
           </div>
         </div>
       </div>
+      
       <div className="features">
         <div className="wrapper">
-          <p className="title">General</p>
-          <div className="listVertical">
-            <div className="feature">
-              <img src="/utility.png" alt="" />
-              <div className="featureText">
-                <span>Utilities</span>
-                <p>Renter is responsible</p>
+          <div className="propertyDetails">
+            <p className="title">Property Details</p>
+            <div className="detailGrid">
+              <div className="detailItem">
+                <img src="/bed.png" alt="Bedrooms" />
+                <div className="detailText">
+                  <span>Bedrooms</span>
+                  <p>{post.bedroom} {post.bedroom === 1 ? 'bedroom' : 'bedrooms'}</p>
+                </div>
               </div>
-            </div>
-            <div className="feature">
-              <img src="/pet.png" alt="" />
-              <div className="featureText">
-                <span>Pet Policy</span>
-                <p>Pets Allowed</p>
+              <div className="detailItem">
+                <img src="/bath.png" alt="Bathrooms" />
+                <div className="detailText">
+                  <span>Bathrooms</span>
+                  <p>{post.bathroom} {post.bathroom === 1 ? 'bathroom' : 'bathrooms'}</p>
+                </div>
               </div>
-            </div>
-            <div className="feature">
-              <img src="/fee.png" alt="" />
-              <div className="featureText">
-                <span>Property Fees</span>
-                <p>Must have 3x the rent in total household income</p>
+              <div className="detailItem">
+                <img src="/size.png" alt="Type" />
+                <div className="detailText">
+                  <span>Type</span>
+                  <p className="capitalize">{post.type}</p>
+                </div>
               </div>
-            </div>
-          </div>
-          <p className="title">Sizes</p>
-          <div className="sizes">
-            <div className="size">
-              <img src="/size.png" alt="" />
-              <span>80 sqft</span>
-            </div>
-            <div className="size">
-              <img src="/bed.png" alt="" />
-              <span>2 beds</span>
-            </div>
-            <div className="size">
-              <img src="/bath.png" alt="" />
-              <span>1 bathroom</span>
-            </div>
-          </div>
-          <p className="title">Nearby Places</p>
-          <div className="listHorizontal">
-            <div className="feature">
-              <img src="/school.png" alt="" />
-              <div className="featureText">
-                <span>School</span>
-                <p>250m away</p>
-              </div>
-            </div>
-            <div className="feature">
-              <img src="/pet.png" alt="" />
-              <div className="featureText">
-                <span>Bus Stop</span>
-                <p>100m away</p>
-              </div>
-            </div>
-            <div className="feature">
-              <img src="/fee.png" alt="" />
-              <div className="featureText">
-                <span>Restaurant</span>
-                <p>200m away</p>
+              <div className="detailItem">
+                <img src="/building.png" alt="Property Type" />
+                <div className="detailText">
+                  <span>Property Type</span>
+                  <p className="capitalize">{post.propertyType}</p>
+                </div>
               </div>
             </div>
           </div>
-          <p className="title">Location</p>
-          <div className="mapContainer">
-            <Map items={[singlePostData]} />
+
+          <div className="amenities">
+            <p className="title">Amenities & Features</p>
+            <div className="amenitiesGrid">
+              <div className="amenityItem">
+                <img src="/utility.png" alt="Utilities" />
+                <span>Utilities Included</span>
+              </div>
+              <div className="amenityItem">
+                <img src="/pet.png" alt="Pets" />
+                <span>Pets Allowed</span>
+              </div>
+              <div className="amenityItem">
+                <img src="/wifi.png" alt="WiFi" />
+                <span>High-Speed WiFi</span>
+              </div>
+              <div className="amenityItem">
+                <img src="/parking.png" alt="Parking" />
+                <span>Parking Available</span>
+              </div>
+              <div className="amenityItem">
+                <img src="/laundry.png" alt="Laundry" />
+                <span>Laundry Facilities</span>
+              </div>
+              <div className="amenityItem">
+                <img src="/security.png" alt="Security" />
+                <span>24/7 Security</span>
+              </div>
+            </div>
           </div>
-          <div className="buttons">
-            <button>
-              <img src="/chat.png" alt="" />
-              Send a Message
+
+          <div className="locationSection">
+            <p className="title">Location</p>
+            <div className="mapContainer">
+              <Map items={[post]} />
+            </div>
+            <div className="locationDetails">
+              <div className="locationItem">
+                <img src="/school.png" alt="Schools" />
+                <div className="locationText">
+                  <span>Schools</span>
+                  <p>Multiple schools within 1km radius</p>
+                </div>
+              </div>
+              <div className="locationItem">
+                <img src="/bus.png" alt="Transport" />
+                <div className="locationText">
+                  <span>Public Transport</span>
+                  <p>Bus stop 250m away</p>
+                </div>
+              </div>
+              <div className="locationItem">
+                <img src="/shopping.png" alt="Shopping" />
+                <div className="locationText">
+                  <span>Shopping</span>
+                  <p>Supermarket 500m away</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="actionButtons">
+            <button className="contactBtn" onClick={handleContact}>
+              <img src="/chat.png" alt="Contact" />
+              Contact Owner
             </button>
-            <button>
-              <img src="/save.png" alt="" />
-              Save the Place
+            <button 
+              className={`saveBtn ${isSaving ? 'saving' : ''}`} 
+              onClick={handleSavePost}
+              disabled={isSaving}
+            >
+              <img src="/save.png" alt="Save" />
+              {isSaving ? "Saving..." : "Save Property"}
             </button>
           </div>
         </div>
       </div>
+
+      {showChatModal && (
+        <ChatModal
+          property={post}
+          owner={user}
+          clientId={clientId}
+          onClose={() => setShowChatModal(false)}
+        />
+      )}
     </div>
   );
 }

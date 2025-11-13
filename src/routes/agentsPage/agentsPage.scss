@@ -1,0 +1,332 @@
+@import "../../responsive.scss";
+
+.agentsPage {
+  min-height: 100vh;
+  background: #f8fafc;
+  padding: 40px 0;
+
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+
+    @include md {
+      padding: 0 16px;
+    }
+  }
+
+  .loadingContainer,
+  .errorContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 400px;
+  }
+
+  .errorContent {
+    text-align: center;
+    max-width: 400px;
+
+    img {
+      width: 80px;
+      height: 80px;
+      margin-bottom: 20px;
+      opacity: 0.7;
+    }
+
+    h2 {
+      margin: 0 0 12px 0;
+      color: #dc2626;
+      font-weight: 600;
+    }
+
+    p {
+      margin: 0 0 24px 0;
+      color: #64748b;
+      line-height: 1.5;
+    }
+
+    .retryBtn {
+      padding: 12px 24px;
+      background: #3b82f6;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s ease;
+
+      &:hover {
+        background: #2563eb;
+        transform: translateY(-1px);
+      }
+    }
+  }
+
+  .header {
+    text-align: center;
+    margin-bottom: 48px;
+
+    h1 {
+      font-size: 48px;
+      font-weight: 700;
+      color: #1e293b;
+      margin: 0 0 16px 0;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+
+      @include md {
+        font-size: 36px;
+      }
+
+      @include sm {
+        font-size: 28px;
+      }
+    }
+
+    p {
+      font-size: 18px;
+      color: #64748b;
+      margin: 0 0 32px 0;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+
+      @include sm {
+        font-size: 16px;
+      }
+    }
+
+    .searchSection {
+      max-width: 500px;
+      margin: 0 auto;
+
+      .searchInput {
+        position: relative;
+        display: flex;
+        align-items: center;
+
+        img {
+          position: absolute;
+          left: 16px;
+          width: 20px;
+          height: 20px;
+          opacity: 0.5;
+        }
+
+        input {
+          width: 100%;
+          padding: 16px 16px 16px 48px;
+          border: 2px solid #e2e8f0;
+          border-radius: 12px;
+          font-size: 16px;
+          background: white;
+          transition: all 0.2s ease;
+
+          &:focus {
+            outline: none;
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+          }
+
+          &::placeholder {
+            color: #9ca3af;
+          }
+        }
+      }
+    }
+  }
+
+  .agentsGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 24px;
+
+    @include sm {
+      grid-template-columns: 1fr;
+      gap: 20px;
+    }
+  }
+
+  .agentCard {
+    background: white;
+    border-radius: 16px;
+    padding: 24px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    border: 1px solid #e2e8f0;
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+
+    &:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+    }
+
+    .agentImage {
+      position: relative;
+      align-self: center;
+
+      img {
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 4px solid #e2e8f0;
+      }
+
+      .onlineIndicator {
+        position: absolute;
+        bottom: 8px;
+        right: 8px;
+        width: 16px;
+        height: 16px;
+        background: #10b981;
+        border: 2px solid white;
+        border-radius: 50%;
+      }
+    }
+
+    .agentInfo {
+      text-align: center;
+
+      h3 {
+        font-size: 20px;
+        font-weight: 600;
+        color: #1e293b;
+        margin: 0 0 4px 0;
+      }
+
+      .email {
+        color: #64748b;
+        font-size: 14px;
+        margin: 0 0 16px 0;
+      }
+
+      .stats {
+        display: flex;
+        justify-content: space-around;
+        margin-bottom: 16px;
+        padding: 16px 0;
+        border-top: 1px solid #e2e8f0;
+        border-bottom: 1px solid #e2e8f0;
+
+        .stat {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+
+          .number {
+            font-size: 18px;
+            font-weight: 700;
+            color: #1e293b;
+          }
+
+          .label {
+            font-size: 12px;
+            color: #64748b;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+          }
+        }
+      }
+
+      .specialties {
+        display: flex;
+        justify-content: center;
+        gap: 8px;
+        flex-wrap: wrap;
+
+        .specialty {
+          background: #f1f5f9;
+          color: #475569;
+          padding: 4px 8px;
+          border-radius: 12px;
+          font-size: 12px;
+          font-weight: 500;
+        }
+      }
+    }
+
+    .agentActions {
+      display: flex;
+      gap: 12px;
+
+      @include sm {
+        flex-direction: column;
+      }
+
+      .viewProfileBtn {
+        flex: 2;
+        background: #3b82f6;
+        color: white;
+        padding: 12px 16px;
+        border-radius: 8px;
+        text-decoration: none;
+        text-align: center;
+        font-weight: 500;
+        transition: all 0.2s ease;
+
+        &:hover {
+          background: #2563eb;
+          transform: translateY(-1px);
+        }
+      }
+
+      .contactBtn {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
+        background: white;
+        color: #374151;
+        border: 1px solid #e2e8f0;
+        padding: 12px 16px;
+        border-radius: 8px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.2s ease;
+
+        &:hover {
+          border-color: #3b82f6;
+          color: #3b82f6;
+          transform: translateY(-1px);
+        }
+
+        img {
+          width: 16px;
+          height: 16px;
+        }
+      }
+    }
+  }
+
+  .noResults {
+    text-align: center;
+    padding: 80px 20px;
+
+    img {
+      width: 120px;
+      height: 120px;
+      margin-bottom: 24px;
+      opacity: 0.5;
+    }
+
+    h3 {
+      margin: 0 0 12px 0;
+      color: #475569;
+      font-weight: 600;
+      font-size: 20px;
+    }
+
+    p {
+      margin: 0;
+      color: #64748b;
+      font-size: 16px;
+    }
+  }
+}

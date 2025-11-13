@@ -9,6 +9,7 @@ import markerIcon from 'leaflet/dist/images/marker-icon.png';
 import markerShadow from 'leaflet/dist/images/marker-shadow.png';
 import 'leaflet/dist/leaflet.css';
 
+// Fix for default markers
 delete L.Icon.Default.prototype._getIconUrl;
 L.Icon.Default.mergeOptions({
   iconRetinaUrl: markerIcon2x,
@@ -16,14 +17,18 @@ L.Icon.Default.mergeOptions({
   shadowUrl: markerShadow,
 });
 
-
-const CONTACT_ENDPOINT = import.meta.env.VITE_CONTACT_ENDPOINT || 'contact';
-
-const MARKERS_ENDPOINT = import.meta.env.VITE_MARKERS_ENDPOINT || 'agents';
+const CONTACT_ENDPOINT = import.meta.env.VITE_CONTACT_ENDPOINT || '/contact';
+const MARKERS_ENDPOINT = import.meta.env.VITE_MARKERS_ENDPOINT || '/users';
 
 function Contact() {
-  const [form, setForm] = useState({ name: "", email: "", phone: "", message: "" });
-  const [error, setError] = useState("");
+  const [form, setForm] = useState({ 
+    name: "", 
+    email: "", 
+    phone: "", 
+    subject: "",
+    message: "" 
+  });
+  const [errors, setErrors] = useState({});
   const [success, setSuccess] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [showModal, setShowModal] = useState(false);
@@ -31,7 +36,40 @@ function Contact() {
   const mapRef = useRef(null);
 
   const handleChange = (e) => {
-    setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+    const { name, value } = e.target;
+    setForm(prev => ({ ...prev, [name]: value }));
+    
+    // Clear error when user starts typing
+    if (errors[name]) {
+      setErrors(prev => ({ ...prev, [name]: "" }));
+    }
+  };
+
+  const validateForm = () => {
+    const newErrors = {};
+
+    if (!form.name.trim()) {
+      newErrors.name = "Name is required";
+    }
+
+    if (!form.email.trim()) {
+      newErrors.email = "Email is required";
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) {
+      newErrors.email = "Please enter a valid email address";
+    }
+
+    if (!form.subject.trim()) {
+      newErrors.subject = "Subject is required";
+    }
+
+    if (!form.message.trim()) {
+      newErrors.message = "Message is required";
+    } else if (form.message.trim().length < 10) {
+      newErrors.message = "Message must be at least 10 characters long";
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
   };
 
   // Fetch markers (agents/offices) to display on the map
@@ -47,32 +85,43 @@ function Contact() {
         }
 
         const data = res?.data?.agents || res?.data?.offices || res?.data || [];
+        
         // Normalize markers to { id, name, lat, lng, phone, email, address }
         const normalized = (Array.isArray(data) ? data : []).map((item, idx) => ({
           id: item.id ?? item._id ?? idx,
-          name: item.name || item.agentName || item.title || 'Office',
-          lat: Number(item.lat ?? item.latitude ?? item.location?.lat) || null,
-          lng: Number(item.lng ?? item.longitude ?? item.location?.lng) || null,
-          phone: item.phone || item.contact || null,
-          email: item.email || null,
-          address: item.address || item.locationText || null,
+          name: item.username || item.name || item.agentName || item.title || 'Office',
+          lat: Number(item.lat ?? item.latitude ?? item.location?.lat) || 6.3382,
+          lng: Number(item.lng ?? item.longitude ?? item.location?.lng) || 5.6258,
+          phone: item.phone || item.contact || '+1 234 567 890',
+          email: item.email || 'info@dewgates.com',
+          address: item.address || item.locationText || 'Benin City, Edo State',
         })).filter(m => m.lat && m.lng);
 
         if (!cancelled) setMarkers(normalized);
+        
         // Fit map bounds to markers if map is ready
         setTimeout(() => {
           try {
             if (mapRef.current && normalized.length > 0) {
               const bounds = normalized.map(m => [m.lat, m.lng]);
-              mapRef.current.fitBounds(bounds, { padding: [50, 50] });
+              mapRef.current.fitBounds(bounds, { padding: [20, 20] });
             }
           } catch (e) {
-            // ignore
+            console.warn('Could not fit map bounds:', e);
           }
-        }, 300);
+        }, 500);
       } catch (err) {
-        // If markers endpoint fails, keep default marker (handled below)
         console.warn('Failed to load markers for contact map:', err);
+        // Set default marker if fetch fails
+        setMarkers([{
+          id: 1,
+          name: 'Dewgates Consults',
+          lat: 6.3382,
+          lng: 5.6258,
+          phone: '+1 234 567 890',
+          email: 'info@dewgates.com',
+          address: 'Benin City, Edo State, Nigeria'
+        }]);
       }
     };
 
@@ -82,165 +131,266 @@ function Contact() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError("");
+    setErrors({});
     setSuccess("");
+
+    if (!validateForm()) {
+      return;
+    }
+
     setIsLoading(true);
-    // show global overlay
     window.dispatchEvent(new CustomEvent('globalLoading', { detail: { loading: true } }));
+
     try {
-      // send to backend; endpoint is configurable via VITE_CONTACT_ENDPOINT or defaults to /contact
-      // We log the endpoint and payload to aid debugging when axios/network errors occur.
       const endpoint = CONTACT_ENDPOINT;
       const isAbsolute = /^https?:\/\//i.test(endpoint);
-      console.debug("Contact submit -> endpoint:", endpoint, "payload:", form);
 
       let res;
       if (isAbsolute) {
-        try {
-          // Try direct axios POST for absolute endpoints
-          res = await axios.post(endpoint, form, { withCredentials: true });
-        } catch (err) {
-          // Log detailed axios error shape for debugging
-          try {
-            console.error('Axios contact error (detailed):', err.toJSON ? err.toJSON() : err);
-          } catch (e) {
-            console.error('Axios contact error (raw):', err);
-          }
-
-          // If there's no response (network/CORS) or a 404 from the external service,
-          // attempt a conservative fallback to the relative path via our apiRequest instance.
-          const status = err?.response?.status;
-          const noResponse = !err?.response;
-          if (noResponse || status === 404) {
-            const relative = endpoint.replace(/^https?:\/\//i, '').replace(/^[^/]+/, '') || '/contact';
-            console.info('Attempting fallback POST via apiRequest to relative endpoint:', relative);
-            try {
-              res = await apiRequest.post(relative, form);
-            } catch (fallbackErr) {
-              // If fallback also fails, attach both errors to logs and rethrow to outer catch
-              console.error('Fallback apiRequest POST failed:', fallbackErr);
-              throw err;
-            }
-          } else {
-            // For other statuses, rethrow and let outer catch handle messaging
-            throw err;
-          }
-        }
+        res = await axios.post(endpoint, form, { withCredentials: true });
       } else {
-        // use the apiRequest axios instance (baseURL applies)
         res = await apiRequest.post(endpoint, form);
       }
 
-      const successMsg = (res?.data && res.data.message) || "Message sent. We will get back to you soon.";
+      const successMsg = res?.data?.message || "Thank you for your message! We'll get back to you within 24 hours.";
       setSuccess(successMsg);
       setShowModal(true);
-      setForm({ name: "", email: "", phone: "", message: "" });
+      setForm({ name: "", email: "", phone: "", subject: "", message: "" });
+      
     } catch (err) {
-      // Build a helpful error message including the endpoint used and any status/response data
-      const status = err?.response?.status;
-      const respData = err?.response?.data;
-      const baseMsg = (respData && (respData.message || JSON.stringify(respData))) || err?.message || "Failed to send message";
-      const endpointNote = `Endpoint: ${CONTACT_ENDPOINT}${status ? ` (status ${status})` : ""}`;
-      const finalMsg = `${baseMsg}. ${endpointNote}`;
-      setError(finalMsg);
-
-      // If using an absolute endpoint and it returned 404, give an immediate alert to the user
-      if (/^https?:\/\//i.test(CONTACT_ENDPOINT) && status === 404) {
-        alert('Contact service not found. Please try again later.');
-      }
-
-      // Emit detailed console logs for developer debugging (network tab + err.response recommended)
-      console.error('Contact submit final error:', err, { endpoint: CONTACT_ENDPOINT, status, respData });
+      console.error('Contact form submission error:', err);
+      
+      const errorMsg = err?.response?.data?.message || 
+                      err?.message || 
+                      "Sorry, we couldn't send your message. Please try again later.";
+      
+      setErrors({ submit: errorMsg });
     } finally {
       setIsLoading(false);
-      // hide global overlay
       window.dispatchEvent(new CustomEvent('globalLoading', { detail: { loading: false } }));
     }
+  };
+
+  const getCurrentDay = () => {
+    return new Date().toLocaleDateString('en-US', { weekday: 'long' });
   };
 
   return (
     <div className="contact-page">
       <div className="contact-wrapper">
+        {/* Contact Information Section */}
         <div className="contact-info">
-          <h2>Contact Us</h2>
+          <h2>Get in Touch</h2>
           <p>
-            Have questions about a listing or want to talk to an agent? Send us a
-            message and we will respond within 24 hours.
+            Ready to find your dream property? Our expert team is here to help you 
+            every step of the way. Reach out to us through any of the channels below.
           </p>
-          <ul>
-            <li><strong>Phone:</strong> <a href="tel:+1234567890">+1 234 567 890</a></li>
-            <li><strong>Email:</strong> <a href="mailto:info@example.com">info@example.com</a></li>
-            <li><strong>Office:</strong> Benin City, Edo State, NG</li>
-          </ul>
+
+          <div className="contact-details">
+            <div className="contact-item">
+              <div className="icon">
+                <img src="/phone.png" alt="Phone" />
+              </div>
+              <div className="content">
+                <h3>Call Us</h3>
+                <a href="tel:+1234567890">+1 (234) 567-890</a>
+                <p>Mon-Fri from 8am to 6pm</p>
+              </div>
+            </div>
+
+            <div className="contact-item">
+              <div className="icon">
+                <img src="/mail.png" alt="Email" />
+              </div>
+              <div className="content">
+                <h3>Email Us</h3>
+                <a href="mailto:info@dewgates.com">info@dewgates.com</a>
+                <p>We'll respond within 24 hours</p>
+              </div>
+            </div>
+
+            <div className="contact-item">
+              <div className="icon">
+                <img src="/pin.png" alt="Location" />
+              </div>
+              <div className="content">
+                <h3>Visit Us</h3>
+                <p>Benin City, Edo State</p>
+                <p>Nigeria</p>
+              </div>
+            </div>
+          </div>
+
+          <div className="business-hours">
+            <h3>Business Hours</h3>
+            <div className="hours-list">
+              {['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'].map(day => (
+                <div 
+                  key={day} 
+                  className={`hour-item ${getCurrentDay() === day ? 'today' : ''}`}
+                >
+                  <span className="day">{day}</span>
+                  <span className="time">
+                    {day === 'Sunday' ? 'Closed' : '8:00 AM - 6:00 PM'}
+                  </span>
+                </div>
+              ))}
+            </div>
+          </div>
 
           <div className="contact-map">
-            {/* Default coordinates: Benin City (latitude, longitude) */}
-            <MapContainer
-              center={markers.length ? [markers[0].lat, markers[0].lng] : [6.3382, 5.6258]}
-              zoom={13}
-              scrollWheelZoom={false}
-              style={{ height: 220, width: '100%' }}
-              whenCreated={(mapInstance) => { mapRef.current = mapInstance; }}
-            >
-              <TileLayer
-                attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-              />
-              {markers.length > 0 ? (
-                markers.map((m) => (
+            <div className="map-container">
+              <MapContainer
+                center={[6.3382, 5.6258]}
+                zoom={13}
+                scrollWheelZoom={false}
+                style={{ height: '100%', width: '100%' }}
+                whenCreated={(mapInstance) => { mapRef.current = mapInstance; }}
+              >
+                <TileLayer
+                  attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                  url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                />
+                {markers.map((m) => (
                   <Marker key={m.id} position={[m.lat, m.lng]}>
                     <Popup>
-                      <div>
+                      <div style={{ minWidth: '200px' }}>
                         <strong>{m.name}</strong>
-                        {m.address && <div>{m.address}</div>}
-                        {m.phone && <div>Phone: <a href={`tel:${m.phone}`}>{m.phone}</a></div>}
-                        {m.email && <div>Email: <a href={`mailto:${m.email}`}>{m.email}</a></div>}
+                        {m.address && <div style={{ margin: '8px 0' }}>{m.address}</div>}
+                        {m.phone && (
+                          <div style={{ margin: '4px 0' }}>
+                            📞 <a href={`tel:${m.phone}`}>{m.phone}</a>
+                          </div>
+                        )}
+                        {m.email && (
+                          <div style={{ margin: '4px 0' }}>
+                            ✉️ <a href={`mailto:${m.email}`}>{m.email}</a>
+                          </div>
+                        )}
                       </div>
                     </Popup>
                   </Marker>
-                ))
-              ) : (
-                <Marker position={[6.3382, 5.6258]}>
-                  <Popup>
-                    Dewgates Consults office<br />Benin City, Edo State
-                  </Popup>
-                </Marker>
-              )}
-            </MapContainer>
+                ))}
+              </MapContainer>
+            </div>
           </div>
         </div>
 
-        <form className="contact-form" onSubmit={handleSubmit}>
-          <label>
-            Name
-            <input name="name" value={form.name} onChange={handleChange} required />
-          </label>
-          <label>
-            Email
-            <input name="email" type="email" value={form.email} onChange={handleChange} required />
-          </label>
-          <label>
-            Phone
-            <input name="phone" value={form.phone} onChange={handleChange} />
-          </label>
-          <label>
-            Message
-            <textarea name="message" value={form.message} onChange={handleChange} required rows={6} />
-          </label>
+        {/* Contact Form Section */}
+        <form className="contact-form" onSubmit={handleSubmit} noValidate>
+          <div className="form-header">
+            <h3>Send us a Message</h3>
+            <p>Fill out the form below and we'll get back to you as soon as possible.</p>
+          </div>
+
+          <div className={`form-group ${errors.name ? 'has-error' : ''}`}>
+            <label htmlFor="name">Full Name *</label>
+            <div className="input-wrapper">
+              <input
+                id="name"
+                name="name"
+                type="text"
+                value={form.name}
+                onChange={handleChange}
+                placeholder="Enter your full name"
+                required
+              />
+              <img src="/user.png" alt="Name" className="input-icon" />
+            </div>
+            {errors.name && <div className="error-message">{errors.name}</div>}
+          </div>
+
+          <div className={`form-group ${errors.email ? 'has-error' : ''}`}>
+            <label htmlFor="email">Email Address *</label>
+            <div className="input-wrapper">
+              <input
+                id="email"
+                name="email"
+                type="email"
+                value={form.email}
+                onChange={handleChange}
+                placeholder="Enter your email address"
+                required
+              />
+              <img src="/mail.png" alt="Email" className="input-icon" />
+            </div>
+            {errors.email && <div className="error-message">{errors.email}</div>}
+          </div>
+
+          <div className="form-group">
+            <label htmlFor="phone">Phone Number</label>
+            <div className="input-wrapper">
+              <input
+                id="phone"
+                name="phone"
+                type="tel"
+                value={form.phone}
+                onChange={handleChange}
+                placeholder="Enter your phone number (optional)"
+              />
+              <img src="/phone.png" alt="Phone" className="input-icon" />
+            </div>
+          </div>
+
+          <div className={`form-group ${errors.subject ? 'has-error' : ''}`}>
+            <label htmlFor="subject">Subject *</label>
+            <div className="input-wrapper">
+              <input
+                id="subject"
+                name="subject"
+                type="text"
+                value={form.subject}
+                onChange={handleChange}
+                placeholder="What is this regarding?"
+                required
+              />
+              <img src="/subject.png" alt="Subject" className="input-icon" />
+            </div>
+            {errors.subject && <div className="error-message">{errors.subject}</div>}
+          </div>
+
+          <div className={`form-group ${errors.message ? 'has-error' : ''}`}>
+            <label htmlFor="message">Message *</label>
+            <div className="input-wrapper">
+              <textarea
+                id="message"
+                name="message"
+                value={form.message}
+                onChange={handleChange}
+                placeholder="Tell us how we can help you..."
+                required
+                rows={6}
+              />
+            </div>
+            {errors.message && <div className="error-message">{errors.message}</div>}
+          </div>
 
           <div className="form-actions">
-            <button type="submit" disabled={isLoading}>{isLoading ? 'Sending...' : 'Send Message'}</button>
+            <button type="submit" disabled={isLoading}>
+              {isLoading ? (
+                <>
+                  <span className="button-loader"></span>
+                  Sending Message...
+                </>
+              ) : (
+                'Send Message'
+              )}
+            </button>
           </div>
-          {error && <div className="form-error">{error}</div>}
+
+          {errors.submit && <div className="form-error">{errors.submit}</div>}
           {success && <div className="form-success">{success}</div>}
         </form>
       </div>
+
+      {/* Success Modal */}
       {showModal && (
-        <div className="contact-success-modal" role="dialog" aria-modal="true">
+        <div className="contact-success-modal" role="dialog" aria-modal="true" aria-labelledby="success-modal-title">
           <div className="modal-body">
-            <h3>Message Sent</h3>
+            <div className="success-icon" aria-hidden="true"></div>
+            <h3 id="success-modal-title">Message Sent Successfully!</h3>
             <p>{success}</p>
-            <button onClick={() => setShowModal(false)}>Close</button>
+            <button onClick={() => setShowModal(false)}>Continue Browsing</button>
           </div>
         </div>
       )}

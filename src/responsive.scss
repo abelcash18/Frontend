@@ -1,5 +1,12 @@
+// responsive.scss
+@mixin xs {
+  @media (max-width: 480px) {
+    @content;
+  }
+}
+
 @mixin sm {
-  @media (max-width: 738px) {
+  @media (max-width: 768px) {
     @content;
   }
 }
@@ -12,6 +19,19 @@
 
 @mixin lg {
   @media (max-width: 1366px) {
+    @content;
+  }
+}
+
+@mixin xl {
+  @media (min-width: 1367px) {
+    @content;
+  }
+}
+
+// Helper for mobile-first approach
+@mixin mobile-first($breakpoint) {
+  @media (min-width: $breakpoint) {
     @content;
   }
 }

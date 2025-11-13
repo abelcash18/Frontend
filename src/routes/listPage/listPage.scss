@@ -2,29 +2,234 @@
 
 .listPage {
   display: flex;
-  height: 100%;
+  height: 100vh;
+  background: #f8fafc;
 
   .listContainer {
     flex: 3;
     height: 100%;
+    overflow: hidden;
 
-    .wrapper{
+    .wrapper {
       height: 100%;
-      padding-right: 50px;
+      padding: 24px;
       display: flex;
       flex-direction: column;
-      gap: 50px;
-      overflow-y: scroll;
-      padding-bottom: 50px;
+      gap: 24px;
+      overflow-y: auto;
+
+      .loadingSection {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 400px;
+      }
+
+      .resultsSection {
+        .resultsGrid {
+          display: flex;
+          flex-direction: column;
+          gap: 20px;
+        }
+      }
+
+      .noResults {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 60px 20px;
+        text-align: center;
+        background: white;
+        border-radius: 16px;
+        border: 2px dashed #e2e8f0;
+
+        img {
+          width: 120px;
+          height: 120px;
+          margin-bottom: 24px;
+          opacity: 0.5;
+        }
+
+        h3 {
+          margin: 0 0 12px 0;
+          color: #475569;
+          font-weight: 600;
+          font-size: 20px;
+        }
+
+        p {
+          margin: 0 0 24px 0;
+          color: #64748b;
+          font-size: 16px;
+        }
+
+        .clearFiltersBtn {
+          padding: 12px 24px;
+          background: #3b82f6;
+          color: white;
+          border: none;
+          border-radius: 8px;
+          font-weight: 500;
+          cursor: pointer;
+          transition: all 0.2s ease;
+
+          &:hover {
+            background: #2563eb;
+            transform: translateY(-1px);
+          }
+        }
+      }
+    }
+
+    @include md {
+      flex: 1;
+      
+      .wrapper {
+        padding-right: 16px;
+        padding-bottom: 80px;
+      }
     }
   }
+
   .mapContainer {
     flex: 2;
     height: 100%;
-    background-color: #fcf5f3;
+    background: white;
+    border-left: 1px solid #e2e8f0;
 
-    @include md{
+    @include md {
       display: none;
+    }
+  }
+
+  .errorContainer {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px;
+
+    .errorContent {
+      text-align: center;
+      max-width: 400px;
+
+      img {
+        width: 80px;
+        height: 80px;
+        margin-bottom: 20px;
+        opacity: 0.7;
+      }
+
+      h2 {
+        margin: 0 0 12px 0;
+        color: #dc2626;
+        font-weight: 600;
+      }
+
+      p {
+        margin: 0 0 24px 0;
+        color: #7f1d1d;
+        line-height: 1.5;
+      }
+
+      .retryBtn {
+        padding: 12px 24px;
+        background: #dc2626;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.2s ease;
+
+        &:hover {
+          background: #b91c1c;
+          transform: translateY(-1px);
+        }
+      }
+    }
+  }
+}
+
+// Custom scrollbar for webkit browsers
+.listContainer .wrapper {
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: #f1f5f9;
+    border-radius: 3px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 3px;
+
+    &:hover {
+      background: #94a3b8;
+    }
+  }
+}
+
+// Add these styles to your existing listPage.scss
+
+.propertyTypeHeader {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 32px;
+  border-radius: 16px;
+  margin-bottom: 32px;
+  text-align: center;
+
+  h2 {
+    font-size: 32px;
+    font-weight: 700;
+    margin: 0 0 8px 0;
+    
+    .propertyCount {
+      font-weight: 400;
+      opacity: 0.9;
+      font-size: 24px;
+    }
+  }
+
+  p {
+    font-size: 18px;
+    margin: 0 0 20px 0;
+    opacity: 0.9;
+  }
+
+  .clearPropertyFilter {
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.3);
+      transform: translateY(-1px);
+    }
+  }
+
+  @include sm {
+    padding: 24px 20px;
+    
+    h2 {
+      font-size: 24px;
+      
+      .propertyCount {
+        font-size: 20px;
+      }
+    }
+    
+    p {
+      font-size: 16px;
     }
   }
 }

@@ -20,18 +20,31 @@ function Slider({ images }) {
     }
   };
 
+  if (!images || images.length === 0) {
+    return (
+      <div className="slider">
+        <div className="fullSlider">
+          <div className="noImage">
+            <img src="/no-image.jpg" alt="No image available" />
+            <p>No images available</p>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="slider">
       {imageIndex !== null && (
         <div className="fullSlider">
           <div className="arrow" onClick={() => changeSlide("left")}>
-            <img src="/arrow.png" alt="" />
+            <img src="/arrow.png" alt="Previous" />
           </div>
           <div className="imgContainer">
-            <img src={images[imageIndex]} alt="" />
+            <img src={images[imageIndex]} alt={`Slide ${imageIndex + 1}`} />
           </div>
           <div className="arrow" onClick={() => changeSlide("right")}>
-            <img src="/arrow.png" className="right" alt="" />
+            <img src="/arrow.png" className="right" alt="Next" />
           </div>
           <div className="close" onClick={() => setImageIndex(null)}>
             X
@@ -39,13 +52,13 @@ function Slider({ images }) {
         </div>
       )}
       <div className="bigImage">
-        <img src={images[0]} alt="" onClick={() => setImageIndex(0)} />
+        <img src={images[0]} alt="Main" onClick={() => setImageIndex(0)} />
       </div>
       <div className="smallImages">
         {images.slice(1).map((image, index) => (
           <img
             src={image}
-            alt=""
+            alt={`Thumbnail ${index + 2}`}
             key={index}
             onClick={() => setImageIndex(index + 1)}
           />
