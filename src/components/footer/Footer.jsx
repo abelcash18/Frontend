@@ -3,7 +3,6 @@ import "./footer.scss";
 
 function Footer() {
   const handlePropertyTypeClick = (propertyType) => {
-    // Store the selected property type in sessionStorage
     sessionStorage.setItem('selectedPropertyType', propertyType);
   };
 
@@ -14,7 +13,7 @@ function Footer() {
           <div className="footerSection">
             <div className="logo">
               <img src="/logo 2.jpg" alt="EstateElite" />
-              <h3>EstateElite</h3>
+              <h3>Dewgates Consults</h3>
             </div>
             <p className="footerDescription">
               Your trusted partner in finding the perfect property. 
@@ -99,7 +98,7 @@ function Footer() {
               </div>
               <div className="contactItem">
                 <span>✉️</span>
-                <span>info@estateelite.com</span>
+                <span>info@dwegatesconsults.com</span>
               </div>
             </div>
           </div>
@@ -107,7 +106,7 @@ function Footer() {
 
         <div className="footerBottom">
           <div className="footerBottomContent">
-            <p>&copy; 2024 EstateElite. All rights reserved.</p>
+            <p>&copy; 2025 Dewgates Consults. All rights reserved.</p>
             <div className="legalLinks">
               <Link to="/privacy">Privacy Policy</Link>
               <Link to="/terms">Terms of Service</Link>

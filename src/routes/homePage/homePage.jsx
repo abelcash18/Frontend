@@ -56,7 +56,7 @@ function HomePage() {
                 <div className="floatingCard">
                   <div className="cardContent">
                     <div className="rating">★ 4.9/5</div>
-                    <p>"Found my dream apartment in just 2 days!"</p>
+                    <p>`Found my dream apartment in just 2 days!`</p>
                     <span>- Sarah Johnson</span>
                   </div>
                 </div>
@@ -70,7 +70,7 @@ function HomePage() {
       <section className="featuresSection">
         <div className="container">
           <div className="sectionHeader">
-            <h2>Why Choose EstateElite</h2>
+            <h2>Why Choose Dewgates Consults</h2>
             <p>We provide the best real estate experience with cutting-edge technology</p>
           </div>
           <div className="featuresGrid">

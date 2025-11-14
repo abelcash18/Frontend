@@ -5,7 +5,7 @@ import Slider from "../../components/slider/Slider";
 import Map from "../../components/map/Map";
 import Loading from "../../components/Loading/Loading";
 import apiRequest from "../../lib/apiRequest";
-import ChatModal from "../../components/chat/ChatModal"; // Add this import
+import ChatModal from "../../components/chat/ChatModal"; 
 
 function SinglePage() {
   const { id } = useParams();
@@ -15,10 +15,10 @@ function SinglePage() {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState("");
   const [isSaving, setIsSaving] = useState(false);
-  const [showChatModal, setShowChatModal] = useState(false); // Add this state
-  const [clientId, setClientId] = useState(""); // Add this state
+  const [showChatModal, setShowChatModal] = useState(false); 
+  const [clientId, setClientId] = useState(""); 
 
-  // Generate or get client ID from localStorage
+ 
   useEffect(() => {
     let existingClientId = localStorage.getItem('clientId');
     if (!existingClientId) {
@@ -36,7 +36,6 @@ function SinglePage() {
         const response = await apiRequest.get(`/posts/${id}`);
         setPost(response.data);
         
-        // If the post has user data populated, use it
         if (response.data.userId && typeof response.data.userId === 'object') {
           setUser(response.data.userId);
         }
@@ -56,7 +55,6 @@ function SinglePage() {
   const handleSavePost = async () => {
     try {
       setIsSaving(true);
-      // Implement save functionality here
       console.log("Save functionality to be implemented");
     } catch (err) {
       console.error("Failed to save post:", err);

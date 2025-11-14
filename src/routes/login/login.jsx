@@ -95,7 +95,7 @@ function Login() {
         <div className="formWrapper">
           <div className="formHeader">
             <h1>Welcome Back</h1>
-            <p>Sign in to your EstateElite account</p>
+            <p>Sign in to your Dewgates Consults account</p>
           </div>
           
           {!showForgotPassword ? (
@@ -145,7 +145,7 @@ function Login() {
 
               <div className="formFooter">
                 <p>
-                  Don't have an account?{" "}
+                  Do not have an account?{" "}
                   <Link to="/register" className="link">Create one here</Link>
                 </p>
               </div>
@@ -164,7 +164,7 @@ function Login() {
                   ← Back to Login
                 </button>
                 <h2>Reset Your Password</h2>
-                <p>Enter your email address and we'll send you instructions to reset your password.</p>
+                <p>Enter your email address and we will send you instructions to reset your password.</p>
               </div>
 
               <form onSubmit={handleForgotPassword}>

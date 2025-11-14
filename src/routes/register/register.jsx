@@ -43,7 +43,7 @@ const Register = () => {
       <div className="formContainer">
         <div className="formWrapper">
           <div className="formHeader">
-            <h1>Join EstateElite</h1>
+            <h1>Join Dewgates Consults</h1>
             <p>Create your account and start your journey</p>
           </div>
           
