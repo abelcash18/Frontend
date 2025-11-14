@@ -1,54 +1,265 @@
 .filter {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
+  background: white;
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  border: 1px solid #e2e8f0;
+  margin-bottom: 24px;
 
-  h1 {
-    font-weight: 300;
-    font-size: 24px;
-  }
-
-  .item {
-    display: flex;
-    flex-direction: column;
-    gap: 2px;
-
-    label {
-      font-size: 10px;
-    }
-
-    input,
-    select {
-      width: 100px;
-      padding: 10px;
-      border: 1px solid #e0e0e0;
-      border-radius: 5px;
-      font-size: 14px;
-    }
-  }
-
-  .top {
-    input {
-      width: 100%;
-    }
-  }
-
-  .bottom {
+  .filterHeader {
     display: flex;
     justify-content: space-between;
-    flex-wrap: wrap;
-    gap: 20px;
+    align-items: flex-start;
+    margin-bottom: 24px;
 
-    button {
-      width: 100px;
-      padding: 10px;
-      border: none;
+    .titleSection {
+      h1 {
+        font-weight: 600;
+        font-size: 28px;
+        color: #1e293b;
+        margin: 0 0 8px 0;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      .resultsCount {
+        color: #64748b;
+        font-size: 14px;
+        margin: 0;
+        font-weight: 500;
+      }
+    }
+
+    .clearAllBtn {
+      background: #f1f5f9;
+      color: #64748b;
+      border: 1px solid #e2e8f0;
+      padding: 8px 16px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 500;
       cursor: pointer;
-      background-color: #fece51;
+      transition: all 0.2s ease;
 
-      img {
-        width: 24px;
-        height: 24px;
+      &:hover {
+        background: #e2e8f0;
+        color: #475569;
+      }
+    }
+  }
+
+  .filterForm {
+    .topSection {
+      margin-bottom: 20px;
+
+      .searchItem {
+        label {
+          display: block;
+          font-weight: 500;
+          color: #374151;
+          margin-bottom: 8px;
+          font-size: 14px;
+        }
+
+        .searchInput {
+          position: relative;
+          display: flex;
+          align-items: center;
+
+          .searchIcon {
+            position: absolute;
+            left: 12px;
+            width: 20px;
+            height: 20px;
+            opacity: 0.5;
+          }
+
+          input {
+            width: 100%;
+            padding: 12px 12px 12px 40px;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            font-size: 16px;
+            transition: all 0.2s ease;
+            background: #f8fafc;
+
+            &:focus {
+              outline: none;
+              border-color: #3b82f6;
+              background: white;
+              box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+            }
+
+            &::placeholder {
+              color: #9ca3af;
+            }
+          }
+        }
+      }
+    }
+
+    .bottomSection {
+      .filterGroup {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        gap: 16px;
+        align-items: end;
+
+        .filterItem {
+          display: flex;
+          flex-direction: column;
+          gap: 6px;
+
+          label {
+            font-weight: 500;
+            color: #374151;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+          }
+
+          input,
+          select {
+            padding: 12px;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: all 0.2s ease;
+            background: white;
+
+            &:focus {
+              outline: none;
+              border-color: #3b82f6;
+              box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+            }
+          }
+
+          select {
+            cursor: pointer;
+          }
+        }
+
+        .searchBtn {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 8px;
+          padding: 12px 20px;
+          background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+          color: white;
+          border: none;
+          border-radius: 8px;
+          font-weight: 600;
+          cursor: pointer;
+          transition: all 0.3s ease;
+          height: fit-content;
+
+          &:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+          }
+
+          img {
+            width: 18px;
+            height: 18px;
+            filter: brightness(0) invert(1);
+          }
+
+          span {
+            font-size: 14px;
+          }
+        }
+      }
+    }
+
+    .activeFilters {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 16px;
+      padding-top: 16px;
+      border-top: 1px solid #e2e8f0;
+
+      span:first-child {
+        color: #64748b;
+        font-size: 12px;
+        font-weight: 500;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+      }
+
+      .filterTag {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        background: #f1f5f9;
+        color: #475569;
+        padding: 6px 12px;
+        border-radius: 20px;
+        font-size: 12px;
+        font-weight: 500;
+
+        button {
+          background: none;
+          border: none;
+          color: #64748b;
+          cursor: pointer;
+          font-size: 16px;
+          line-height: 1;
+          padding: 0;
+          width: 16px;
+          height: 16px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          border-radius: 50%;
+
+          &:hover {
+            background: #e2e8f0;
+            color: #475569;
+          }
+        }
+      }
+    }
+  }
+}
+
+// Responsive design
+@media (max-width: 768px) {
+  .filter {
+    padding: 16px;
+
+    .filterHeader {
+      flex-direction: column;
+      gap: 12px;
+
+      .titleSection {
+        h1 {
+          font-size: 24px;
+        }
+      }
+    }
+
+    .filterForm {
+      .bottomSection {
+        .filterGroup {
+          grid-template-columns: 1fr 1fr;
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .filter {
+    .filterForm {
+      .bottomSection {
+        .filterGroup {
+          grid-template-columns: 1fr;
+        }
       }
     }
   }

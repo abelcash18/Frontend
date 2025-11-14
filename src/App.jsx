@@ -12,6 +12,9 @@ import Login from "./routes/login/login";
 import Register from "./routes/register/register";
 import ProfileUpdatePage from "./routes/profileUpdatePage/profileUpdatePage";
 import About from "./routes/about/about";
+import AgentsPage from "./routes/agentsPage/agentsPage";
+import AgentProfilePage from "./routes/agentProfilePage/agentProfilePage";
+import ResetPassword from "./routes/resetPassword/resetPassword";
 
 function App() {
   const router = createBrowserRouter([
@@ -36,18 +39,28 @@ function App() {
           element:<About/>
         },
         {
+          path:"/agents",
+          element:<AgentsPage/>
+        },
+        {
+          path:"/agents/:id",
+          element:<AgentProfilePage/>
+        },
+        {
           path:"/:id",
           element:<SinglePage/>
         },
-        
         {
           path:"/login",
           element:<Login/>
         },
-        
         {
           path:"/register",
           element:<Register/>
+        },
+        {
+          path:"/reset-password",
+          element:<ResetPassword/>
         }
       ],
     },
@@ -64,15 +77,12 @@ function App() {
           element:<ProfileUpdatePage/>
         },
       ],
-        }
+    }
   ]);
 
   return (
-
     <RouterProvider router={router}/>
   );
 } 
 
 export default App;
-
-

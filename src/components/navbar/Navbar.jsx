@@ -1,57 +1,119 @@
-import { useContext, useState } from "react";
+import { useContext, useState, useEffect } from "react";
 import "./navbar.scss";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../context/AuthContext";
 
 function Navbar() {
   const [open, setOpen] = useState(false);
-    const {currentUser} =  useContext(AuthContext);  
+  const { currentUser } = useContext(AuthContext);
+
+  // Prevent body scroll when menu is open
+  useEffect(() => {
+    if (open) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [open]);
+
+  // Close menu when clicking on a link
+  const handleLinkClick = () => {
+    setOpen(false);
+  };
+
+  // Close menu when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (open && !event.target.closest('.menu') && !event.target.closest('.menuIcon')) {
+        setOpen(false);
+      }
+    };
+
+    document.addEventListener('click', handleClickOutside);
+    return () => document.removeEventListener('click', handleClickOutside);
+  }, [open]);
+
   return (
-    <nav>
+    <nav className={open ? "nav-open" : ""}>
       <div className="left">
-        <a href="/" className="logo">
-          <img style={{ width: "170px", height: "50px" }} src="/logo 2.jpg" alt="" />
-          <span></span>
-        </a>
-  <Link to="/">Home</Link>
-  <Link to="/about">About</Link>
-  <Link to="/contact">Contact</Link>
-  <Link to="/">Agent</Link>
+        <Link to="/" className="logo">
+          <img src="/logo 2.jpg" alt="EstateElite" className="logo-img" />
+        </Link>
+        <div className="desktop-links">
+          <Link to="/" onClick={handleLinkClick}>Home</Link>
+          <Link to="/list" onClick={handleLinkClick}>Properties</Link>
+          <Link to="/agents" onClick={handleLinkClick}>Agents</Link>
+          <Link to="/about" onClick={handleLinkClick}>About</Link>
+          <Link to="/contact" onClick={handleLinkClick}>Contact</Link>
+        </div>
       </div>
       <div className="right">
         {currentUser ? (
           <div className="user">
             <img
               src={currentUser.avatar || "/noavatarr.jpg"}
-              alt="Profile picture"
+              alt="Profile"
+              className="user-avatar"
             />
-            <span>{currentUser.username || "Dewgates Consults"}</span>
-            <Link to="/profile" className="profile">
-              <div className="notification">3</div>
+            <span className="username">{currentUser.username || "Dewgates Consults"}</span>
+            <Link to="/profile" className="profile-link" onClick={handleLinkClick}>
               <span>Profile</span>
             </Link>
           </div>
         ) : (
-          <>
-           <Link to="/login" className="sign in">Sign In</Link>
-           <Link to="/register" className="register">Sign Up</Link>
-           </>
+          <div className="auth-links">
+            <Link to="/login" className="sign-in-link">Sign In</Link>
+            <Link to="/register" className="register-link">Sign Up</Link>
+          </div>
         )}
         <div className="menuIcon">
-          <img
-            src="/menu.png"
-            alt=""
-            onClick={() => setOpen((prev) => !prev)}
-          />
+          <button 
+            className={`hamburger ${open ? "hamburger--active" : ""}`}
+            onClick={() => setOpen(!open)}
+            aria-label="Toggle menu"
+          >
+            <span></span>
+            <span></span>
+            <span></span>
+          </button>
         </div>
-        <div className={open ? "menu active" : "menu"}>
-          <a href="/">Home</a>
-          <Link to="/about">About</Link>
-          <Link to="/contact">Contact</Link>
-          <Link to="/">Agents</Link>
-          <Link to="/login" className="sign in">Login</Link>
-          <Link to="/register" className="register">Sign up</Link>
+        <div className={`menu ${open ? "menu--active" : ""}`}>
+          <div className="menu-header">
+            <h3>Menu</h3>
+            <button 
+              className="close-menu"
+              onClick={() => setOpen(false)}
+              aria-label="Close menu"
+            >
+              ✕
+            </button>
+          </div>
+          <div className="menu-links">
+            <Link to="/" onClick={handleLinkClick}>Home</Link>
+            <Link to="/list" onClick={handleLinkClick}>Properties</Link>
+            <Link to="/agents" onClick={handleLinkClick}>Agents</Link>
+            <Link to="/about" onClick={handleLinkClick}>About</Link>
+            <Link to="/contact" onClick={handleLinkClick}>Contact</Link>
+            {!currentUser && (
+              <>
+                <Link to="/login" onClick={handleLinkClick} className="sign-in-mobile">Sign In</Link>
+                <Link to="/register" onClick={handleLinkClick} className="register-mobile">Sign Up</Link>
+              </>
+            )}
+            {currentUser && (
+              <Link to="/profile" onClick={handleLinkClick} className="profile-mobile">
+                <img src={currentUser.avatar || "/noavatarr.jpg"} alt="Profile" />
+                <span>Profile</span>
+              </Link>
+            )}
+          </div>
         </div>
+        {/* Overlay */}
+        {open && <div className="menu-overlay" onClick={() => setOpen(false)}></div>}
       </div>
     </nav>
   );

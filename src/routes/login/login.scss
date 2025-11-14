@@ -1,61 +1,281 @@
+@import "../../responsive.scss";
+
 .login {
-  height: 100%;
+  height: 100vh;
   display: flex;
 
+  @include md {
+    flex-direction: column;
+  }
+
   .formContainer {
-    flex: 3;
-    height: 100%;
+    flex: 1;
     display: flex;
     align-items: center;
     justify-content: center;
+    padding: 40px;
 
-    form {
-      display: flex;
-      flex-direction: column;
-      gap: 20px;
+    @include md {
+      padding: 20px;
+      order: 2;
+    }
 
-      input{
-        padding: 20px;
-        border: 1px solid gray;
-        border-radius: 5px;
-      }
+    .formWrapper {
+      width: 100%;
+      max-width: 400px;
 
-      button{
-        padding: 20px;
-        border-radius: 5px;
-        border: none;
-        background-color: teal;
-        color: white;
-        font-weight: bold;
-        cursor: pointer;
+      .formHeader {
+        text-align: center;
+        margin-bottom: 32px;
 
-        &:disabled{
-          background-color: #BED9D8;
-          cursor: not-allowed;
+        h1 {
+          font-size: 32px;
+          font-weight: 700;
+          color: #1e293b;
+          margin: 0 0 8px 0;
+
+          @include sm {
+            font-size: 28px;
+          }
+        }
+
+        p {
+          color: #64748b;
+          font-size: 16px;
+          margin: 0;
         }
       }
 
-      span{
-        color: rgba(255, 0, 0, 0.591);
+      form {
+        .inputGroup {
+          margin-bottom: 20px;
+
+          label {
+            display: block;
+            font-weight: 500;
+            color: #374151;
+            margin-bottom: 8px;
+            font-size: 14px;
+          }
+
+          input {
+            width: 100%;
+            padding: 14px 16px;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: all 0.2s ease;
+            background: #f8fafc;
+
+            &:focus {
+              outline: none;
+              border-color: #3b82f6;
+              background: white;
+              box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+            }
+
+            &::placeholder {
+              color: #9ca3af;
+            }
+          }
+        }
+
+        .forgotPasswordBtn {
+          background: none;
+          border: none;
+          color: #3b82f6;
+          font-size: 14px;
+          font-weight: 500;
+          cursor: pointer;
+          padding: 8px 0;
+          margin: -8px 0 16px 0;
+          transition: color 0.2s ease;
+          text-align: left;
+          width: 100%;
+
+          &:hover {
+            color: #2563eb;
+            text-decoration: underline;
+          }
+        }
+
+        .submitBtn {
+          width: 100%;
+          padding: 16px;
+          background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+          color: white;
+          border: none;
+          border-radius: 8px;
+          font-size: 16px;
+          font-weight: 600;
+          cursor: pointer;
+          transition: all 0.3s ease;
+          margin-bottom: 16px;
+
+          &:hover:not(:disabled) {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+          }
+
+          &:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+            transform: none;
+          }
+
+          .loading-in-button {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+          }
+        }
+
+        .errorMessage {
+          background: #fef2f2;
+          color: #dc2626;
+          padding: 12px;
+          border-radius: 8px;
+          border: 1px solid #fecaca;
+          font-size: 14px;
+          margin-bottom: 16px;
+        }
+
+        .formFooter {
+          text-align: center;
+
+          p {
+            color: #64748b;
+            font-size: 14px;
+            margin: 0;
+
+            .link {
+              color: #3b82f6;
+              font-weight: 500;
+              text-decoration: none;
+
+              &:hover {
+                text-decoration: underline;
+              }
+            }
+          }
+        }
       }
 
-      a{
-        font-size: 14px;
-        color: gray;
-        border-bottom: 1px solid gray;
-        width: max-content;
+      .forgotPasswordForm {
+        .forgotPasswordHeader {
+          margin-bottom: 32px;
+
+          .backToLogin {
+            background: none;
+            border: none;
+            color: #3b82f6;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            padding: 8px 0;
+            margin-bottom: 16px;
+            transition: color 0.2s ease;
+
+            &:hover {
+              color: #2563eb;
+              text-decoration: underline;
+            }
+          }
+
+          h2 {
+            font-size: 24px;
+            font-weight: 700;
+            color: #1e293b;
+            margin: 0 0 8px 0;
+          }
+
+          p {
+            color: #64748b;
+            font-size: 14px;
+            margin: 0;
+            line-height: 1.5;
+          }
+        }
+
+        .message {
+          padding: 12px;
+          border-radius: 8px;
+          font-size: 14px;
+          margin-bottom: 16px;
+
+          &.successMessage {
+            background: #f0fdf4;
+            color: #059669;
+            border: 1px solid #bbf7d0;
+          }
+
+          &.errorMessage {
+            background: #fef2f2;
+            color: #dc2626;
+            border: 1px solid #fecaca;
+          }
+        }
       }
     }
   }
 
   .imgContainer {
-    flex: 2;
-    background-color: #fcf5f3;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    img {
+    flex: 1;
+    position: relative;
+    overflow: hidden;
+
+    @include md {
+      height: 300px;
+      order: 1;
+    }
+
+    .imageContent {
+      position: relative;
       width: 100%;
+      height: 100%;
+
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .imageOverlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(135deg, rgba(0, 0, 0, 0.6) 0%, rgba(0, 0, 0, 0.3) 100%);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        color: white;
+        text-align: center;
+        padding: 40px;
+
+        h2 {
+          font-size: 32px;
+          font-weight: 700;
+          margin: 0 0 16px 0;
+
+          @include sm {
+            font-size: 24px;
+          }
+        }
+
+        p {
+          font-size: 18px;
+          margin: 0;
+          opacity: 0.9;
+
+          @include sm {
+            font-size: 16px;
+          }
+        }
+      }
     }
   }
 }

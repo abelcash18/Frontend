@@ -1,155 +1,417 @@
 @import "../../responsive.scss";
 
+// CSS Variables for consistent theming
+:root {
+  --white: #ffffff;
+  --text-dark: #1e293b;
+  --text-light: #64748b;
+  --primary-color: #3b82f6;
+  --primary-dark: #2563eb;
+  --error-color: #ef4444;
+  --border-color: #e2e8f0;
+  --border-radius: 8px;
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
 nav {
-  height: 100px;
+  height: 80px;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  padding: 0 20px;
+  background: var(--white);
+  box-shadow: var(--shadow-sm);
+  position: relative;
+  z-index: 1000;
 
-  a {
-    transition: all 0.4s ease;
-
-    @include sm {
-      display: none;
-    }
-
-    &:hover {
-      scale: 1.05;
-    }
+  @include sm {
+    height: 70px;
+    padding: 0 16px;
   }
 
   .left {
-    flex: 3;
+    flex: 1;
     display: flex;
     align-items: center;
-    gap: 50px;
+    gap: 40px;
+
+    @include md {
+      gap: 24px;
+    }
 
     .logo {
-      font-weight: bold;
-      font-size: 20px;
       display: flex;
       align-items: center;
-      gap: 10px;
-
-      img {
-        width: 28px;
-      }
-
-      span {
-        @include md {
-          display: none;
-        }
+      text-decoration: none;
+      
+      .logo-img {
+        width: 170px;
+        height: 50px;
+        object-fit: contain;
 
         @include sm {
-          display: initial;
+          width: 140px;
+          height: 40px;
+        }
+      }
+    }
+
+    .desktop-links {
+      display: flex;
+      gap: 24px;
+
+      @include sm {
+        display: none;
+      }
+
+      a {
+        color: var(--text-dark);
+        font-weight: 500;
+        padding: 8px 0;
+        position: relative;
+        transition: color 0.3s ease;
+        text-decoration: none;
+        font-size: 15px;
+
+        &:hover {
+          color: var(--primary-color);
+        }
+
+        &::after {
+          content: '';
+          position: absolute;
+          bottom: 0;
+          left: 0;
+          width: 0;
+          height: 2px;
+          background: var(--primary-color);
+          transition: width 0.3s ease;
+        }
+
+        &:hover::after {
+          width: 100%;
         }
       }
     }
   }
+
   .right {
-    flex: 2;
     display: flex;
     align-items: center;
-    justify-content: flex-end;
-    background-color: #fcf5f3;
-    height: 100%;
+    gap: 20px;
 
-    @include md {
-      background-color: transparent;
+    .auth-links {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+
+      @include sm {
+        display: none;
+      }
+
+      .sign-in-link {
+        color: var(--text-dark);
+        font-weight: 500;
+        padding: 8px 16px;
+        transition: color 0.3s ease;
+        text-decoration: none;
+        border-radius: var(--border-radius);
+
+        &:hover {
+          color: var(--primary-color);
+          background: #f8fafc;
+        }
+      }
+
+      .register-link {
+        background: var(--primary-color);
+        color: var(--white);
+        padding: 10px 20px;
+        border-radius: var(--border-radius);
+        font-weight: 500;
+        transition: all 0.3s ease;
+        text-decoration: none;
+        border: none;
+        display: inline-block;
+
+        &:hover {
+          background: var(--primary-dark);
+          transform: translateY(-1px);
+          box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+        }
+      }
     }
 
-    a {
-      padding: 12px 24px;
-      margin: 20px;
-    }
-
-    .user{
+    .user {
       display: flex;
       align-items: center;
-      font-weight: bold;
+      gap: 12px;
 
-      img{
+      @include sm {
+        display: none;
+      }
+
+      .user-avatar {
         width: 40px;
         height: 40px;
         border-radius: 50%;
         object-fit: cover;
-        margin-right: 20px;
+        border: 2px solid var(--border-color);
       }
 
-      span{
-        @include sm{
-          display: none;
-        }
+      .username {
+        font-weight: 500;
+        color: var(--text-dark);
+        font-size: 14px;
       }
 
-      .profile{
-        padding: 12px 24px;
-        background-color: #fece51;
-        cursor: pointer;
-        border: none;
+      .profile-link {
         position: relative;
-        
-        .notification{
+        background: var(--primary-color);
+        color: var(--white);
+        padding: 10px 16px;
+        border-radius: var(--border-radius);
+        font-weight: 500;
+        margin-left: 12px;
+        transition: all 0.3s ease;
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+
+        &:hover {
+          background: var(--primary-dark);
+          transform: translateY(-1px);
+        }
+
+        .notification {
           position: absolute;
           top: -8px;
           right: -8px;
-          background-color: red;
-          color: white;
+          background: var(--error-color);
+          color: var(--white);
           border-radius: 50%;
-          width: 26px;
-          height: 26px;
+          width: 20px;
+          height: 20px;
           display: flex;
           align-items: center;
           justify-content: center;
+          font-size: 0.7rem;
+          font-weight: 600;
         }
-
       }
-    }
-
-    .register {
-      background-color: #fece51;
-      height: fit-content;
     }
 
     .menuIcon {
       display: none;
-      z-index: 999;
-
-      img {
-        width: 36px;
-        height: 36px;
-        cursor: pointer;
-      }
 
       @include sm {
-        display: inline;
+        display: block;
+      }
+
+      .hamburger {
+        background: none;
+        border: none;
+        cursor: pointer;
+        padding: 8px;
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+        width: 30px;
+        height: 30px;
+        justify-content: center;
+        border-radius: 4px;
+        transition: background-color 0.3s ease;
+
+        &:hover {
+          background: #f8fafc;
+        }
+
+        span {
+          display: block;
+          height: 2px;
+          width: 100%;
+          background: var(--text-dark);
+          transition: all 0.3s ease;
+          transform-origin: center;
+        }
+
+        &.hamburger--active {
+          span:nth-child(1) {
+            transform: rotate(45deg) translate(6px, 6px);
+          }
+          span:nth-child(2) {
+            opacity: 0;
+          }
+          span:nth-child(3) {
+            transform: rotate(-45deg) translate(6px, -6px);
+          }
+        }
       }
     }
 
     .menu {
-      position: absolute;
+      position: fixed;
       top: 0;
-      right: -50%;
-      background-color: black;
-      color: white;
+      right: -100%;
+      width: 300px;
       height: 100vh;
-      width: 50%;
-      transition: all 1s ease;
+      background: var(--white);
+      box-shadow: -5px 0 25px rgba(0, 0, 0, 0.1);
+      transition: right 0.3s ease;
+      z-index: 1001;
       display: flex;
       flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      font-size: 24px;
 
-      &.active {
+      @include xs {
+        width: 280px;
+      }
+
+      &.menu--active {
         right: 0;
       }
 
-      @include sm {
+      .menu-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 20px 24px;
+        border-bottom: 1px solid var(--border-color);
+        background: #f8fafc;
+
+        h3 {
+          margin: 0;
+          color: var(--text-dark);
+          font-size: 18px;
+          font-weight: 600;
+        }
+
+        .close-menu {
+          background: none;
+          border: none;
+          font-size: 1.5rem;
+          cursor: pointer;
+          color: var(--text-light);
+          padding: 4px;
+          border-radius: 4px;
+          width: 32px;
+          height: 32px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          
+          &:hover {
+            color: var(--text-dark);
+            background: #e2e8f0;
+          }
+        }
+      }
+
+      .menu-links {
+        padding: 24px;
+        display: flex;
+        flex-direction: column;
+        gap: 0;
+        flex: 1;
+        overflow-y: auto;
+
         a {
-          display: initial;
+          color: var(--text-dark);
+          font-weight: 500;
+          padding: 16px 0;
+          border-bottom: 1px solid var(--border-color);
+          transition: all 0.3s ease;
+          text-decoration: none;
+          display: flex;
+          align-items: center;
+
+          &:hover {
+            color: var(--primary-color);
+            background: #f8fafc;
+            margin: 0 -24px;
+            padding: 16px 24px;
+          }
+
+          &.sign-in-mobile {
+            border-bottom: 1px solid var(--border-color);
+            margin-top: 8px;
+            
+            &:hover {
+              background: #f8fafc;
+              color: var(--primary-color);
+            }
+          }
+
+          &.register-mobile {
+            background: var(--primary-color);
+            color: var(--white);
+            padding: 16px;
+            border-radius: var(--border-radius);
+            text-align: center;
+            border: none;
+            margin-top: 16px;
+            justify-content: center;
+
+            &:hover {
+              background: var(--primary-dark);
+              color: var(--white);
+              margin: 16px 0 0 0;
+              transform: translateY(-1px);
+            }
+          }
+
+          &.profile-mobile {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            border: none;
+            margin-top: auto;
+            background: #f8fafc;
+            border-radius: var(--border-radius);
+            padding: 16px;
+
+            &:hover {
+              background: #e2e8f0;
+              margin: auto -24px 0 -24px;
+              padding: 16px 24px;
+            }
+
+            img {
+              width: 36px;
+              height: 36px;
+              border-radius: 50%;
+              object-fit: cover;
+            }
+          }
+
+          // Remove hover margin for the last link (profile)
+          &:last-child:hover {
+            margin-bottom: -24px;
+          }
         }
       }
     }
+
+    .menu-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 1000;
+      display: none;
+
+      @include sm {
+        display: block;
+      }
+    }
+  }
+}
+
+// Body lock when menu is open
+body.nav-open {
+  @include sm {
+    overflow: hidden;
   }
 }

@@ -1,33 +1,48 @@
-.loadingWrapper{
-  justify-content:center;
-  align-items:center;
+.loadingWrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-.loadingWrapper lottie-player{
-  display:block;
+.loadingWrapper lottie-player {
+  display: block;
 }
 
-.global-loading-overlay{
-  position:absolute;
-  top:0;
-  left:0;
-  right:0;
-  bottom:0;
-  background:rgba(0,0,0,0.45);
-  z-index:9999;
-  display:flex;
-  align-items:center;
-  justify-content:center;
+.global-loading-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.6);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(4px);
 }
 
-.global-loading-inner{
-  display:flex;
-  align-items:center;
-  justify-content:center;
+.global-loading-inner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--white);
+  padding: 40px;
+  border-radius: var(--border-radius-lg);
+  box-shadow: var(--shadow-lg);
+  flex-direction: column;
+  gap: 16px;
+
+  p {
+    color: var(--text-dark);
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+  }
 }
 
-.loading-in-button{
-  display:inline-flex;
-  align-items:center;
-  justify-content:center;
+.loading-in-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
 }

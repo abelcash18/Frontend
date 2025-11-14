@@ -1,15 +1,20 @@
 import './list.scss'
-import Card from"../card/Card"
-import {listData} from"../../lib/dummydata"
+import Card from "../card/Card"
 
-function List(){
-  return (
-    <div className='list'>
-      {listData.map(item=>(
-        <Card key={item.id} item={item}/>
-      ))}
-    </div>
-  )
+function List({ posts = [], onEdit, onDelete, showActions = false }) {
+    return (
+        <div className='list'>
+            {posts.map(item => (
+                <Card 
+                    key={item._id || item.id} 
+                    item={item}
+                    onEdit={onEdit}
+                    onDelete={onDelete}
+                    showActions={showActions}
+                />
+            ))}
+        </div>
+    )
 }
 
 export default List

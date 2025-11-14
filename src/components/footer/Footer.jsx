@@ -1,49 +1,120 @@
-import "./footer.scss";
 import { Link } from "react-router-dom";
+import "./footer.scss";
 
 function Footer() {
+  const handlePropertyTypeClick = (propertyType) => {
+    // Store the selected property type in sessionStorage
+    sessionStorage.setItem('selectedPropertyType', propertyType);
+  };
+
   return (
-    <footer className="app-footer">
-      <div className="footer-inner">
-        <div className="footer-col about">
-          <h4>About</h4>
-          <p>
-            Small description about your real estate app. Find properties, agents,
-            and local market insights.
-          </p>
+    <footer className="footer">
+      <div className="container">
+        <div className="footerContent">
+          <div className="footerSection">
+            <div className="logo">
+              <img src="/logo 2.jpg" alt="EstateElite" />
+              <h3>EstateElite</h3>
+            </div>
+            <p className="footerDescription">
+              Your trusted partner in finding the perfect property. 
+              We connect you with your dream home through innovative 
+              technology and personalized service.
+            </p>
+            <div className="socialLinks">
+              <a href="#" aria-label="Facebook">📘</a>
+              <a href="#" aria-label="Twitter">🐦</a>
+              <a href="#" aria-label="Instagram">📷</a>
+              <a href="#" aria-label="LinkedIn">💼</a>
+            </div>
+          </div>
+
+          <div className="footerSection">
+            <h4>Quick Links</h4>
+            <ul>
+              <li><Link to="/">Home</Link></li>
+              <li><Link to="/about">About Us</Link></li>
+              <li><Link to="/list">Properties</Link></li>
+              <li><Link to="/agents">Agents</Link></li>
+              <li><Link to="/contact">Contact</Link></li>
+            </ul>
+          </div>
+
+          <div className="footerSection">
+            <h4>Property Types</h4>
+            <ul>
+              <li>
+                <Link 
+                  to="/list" 
+                  onClick={() => handlePropertyTypeClick('apartment')}
+                >
+                  Apartments
+                </Link>
+              </li>
+              <li>
+                <Link 
+                  to="/list" 
+                  onClick={() => handlePropertyTypeClick('house')}
+                >
+                  Houses
+                </Link>
+              </li>
+              <li>
+                <Link 
+                  to="/list" 
+                  onClick={() => handlePropertyTypeClick('condo')}
+                >
+                  Condos
+                </Link>
+              </li>
+              <li>
+                <Link 
+                  to="/list" 
+                  onClick={() => handlePropertyTypeClick('land')}
+                >
+                  Land
+                </Link>
+              </li>
+              <li>
+                <Link 
+                  to="/list" 
+                  onClick={() => handlePropertyTypeClick('commercial')}
+                >
+                  Commercial
+                </Link>
+              </li>
+            </ul>
+          </div>
+
+          <div className="footerSection">
+            <h4>Contact Info</h4>
+            <div className="contactInfo">
+              <div className="contactItem">
+                <span>📍</span>
+                <span>123 Business District, City 10001</span>
+              </div>
+              <div className="contactItem">
+                <span>📞</span>
+                <span>+1 (555) 123-4567</span>
+              </div>
+              <div className="contactItem">
+                <span>✉️</span>
+                <span>info@estateelite.com</span>
+              </div>
+            </div>
+          </div>
         </div>
 
-        <div className="footer-col links">
-          <h4>Quick Links</h4>
-          <ul>
-            <li><Link to="/">Home</Link></li>
-            <li><Link to="/listings">Listings</Link></li>
-            <li><Link to="/agents">Agents</Link></li>
-            <li><Link to="/contact">Contact</Link></li>
-          </ul>
+        <div className="footerBottom">
+          <div className="footerBottomContent">
+            <p>&copy; 2024 EstateElite. All rights reserved.</p>
+            <div className="legalLinks">
+              <Link to="/privacy">Privacy Policy</Link>
+              <Link to="/terms">Terms of Service</Link>
+              <Link to="/cookies">Cookie Policy</Link>
+            </div>
+          </div>
         </div>
-
-        <div className="footer-col contact">
-          <h4>Contact</h4>
-          <address>
-            <div>Phone: <a href="tel:+1234567890">+1 234 567 890</a></div>
-            <div>Email: <a href="mailto:info@example.com">info@example.com</a></div>
-            <div>Office: Benin City Edo-State NG</div>
-          </address>
-        </div>
-
-        <div className="footer-col social">
-          <h4>Follow Us</h4>
-          <ul className="social-list">
-            <li><a href="#" aria-label="Facebook">Facebook</a></li>
-            <li><a href="#" aria-label="Twitter">Twitter</a></li>
-            <li><a href="#" aria-label="Instagram">Instagram</a></li>
-          </ul>
-        </div>
-      </div>
-
-      <div className="footer-bottom">
-        <small>© {new Date().getFullYear()} Dewgates Consults. All rights reserved.</small>
       </div>
     </footer>
   );

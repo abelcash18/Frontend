@@ -1,33 +1,31 @@
 import { useContext, useState } from "react";
-import {AuthContext} from "../../context/AuthContext";
+import { AuthContext } from "../../context/AuthContext";
 import "./profileUpdatePage.scss";
 import apiRequest from "../../lib/apiRequest";
-import { useNavigate } from "react-router-dom"
+import { useNavigate } from "react-router-dom";
 import UploadWidget from "../../components/uploadWidget/uploadWidget";
-import Loading from "../../components/Loading/Loading";
 
 function ProfileUpdatePage() {
-  const {currentUser, updateUser } = useContext(AuthContext);
+  const { currentUser, updateUser } = useContext(AuthContext);
   const [error, setError] = useState("");
-  const [avatar, setAvatar] = useState(currentUser.avatar );
+  const [avatar, setAvatar] = useState(currentUser.avatar || "/noavatarr.jpg");
   const [isLoading, setIsLoading] = useState(false);
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
-    // show global overlay
+    setError("");
+    
+    // Show global loading
     window.dispatchEvent(new CustomEvent('globalLoading', { detail: { loading: true } }));
+
     const formData = new FormData(e.target);
-    const updatedData = Object.fromEntries(formData);
-        if (avatar) updatedData.avatar = avatar;
-
-    const { username, email, password  } = updatedData;
-
-    // determine a reliable user id from possible response shapes
-    const userId =
-      currentUser?.id || currentUser?._id || currentUser?.user?.id || currentUser?.data?.id;
+    const { username, email, password } = Object.fromEntries(formData);
+    
+    // Get user ID - handle different possible locations
+    const userId = currentUser?.id || currentUser?._id || currentUser?.user?.id || currentUser?.data?.id;
 
     if (!userId) {
       const msg = "Cannot update profile: user id is missing";
@@ -39,15 +37,27 @@ function ProfileUpdatePage() {
     }
 
     try {
-      const payload = { username, email, password, avatar: updatedData.avatar };
-      console.debug("Sending profile update for userId", userId, payload);
-      const res = await apiRequest.put(`/users/${userId}`, payload);
+      // Only send fields that have values
+      const updateData = {};
+      if (username && username !== currentUser.username) updateData.username = username;
+      if (email && email !== currentUser.email) updateData.email = email;
+      if (password) updateData.password = password;
+      if (avatar && avatar !== currentUser.avatar) updateData.avatar = avatar;
 
-      console.debug("Profile update response:", res.data);
+      // Don't send empty update
+      if (Object.keys(updateData).length === 0) {
+        setError("No changes detected");
+        return;
+      }
 
-      // backend may return the updated user directly or under `user`
-      const newUser = res.data?.user || res.data;
-      updateUser(newUser);
+      console.log("Updating user with data:", updateData);
+
+      const res = await apiRequest.put(`/users/${userId}`, updateData);
+      
+      // Update user context - handle different response formats
+      const updatedUser = res.data?.user || res.data;
+      updateUser(updatedUser);
+      
       navigate("/profile");
     } catch (err) {
       console.error("Error updating user:", err);
@@ -55,7 +65,6 @@ function ProfileUpdatePage() {
       setError(message);
     } finally {
       setIsLoading(false);
-      // hide global overlay
       window.dispatchEvent(new CustomEvent('globalLoading', { detail: { loading: false } }));
     }
   };
@@ -65,36 +74,71 @@ function ProfileUpdatePage() {
       <div className="formContainer">
         <form onSubmit={handleSubmit}>
           <h1>Update Profile</h1>
+          
           <div className="item">
             <label htmlFor="username">Username</label>
-            <input  id="username" name="username"
-             type="text" defaultValue={currentUser.username}/>
+            <input 
+              id="username" 
+              name="username"
+              type="text" 
+              defaultValue={currentUser.username}
+              placeholder="Enter your username"
+            />
           </div>
+          
           <div className="item">
             <label htmlFor="email">Email</label>
-            <input id="email" name="email"
-              type="email" defaultValue={currentUser.email}/>
+            <input 
+              id="email" 
+              name="email"
+              type="email" 
+              defaultValue={currentUser.email}
+              placeholder="Enter your email"
+            />
           </div>
+          
           <div className="item">
-            <label htmlFor="password">Password</label>
-            <input id="password" name="password" type="password" />
+            <label htmlFor="password">New Password (leave blank to keep current)</label>
+            <input 
+              id="password" 
+              name="password" 
+              type="password" 
+              placeholder="Enter new password"
+            />
           </div>
-          <button>Update</button>
-            {error && <span className="error">{error}</span>}
+
+          <button 
+            type="submit" 
+            disabled={isLoading}
+            className={isLoading ? 'loading' : ''}
+          >
+            {isLoading ? "Updating..." : "Update Profile"}
+          </button>
+          
+          {error && <span className="error">{error}</span>}
         </form>
       </div>
+      
       <div className="sideContainer">
-        <img src={avatar || "/noavatarr.jpg"} alt=""
-         className="avatar" />
-        <UploadWidget uwConfig={{ 
-          cloudName: "duzkfzv3p",
-          uploadPreset: "Estate",
-          multiple: false,
-          maxImageFileSize: 1048576,
-          folder: "avatars"
-         }}
-         setAvatar={setAvatar}
-         />
+        <div className="avatarSection">
+          <img 
+            src={avatar} 
+            alt="Profile avatar" 
+            className="avatar" 
+          />
+          <p>Click below to upload new avatar</p>
+        </div>
+        
+        <UploadWidget 
+          uwConfig={{ 
+            cloudName: "duzkfzv3p",
+            uploadPreset: "Estate",
+            multiple: false,
+            maxImageFileSize: 1048576,
+            folder: "avatars"
+          }}
+          setAvatar={setAvatar}
+        />
       </div>
     </div>
   );
