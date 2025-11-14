@@ -63,7 +63,7 @@ function SearchBar() {
           </div>
 
           <div className="inputGroup">
-            <span className="inputIcon">💰</span>
+            <span className="inputIcon">$0</span>
             <input
               type="number"
               name="minPrice"
@@ -75,11 +75,11 @@ function SearchBar() {
           </div>
 
           <div className="inputGroup">
-            <span className="inputIcon">💰</span>
+            <span className="inputIcon">$</span>
             <input
               type="number"
               name="maxPrice"
-              min="0"
+              max="1000000"
               placeholder="Max price"
               value={query.maxPrice}
               onChange={(e) => setQuery(prev => ({ ...prev, maxPrice: e.target.value }))}

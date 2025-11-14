@@ -24,7 +24,7 @@ function Login() {
     const password = formData.get("password");
 
     try {
-      const res = await fetch("http://localhost:8800/auth/login", {
+      const res = await fetch ("http://localhost:8800/auth/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         credentials: "include",
