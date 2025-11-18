@@ -7,8 +7,8 @@ function SearchBar() {
   const [query, setQuery] = useState({
     type: "buy",
     location: "",
-    minPrice: "",
-    maxPrice: "",
+    minPrice: 0,
+    maxPrice: 0,
     propertyType: ""
   });
 
@@ -25,7 +25,6 @@ function SearchBar() {
   };
 
   const propertyTypes = ["Any", "Apartment", "Villa", "Townhouse", "Condominium", "Commercial"];
-
   return (
     <div className="searchBar">
       <div className="searchHeader">
@@ -52,8 +51,7 @@ function SearchBar() {
       <form onSubmit={handleSubmit}>
         <div className="formGrid">
           <div className="inputGroup locationGroup">
-            <span className="inputIcon">📍</span>
-            <input
+           <input
               type="text"
               name="location"
               placeholder="Enter city, neighborhood, or ZIP"
@@ -62,12 +60,12 @@ function SearchBar() {
             />
           </div>
 
-          <div className="inputGroup">
-            <span className="inputIcon">$0</span>
+          <div className="inputGroup">           
             <input
               type="number"
               name="minPrice"
-              min="0"
+              min={0}
+              max={1000000}
               placeholder="Min price"
               value={query.minPrice}
               onChange={(e) => setQuery(prev => ({ ...prev, minPrice: e.target.value }))}
@@ -75,11 +73,11 @@ function SearchBar() {
           </div>
 
           <div className="inputGroup">
-            <span className="inputIcon">$</span>
-            <input
+           <input 
               type="number"
               name="maxPrice"
-              max="1000000"
+              min={0}
+              max={1000000}
               placeholder="Max price"
               value={query.maxPrice}
               onChange={(e) => setQuery(prev => ({ ...prev, maxPrice: e.target.value }))}

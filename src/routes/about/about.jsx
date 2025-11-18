@@ -115,25 +115,25 @@ function About() {
                     <div className="teamGrid">
                         <div className="teamMember">
                             <div className="memberImage">
-                                <img src="/team-member1.jpg" alt="Sarah Johnson" />
+                                <img src="/team-member1.jpg" alt="Pastor Idowu Oviawe Gabriel" />
                             </div>
-                            <h3>Sarah Johnson</h3>
+                            <h3>Pastor Idowu Oviawe Gabriel</h3>
                             <p className="memberRole">CEO & Founder</p>
                             <p className="memberBio">15+ years in real estate technology and customer experience innovation.</p>
                         </div>
                         <div className="teamMember">
                             <div className="memberImage">
-                                <img src="/team-member2.jpg" alt="Michael Chen" />
-                            </div>
-                            <h3>Michael Chen</h3>
+                                <img src="/team-member2.jpg" alt="Mrs Doris Idowu Oviawe picture" />
+                            </div> 32q  
+                            <h3>Mrs Doris Idowu Oviawe</h3>
                             <p className="memberRole">Head of Operations</p>
                             <p className="memberBio">Expert in scaling platforms and ensuring seamless user experiences.</p>
                         </div>
                         <div className="teamMember">
                             <div className="memberImage">
-                                <img src="/team-member3.jpg" alt="Emily Rodriguez" />
+                                <img src="/my.jpg" alt="Joseph picture" />
                             </div>
-                            <h3>Emily Rodriguez</h3>
+                            <h3>Joseph Abel Olayinka</h3>
                             <p className="memberRole">Lead Agent Relations</p>
                             <p className="memberBio">Connecting top-tier agents with motivated buyers and sellers.</p>
                         </div>

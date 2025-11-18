@@ -7,10 +7,11 @@ import { useNavigate } from "react-router-dom";
 
 function HomePage() {
   const { currentUser } = useContext(AuthContext);
+  console.log(currentUser)
   const navigate = useNavigate();
-
+  
   return (
-    <div className="homePage">
+   <div className="homePage">
       {/* Hero Section */}
       <section className="heroSection">
         <div className="container">
@@ -19,11 +20,11 @@ function HomePage() {
               <div className="content">
                 <div className="badge">Trusted by 10,000+ Clients</div>
                 <h1 className="title">
-                  Find Your Perfect <span className="highlight">Dream Home</span>
+                  Find Your Perfect <span className="highlight">Dream Home, Land and Properties</span>
                 </h1>
                 <p className="description">
                   Discover the perfect property from our curated collection of apartments, 
-                  villas, and modern residences. Your ideal home is just a search away.
+                  villas, modern residences, Land And Properties. Your Dream home, land is just a search away.
                 </p>
                 <SearchBar />
                 

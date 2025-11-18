@@ -9,7 +9,6 @@ import markerIcon from 'leaflet/dist/images/marker-icon.png';
 import markerShadow from 'leaflet/dist/images/marker-shadow.png';
 import 'leaflet/dist/leaflet.css';
 
-// Fix for default markers
 delete L.Icon.Default.prototype._getIconUrl;
 L.Icon.Default.mergeOptions({
   iconRetinaUrl: markerIcon2x,
@@ -39,7 +38,7 @@ function Contact() {
     const { name, value } = e.target;
     setForm(prev => ({ ...prev, [name]: value }));
     
-    // Clear error when user starts typing
+
     if (errors[name]) {
       setErrors(prev => ({ ...prev, [name]: "" }));
     }
@@ -72,7 +71,6 @@ function Contact() {
     return Object.keys(newErrors).length === 0;
   };
 
-  // Fetch markers (agents/offices) to display on the map
   useEffect(() => {
     let cancelled = false;
     const loadMarkers = async () => {
@@ -85,22 +83,19 @@ function Contact() {
         }
 
         const data = res?.data?.agents || res?.data?.offices || res?.data || [];
-        
-        // Normalize markers to { id, name, lat, lng, phone, email, address }
         const normalized = (Array.isArray(data) ? data : []).map((item, idx) => ({
           id: item.id ?? item._id ?? idx,
           name: item.username || item.name || item.agentName || item.title || 'Office',
           lat: Number(item.lat ?? item.latitude ?? item.location?.lat) || 6.3382,
           lng: Number(item.lng ?? item.longitude ?? item.location?.lng) || 5.6258,
-          phone: item.phone || item.contact || '+1 234 567 890',
-          email: item.email || 'info@dewgates.com',
+          phone: item.phone || item.contact || '+234 905 642 4816',
+          email: item.email || 'info@dewgatesconsults.com',
           address: item.address || item.locationText || 'Benin City, Edo State',
         })).filter(m => m.lat && m.lng);
 
         if (!cancelled) setMarkers(normalized);
         
-        // Fit map bounds to markers if map is ready
-        setTimeout(() => {
+         setTimeout(() => {
           try {
             if (mapRef.current && normalized.length > 0) {
               const bounds = normalized.map(m => [m.lat, m.lng]);
@@ -112,14 +107,13 @@ function Contact() {
         }, 500);
       } catch (err) {
         console.warn('Failed to load markers for contact map:', err);
-        // Set default marker if fetch fails
-        setMarkers([{
+         setMarkers([{
           id: 1,
           name: 'Dewgates Consults',
           lat: 6.3382,
           lng: 5.6258,
-          phone: '+1 234 567 890',
-          email: 'info@dewgates.com',
+          phone: '+234 905 642 4816',
+          email: 'info@dewgatesconsults.com',
           address: 'Benin City, Edo State, Nigeria'
         }]);
       }
@@ -193,7 +187,7 @@ function Contact() {
               </div>
               <div className="content">
                 <h3>Call Us</h3>
-                <a href="tel:+1234567890">+1 (234) 567-890</a>
+                <a href="tel:+2349056424816">(+234) 905-642-4816 </a>
                 <p>Mon-Fri from 8am to 6pm</p>
               </div>
             </div>
@@ -204,8 +198,8 @@ function Contact() {
               </div>
               <div className="content">
                 <h3>Email Us</h3>
-                <a href="mailto:info@dewgates.com">info@dewgates.com</a>
-                <p>We'll respond within 24 hours</p>
+                <a href="mailto:info@dewgatesconsults.com">info@dewgatesconsults.com</a>
+                <p>We will respond within 24 hours</p>
               </div>
             </div>
 
@@ -280,7 +274,7 @@ function Contact() {
         <form className="contact-form" onSubmit={handleSubmit} noValidate>
           <div className="form-header">
             <h3>Send us a Message</h3>
-            <p>Fill out the form below and we'll get back to you as soon as possible.</p>
+            <p>Fill out the form below and we will get back to you as soon as possible.</p>
           </div>
 
           <div className={`form-group ${errors.name ? 'has-error' : ''}`}>
@@ -393,7 +387,7 @@ function Contact() {
             <button onClick={() => setShowModal(false)}>Continue Browsing</button>
           </div>
         </div>
-      )}
+      )};
     </div>
   );
 }

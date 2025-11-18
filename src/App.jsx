@@ -3,7 +3,9 @@ import {
   createBrowserRouter,
   RouterProvider,
 } from "react-router-dom";
+import "bootstrap/dist/css/bootstrap.min.css";
 import ListPage from "./routes/listPage/listPage";
+import NotFound from "./routes/NotFound/NotFound.jsx"
 import Contact from "./routes/contact/contact";
 import  { Layout, RequireAuth } from "./routes/layout/layout";
 import SinglePage from "./routes/singlePage/singlePage";
@@ -24,12 +26,17 @@ function App() {
       children:[
         {
           path:"/",
-          element:<HomePage/>
+          element:<HomePage/>,
+          errorElement:<NotFound/>
         },
         {
           path:"/list",
           element:<ListPage/>
         },
+        //  {
+        //   path:"*",
+        //   element:<NotFound/>
+        // },
         {
           path:"/contact",
           element:<Contact/>

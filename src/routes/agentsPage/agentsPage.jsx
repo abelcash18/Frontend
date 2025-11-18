@@ -15,8 +15,7 @@ function AgentsPage() {
   const [selectedAgent, setSelectedAgent] = useState(null);
   const [clientId, setClientId] = useState("");
 
-  // Generate or get client ID from localStorage
-  useEffect(() => {
+   useEffect(() => {
     let existingClientId = localStorage.getItem('clientId');
     if (!existingClientId) {
       existingClientId = 'client_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
@@ -30,7 +29,6 @@ function AgentsPage() {
       try {
         setIsLoading(true);
         setError("");
-        // Fetch all users who have posted properties
         const response = await apiRequest.get("/users");
         setAgents(response.data);
         setFilteredAgents(response.data);

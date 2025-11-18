@@ -131,20 +131,7 @@
           color: var(--text-dark);
           font-size: 0.9rem;
           font-family: 'Inter', sans-serif;
-        }
-
-        .inputIcon {
-          position: absolute;
-          left: 16px;
-          top: 50%;
-          transform: translateY(-50%);
-          color: var(--text-light);
-          z-index: 1;
-
-          + input {
-            padding-left: 48px;
-          }
-        }
+        };
 
         input, select {
           width: 100%;
@@ -217,15 +204,15 @@
           width: 20px;
           height: 20px;
           filter: brightness(0) invert(1);
-        }
+        };
 
         span {
           @include sm {
             display: none;
-          }
-        }
-      }
-    }
+          };
+        };
+      };
+    };
 
     .advancedOptions {
       margin-top: 24px;
@@ -240,24 +227,23 @@
 
         @include sm {
           grid-template-columns: 1fr;
-        }
-      }
-    }
-  }
-}
+        };
+      };
+    };
+  };
+};
 
 @keyframes slideDown {
   from {
     opacity: 0;
     transform: translateY(-10px);
-  }
+  };
   to {
     opacity: 1;
     transform: translateY(0);
-  }
-}
+  };
+};
 
-// Loading state
 .searchBar.loading {
   pointer-events: none;
   opacity: 0.7;
@@ -275,11 +261,11 @@
       height: 100%;
       background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
       animation: loading 1.5s infinite;
-    }
-  }
-}
+    };
+  };
+};
 
 @keyframes loading {
   0% { left: -100%; }
   100% { left: 100%; }
-}
+};

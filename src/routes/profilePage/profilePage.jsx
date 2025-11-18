@@ -21,12 +21,10 @@ function ProfilePage() {
     const [savedPosts, setSavedPosts] = useState([]);
     const [fetchError, setFetchError] = useState("");
 
-    // Get user ID from currentUser
     const getUserId = () => {
         return currentUser?.id || currentUser?._id || currentUser?.user?.id || currentUser?.data?.id;
     };
 
-    // Fetch user's posts
     const fetchUserPosts = async () => {
         const userId = getUserId();
         if (!userId) {
@@ -114,7 +112,6 @@ function ProfilePage() {
             setIsLoading(true);
             await apiRequest.delete(`/posts/${postId}`);
             
-            // Remove post from local state
             setUserPosts(prev => prev.filter(post => 
                 (post._id !== postId && post.id !== postId)
             ));
