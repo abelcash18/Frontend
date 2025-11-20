@@ -7,7 +7,6 @@ import { useNavigate } from "react-router-dom";
 
 function HomePage() {
   const { currentUser } = useContext(AuthContext);
-  console.log(currentUser)
   const navigate = useNavigate();
   
   return (
