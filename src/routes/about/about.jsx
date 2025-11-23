@@ -124,7 +124,7 @@ function About() {
                         <div className="teamMember">
                             <div className="memberImage">
                                 <img src="/team-member2.jpg" alt="Mrs Doris Idowu Oviawe picture" />
-                            </div> 32q  
+                            </div>  
                             <h3>Mrs Doris Idowu Oviawe</h3>
                             <p className="memberRole">Head of Operations</p>
                             <p className="memberBio">Expert in scaling platforms and ensuring seamless user experiences.</p>
