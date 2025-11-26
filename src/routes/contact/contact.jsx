@@ -182,41 +182,37 @@ function Contact() {
 
           <div className="contact-details">
             <div className="contact-item">
-              <div className="icon">
-                <img src="/phone.png" alt="Phone" />
-              </div>
-              <div className="content">
-                <h3>Call Us</h3>
-                <a href="tel:+2349056424816">(+234) 905-642-4816 </a>
-                <p>Mon-Fri from 8am to 6pm</p>
+             <div className="content">
+              <h3>Call Us</h3>
+                 <a href="tel:+2349056424816" className="text-success fs-3">
+                <i className="bi bi-whatsapp">  (+234) 905-642-4816</i>
+              </a>
+               <p>Mon-Fri from 8am to 6pm</p>
               </div>
             </div>
 
             <div className="contact-item">
-              <div className="icon">
-                <img src="/mail.png" alt="Email" />
-              </div>
               <div className="content">
                 <h3>Email Us</h3>
-                <a href="mailto:info@dewgatesconsults.com">info@dewgatesconsults.com</a>
+                     <a href="mailto:info@dewgatesconsults.com" className="text-info fs-3">
+                 <i className="bi bi-mailbox">       info@dewgatesconsults.com</i>
+              </a>
                 <p>We will respond within 24 hours</p>
               </div>
             </div>
 
             <div className="contact-item">
-              <div className="icon">
-                <img src="/pin.png" alt="Location" />
-              </div>
               <div className="content">
                 <h3>Visit Us</h3>
-                <p>Benin City, Edo State</p>
-                <p>Nigeria</p>
-              </div>
+                 <a href="/" className="text-info fs-3">
+                 <i className="bi bi-map">   Benin City, Edo State, Nigeria</i>
+              </a>
+                 </div>
             </div>
           </div>
 
           <div className="business-hours">
-            <h3>Business Hours</h3>
+            <i className="bi bi-clock active">   Business Hours</i>
             <div className="hours-list">
               {['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'].map(day => (
                 <div 
@@ -289,7 +285,7 @@ function Contact() {
                 placeholder="Enter your full name"
                 required
               />
-              <img src="/user.png" alt="Name" className="input-icon" />
+             <img src="/user.png" alt="Name" className="input-icon bi bi-pen" />
             </div>
             {errors.name && <div className="error-message">{errors.name}</div>}
           </div>
@@ -311,8 +307,8 @@ function Contact() {
             {errors.email && <div className="error-message">{errors.email}</div>}
           </div>
 
-          <div className="form-group">
-            <label htmlFor="phone">Phone Number</label>
+         <div className={`form-group ${errors.phone ? 'has-error' : ''}`}>
+            <label htmlFor="phone">Phone Number *</label>
             <div className="input-wrapper">
               <input
                 id="phone"
@@ -320,10 +316,12 @@ function Contact() {
                 type="tel"
                 value={form.phone}
                 onChange={handleChange}
-                placeholder="Enter your phone number (optional)"
+                placeholder="Enter your phone number"
+                required
               />
-              <img src="/phone.png" alt="Phone" className="input-icon" />
+              <img src="" alt="Phone" className="input-icon bi bi-telephone" />
             </div>
+            {errors.phone && <div className="error-message">{errors.phone}</div>}
           </div>
 
           <div className={`form-group ${errors.subject ? 'has-error' : ''}`}>
@@ -338,7 +336,7 @@ function Contact() {
                 placeholder="What is this regarding?"
                 required
               />
-              <img src="/subject.png" alt="Subject" className="input-icon" />
+              <img src="" alt="Subject" className="input-icon bi bi-book" />
             </div>
             {errors.subject && <div className="error-message">{errors.subject}</div>}
           </div>

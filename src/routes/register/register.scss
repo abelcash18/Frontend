@@ -110,6 +110,7 @@
 
           &:hover:not(:disabled) {
             transform: translateY(-2px);
+             transform: scale(0.9);
             box-shadow: var(--shadow);
           }
 

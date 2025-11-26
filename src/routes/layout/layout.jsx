@@ -3,6 +3,7 @@ import Navbar from "../../components/navbar/Navbar";
 import { Navigate, Outlet, useLocation } from "react-router-dom";
 import { AuthContext } from "../../context/AuthContext";
 import { useContext, useEffect } from "react";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 function Layout() {
   const location = useLocation();

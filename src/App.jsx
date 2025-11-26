@@ -33,10 +33,10 @@ function App() {
           path:"/list",
           element:<ListPage/>
         },
-        //  {
-        //   path:"*",
-        //   element:<NotFound/>
-        // },
+          {
+           path:"*",
+           element:<NotFound/>
+         },
         {
           path:"/contact",
           element:<Contact/>

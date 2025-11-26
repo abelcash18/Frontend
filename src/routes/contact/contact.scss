@@ -156,12 +156,7 @@
       display: flex;
       align-items: center;
       gap: 8px;
-
-      &::before {
-        content: '🕒';
-        font-size: 20px;
-      }
-    }
+         }
 
     .hours-list {
       display: flex;

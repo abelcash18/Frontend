@@ -147,7 +147,7 @@ function HomePage() {
             <p>Join thousands of satisfied customers who found their perfect match with our expert guidance</p>
             <div className="ctaButtons">
               <button onClick={() => navigate('/list')} className="btn-primary">Browse Properties</button>
-              <button className="btn-secondary">Contact Agent</button>
+              <button  onClick={() => navigate('/about')} className="btn-secondary">Contact Agent</button>
             </div>
           </div>
         </div>
