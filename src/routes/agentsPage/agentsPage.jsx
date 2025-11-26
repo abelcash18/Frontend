@@ -80,7 +80,7 @@ function AgentsPage() {
       <div className="agentsPage">
         <div className="errorContainer">
           <div className="errorContent">
-            <img src="/error-icon.svg" alt="Error" />
+            <img src="/error.png" alt="Error" />
             <h2>Unable to Load Agents</h2>
             <p>{error}</p>
             <button onClick={() => window.location.reload()} className="retryBtn">
@@ -124,7 +124,7 @@ function AgentsPage() {
           </div>
         ) : (
           <div className="noResults">
-            <img src="/no-agents.svg" alt="No agents found" />
+            <img src="/error.png" alt="No agents found" />
             <h3>No agents found</h3>
             <p>Try adjusting your search criteria</p>
           </div>
@@ -149,7 +149,7 @@ function AgentCard({ agent, onContact }) {
     <div className="agentCard">
       <div className="agentImage">
         <img 
-          src={agent.avatar || "/noavatar.jpg"} 
+          src={agent.avatar || "/noavatarr.jpg"} 
           alt={agent.username} 
         />
         <div className="onlineIndicator"></div>

@@ -5,6 +5,7 @@ import Loading from "../../components/Loading/Loading";
 import Card from "../../components/card/Card";
 import "./agentProfilePage.scss";
 
+
 function AgentProfilePage() {
   const { id } = useParams();
   const [agent, setAgent] = useState(null);
@@ -18,12 +19,10 @@ function AgentProfilePage() {
         setIsLoading(true);
         setError("");
         
-        // Fetch agent details
-        const agentResponse = await apiRequest.get(`/users/${id}`);
+             const agentResponse = await apiRequest.get(`/users/${id}`);
         setAgent(agentResponse.data);
         
-        // Fetch agent's posts
-        const postsResponse = await apiRequest.get(`/posts/user/${id}`);
+         const postsResponse = await apiRequest.get(`/posts/user/${id}`);
         setAgentPosts(postsResponse.data);
         
       } catch (err) {
@@ -54,7 +53,7 @@ function AgentProfilePage() {
       <div className="agentProfilePage">
         <div className="errorContainer">
           <div className="errorContent">
-            <img src="/error-icon.svg" alt="Error" />
+            <img src="/error.png" alt="Error" />
             <h2>Agent Not Found</h2>
             <p>{error || "The agent you're looking for doesn't exist."}</p>
             <Link to="/agents" className="backBtn">
@@ -74,7 +73,7 @@ function AgentProfilePage() {
           <div className="agentProfile">
             <div className="profileImage">
               <img 
-                src={agent.avatar || "/noavatar.jpg"} 
+                src={agent.avatar || "/noavatarr.jpg"} 
                 alt={agent.username} 
               />
               <div className="onlineStatus">
@@ -111,7 +110,7 @@ function AgentProfilePage() {
           
           <div className="contactActions">
             <button className="primaryBtn">
-              <img src="/chat.png" alt="Chat" />
+              <img src="/chat" alt="Chat" />
               Send Message
             </button>
             <button className="secondaryBtn">
@@ -173,7 +172,7 @@ function AgentProfilePage() {
             </div>
           ) : (
             <div className="noProperties">
-              <img src="/no-properties.svg" alt="No properties" />
+              <img src="/error.png" alt="No properties" />
               <h3>No Properties Listed</h3>
               <p>This agent hasn't listed any properties yet.</p>
             </div>

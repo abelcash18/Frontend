@@ -190,7 +190,7 @@ function ProfilePage() {
                         {fetchError && !isFetchingPosts && (
                             <div className="errorState">
                                 <div className="errorContent">
-                                    <img src="/error-icon.svg" alt="Error" />
+                                    <img src="/error.png" alt="Error" />
                                     <h3>Failed to load posts</h3>
                                     <p>{fetchError}</p>
                                     <button onClick={handleRetryFetch} className="retryBtn">
@@ -213,7 +213,7 @@ function ProfilePage() {
                         {/* Empty State - No Posts */}
                         {!isFetchingPosts && !fetchError && userPosts.length === 0 && (
                             <div className="emptyState">
-                                <img src="/empty-state.svg" alt="No posts" />
+                                <img src="/error.png" alt="No posts" />
                                 <h3>No posts yet</h3>
                                 <p>Create your first post to get started!</p>
                             </div>
@@ -229,7 +229,7 @@ function ProfilePage() {
                             <List posts={savedPosts} />
                         ) : (
                             <div className="emptyState">
-                                <img src="/save-empty.svg" alt="No saved posts" />
+                                <img src="/error.png" alt="No saved posts" />
                                 <h3>No saved posts</h3>
                                 <p>Posts you save will appear here</p>
                             </div>
