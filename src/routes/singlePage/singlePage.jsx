@@ -82,7 +82,7 @@ function SinglePage() {
       <div className="singlePage">
         <div className="errorContainer">
           <div className="errorContent">
-            <img src="/error-icon.svg" alt="Error" />
+            <img src="/error.png" alt="Error" />
             <h2>Property Not Found</h2>
             <p>{error || "The property you're looking for doesn't exist."}</p>
             <button onClick={() => navigate("/list")} className="backBtn">
@@ -115,7 +115,7 @@ function SinglePage() {
               </div>
               <div className="user">
                 <img 
-                  src={user?.avatar || "/noavatar.jpg"} 
+                  src={user?.avatar || "/noavatarr.jpg"} 
                   alt={user?.username || "User"} 
                 />
                 <div className="userInfo">

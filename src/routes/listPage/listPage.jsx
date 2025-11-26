@@ -133,7 +133,7 @@ function ListPage() {
       <div className="listPage">
         <div className="errorContainer">
           <div className="errorContent">
-            <img src="/error-icon.svg" alt="Error" />
+            <img src="/error.png" alt="Error" />
             <h2>Unable to Load Properties</h2>
             <p>{error}</p>
             <button onClick={() => window.location.reload()} className="retryBtn">
@@ -190,7 +190,7 @@ function ListPage() {
                 </div>
               ) : (
                 <div className="noResults">
-                  <img src="/no-results.svg" alt="No results" />
+                  <img src="/error.png" alt="No results" />
                   <h3>
                     {filters.property 
                       ? `No ${getPropertyTypeDisplayName(filters.property).toLowerCase()} found`

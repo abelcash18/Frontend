@@ -144,13 +144,13 @@ function ProfilePage() {
                         <div className="userInfo">
                             <div className="avatarSection">
                                 <img
-                                    src={currentUser?.avatar || "/noavatarr.jpg"}
+                                    src={currentUser.avatar || "/noavatarr.jpg"}
                                     alt="profile"
                                     className="avatar"
                                 />
                                 <div className="userDetails">
-                                    <h2>{currentUser?.username || "Dewgates Consult"}</h2>
-                                    <p>{currentUser?.email || "DewgatesConsults@gmail.com"}</p>
+                                    <h2>{currentUser.username || "Dewgates Consult"}</h2>
+                                    <p>{currentUser.email || "DewgatesConsults@gmail.com"}</p>
                                 </div>
                             </div>
                             <button 
