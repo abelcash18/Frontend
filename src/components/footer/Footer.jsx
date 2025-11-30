@@ -35,6 +35,9 @@ function Footer() {
               <a href="+2349056424816" className="text-success fs-3">
                 <i className="bi bi-whatsapp"></i>
               </a>
+              <a href="https://bi-github.com/abelcash18" className="text-lightdark fs-3">
+                <i className="bi bi-github"></i>
+              </a>
             </div>
           </div>
 
