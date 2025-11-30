@@ -29,7 +29,7 @@ function Footer() {
               <a href="https://bi-instagram.com/abelcash.18" className="text-danger fs-3">
                  <i className="bi bi-instagram"></i>
               </a>
-              <a href="" className="text-primary fs-3">
+              <a href="https://bi-linkedin.com/Joseph Abel" className="text-primary fs-3">
                 <i className="bi bi-linkedin"></i>
               </a>
               <a href="+2349056424816" className="text-success fs-3">
