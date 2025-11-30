@@ -13,27 +13,26 @@ function Footer() {
           <div className="footerSection">
             <div className="logo">
               <img src="/logo 2.jpg" alt="Dewgates Consults" />
-              <h3>Dewgates Consults</h3>
-            </div>
+              </div>
             <p className="footerDescription">
               Your trusted partner in finding the perfect property. 
               We connect you with your dream home through innovative 
               technology and personalized service.
             </p>
             <div className="d-flex gap-3" >
-              <a href="" className="text-primary fs-3">
+              <a href="https://bi-facebook.com/Joseph Abel Damilare" className="text-primary fs-3">
               <i className="bi bi-facebook"></i>
               </a>
-              <a href="#" className="text-info fs-3">
+              <a href="https://bi-twitter.com/JosephAlfredca2" className="text-info fs-3">
                  <i className="bi bi-twitter"></i>
               </a>
-              <a href="#" className="text-danger fs-3">
+              <a href="https://bi-instagram.com/abelcash.18" className="text-danger fs-3">
                  <i className="bi bi-instagram"></i>
               </a>
-              <a href="#" className="text-primary fs-3">
+              <a href="" className="text-primary fs-3">
                 <i className="bi bi-linkedin"></i>
               </a>
-              <a href="#" className="text-success fs-3">
+              <a href="+2349056424816" className="text-success fs-3">
                 <i className="bi bi-whatsapp"></i>
               </a>
             </div>

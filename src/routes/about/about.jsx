@@ -115,7 +115,7 @@ function About() {
                     <div className="teamGrid">
                         <div className="teamMember">
                             <div className="memberImage">
-                                <img src="/team-member1.jpg" alt="Pastor Idowu Oviawe Gabriel" />
+                                <img src="/noavatarr.jpg" alt="Pastor Idowu Oviawe Gabriel" />
                             </div>
                             <h3>Pastor Idowu Oviawe Gabriel</h3>
                             <p className="memberRole">CEO & Founder</p>
@@ -123,7 +123,7 @@ function About() {
                         </div>
                         <div className="teamMember">
                             <div className="memberImage">
-                                <img src="/team-member2.jpg" alt="Mrs Doris Idowu Oviawe picture" />
+                                <img src="/noavatarr.jpg" alt="Mrs Doris Idowu Oviawe picture" />
                             </div>  
                             <h3>Mrs Doris Idowu Oviawe</h3>
                             <p className="memberRole">Head of Operations</p>
@@ -131,7 +131,7 @@ function About() {
                         </div>
                         <div className="teamMember">
                             <div className="memberImage">
-                                <img src="/my.jpg" alt="Joseph picture" />
+                                <img src="/noavatarr.jpg" alt="Joseph picture" />
                             </div>
                             <h3>Joseph Abel Olayinka</h3>
                             <p className="memberRole">Lead Agent Relations</p>
