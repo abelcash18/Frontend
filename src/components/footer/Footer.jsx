@@ -12,7 +12,7 @@ function Footer() {
         <div className="footerContent">
           <div className="footerSection">
             <div className="logo">
-              <img src="/logo 2.jpg" alt="Dewgates Consults" />
+            <a href="#"><img src="/logo 2.jpg" alt="Dewgates Consults" /></a>
               </div>
             <p className="footerDescription">
               Your trusted partner in finding the perfect property. 
