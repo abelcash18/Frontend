@@ -110,14 +110,18 @@ function AgentProfilePage() {
           
           <div className="contactActions">
             <button className="primaryBtn">
-              <img src="/chat" alt="Chat" />
+             <a href="/Chat.jsx"> <img src="/chat.png" alt="Chat" /></a>
               Send Message
             </button>
             <button className="secondaryBtn">
+              <a href="tel:+2349056424816" className="text-success fs-3">
+                </a>
               <img src="/phone.png" alt="Phone" />
               Call Agent
             </button>
             <button className="tertiaryBtn">
+               <a href="mailto:info@dewgatesconsults.com" className="text-info fs-3">
+                 </a>
               <img src="/mail.png" alt="Email" />
               Email Agent
             </button>

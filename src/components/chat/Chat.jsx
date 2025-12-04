@@ -68,7 +68,7 @@ function Chat() {
         id: chat._id,
         user: {
           name: chat.clientName,
-          avatar: "/noavatar.jpg",
+          avatar: "/noavatarr.jpg",
           isOnline: false,
         },
         property: chat.propertyId,
@@ -107,7 +107,7 @@ function Chat() {
         id: chat._id,
         user: {
           name: chat.clientName,
-          avatar: "/noavatar.jpg",
+          avatar: "/noavatarr.jpg",
           isOnline: false,
         },
         property: chat.propertyId,
