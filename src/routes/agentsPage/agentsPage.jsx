@@ -158,6 +158,7 @@ function AgentCard({ agent, onContact }) {
       <div className="agentInfo">
         <h3>{agent.username || "Unknown User"}</h3>
         <p className="email">{agent.email}</p>
+       {/* <p className="tel">{agent.phone || "No phone number available"}</p> */}
         <div className="stats">
           <div className="stat">
             <span className="number">12+</span>
@@ -185,7 +186,7 @@ function AgentCard({ agent, onContact }) {
         </Link>
         <button className="contactBtn" onClick={onContact}>
           <img src="/chat.png" alt="Contact" />
-          Contact
+           Contact
         </button>
       </div>
     </div>
