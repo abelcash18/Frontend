@@ -2,7 +2,6 @@ import { Link } from "react-router-dom";
 import "./card.scss";
 
 function Card({ item, onEdit, onDelete, showActions = false }) {
-    // Use the first image as the main image, or a placeholder
     const mainImage = item.images && item.images.length > 0 
         ? item.images[0] 
         : "/no-image.jpg";

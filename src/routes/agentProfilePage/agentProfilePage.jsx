@@ -109,10 +109,11 @@ function AgentProfilePage() {
           </div>
           
           <div className="contactActions">
+            <a href="ChatModal.jsx">
             <button className="primaryBtn">
              <img src="/chat.png" alt="Chat" />
               Send Message
-            </button>
+            </button> </a>
             <button className="secondaryBtn">
               <img src="/phone.png" alt="Phone" />
                     Call Agent

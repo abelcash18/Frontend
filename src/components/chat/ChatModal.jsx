@@ -148,7 +148,7 @@ function ChatModal({ property, owner, clientId, onClose }) {
       <div className="chatModal">
         <div className="chatHeader">
           <div className="propertyInfo">
-            <img src={property.images?.[0] || "/noimage.jpg"} alt={property.title} />
+            <img src={property.images?.[0] || "/error.png"} alt={property.title} />
             <div className="propertyDetails">
               <h3>{property.title}</h3>
               <p>${property.price.toLocaleString()} • {property.type}</p>

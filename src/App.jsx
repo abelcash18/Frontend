@@ -46,14 +46,6 @@ function App() {
           element:<About/>
         },
         {
-          path:"/agents",
-          element:<AgentsPage/>
-        },
-        {
-          path:"/agents/:id",
-          element:<AgentProfilePage/>
-        },
-        {
           path:"/:id",
           element:<SinglePage/>
         },
@@ -82,6 +74,14 @@ function App() {
          {
           path:"/profile/update",
           element:<ProfileUpdatePage/>
+        },
+        {
+          path:"/agents",
+          element:<AgentsPage/>
+        },
+        {
+          path:"/agents/:id",
+          element:<AgentProfilePage/>
         },
       ],
     }
