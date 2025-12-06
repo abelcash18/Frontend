@@ -36,7 +36,7 @@ export default defineConfig({
   ],
   server: {
     proxy: {
-      '/auth': 'http://localhost:8800'
+      '/auth': 'https://backend-dewgates-consults.onrender.com'
     }
   }
 })
