@@ -39,7 +39,6 @@ function PostModal({ onClose, onPostCreated }) {
         setIsLoading(true);
         setError("");
 
-        // Validate required fields including images
         if (formData.images.length === 0) {
             setError("Please upload at least one property image");
             setIsLoading(false);
@@ -191,8 +190,7 @@ function PostModal({ onClose, onPostCreated }) {
                         </div>
                     </div>
 
-                    {/* Image Upload Section */}
-                    <div className="formGroup fullWidth">
+                  <div className="formGroup fullWidth">
                         <ImageUpload 
                             images={formData.images}
                             setImages={handleImagesChange}

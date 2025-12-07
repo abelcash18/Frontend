@@ -68,7 +68,6 @@ function AgentProfilePage() {
   return (
     <div className="agentProfilePage">
       <div className="container">
-        {/* Agent Header Section */}
         <div className="agentHeader">
           <div className="agentProfile">
             <div className="profileImage">
@@ -125,7 +124,6 @@ function AgentProfilePage() {
           </div>
         </div>
 
-        {/* Agent Details Section */}
         <div className="agentDetails">
           <div className="detailsSection">
             <h2>About Me</h2>
@@ -158,7 +156,6 @@ function AgentProfilePage() {
           </div>
         </div>
 
-        {/* Agent's Properties Section */}
         <div className="propertiesSection">
           <div className="sectionHeader">
             <h2>Properties Listed by {agent.username}</h2>

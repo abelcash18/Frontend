@@ -8,7 +8,6 @@
   overflow: hidden;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 
-  // Conversations List
   .conversations {
     width: 380px;
     border-right: 1px solid #f1f5f9;
@@ -275,7 +274,6 @@
     }
   }
 
-  // Active Chat Area
   .active-chat {
     flex: 1;
     display: flex;
@@ -522,7 +520,6 @@
     }
   }
 
-  // No Chat Selected State
   .no-chat-selected {
     flex: 1;
     display: flex;
@@ -558,7 +555,6 @@
   }
 }
 
-// Animations
 @keyframes messageSlide {
   from {
     opacity: 0;
@@ -575,7 +571,7 @@
   100% { transform: rotate(360deg); }
 }
 
-// Loading Spinner
+
 .loading-spinner-small {
   width: 16px;
   height: 16px;
@@ -585,7 +581,6 @@
   animation: spin 1s linear infinite;
 }
 
-// Scrollbar Styling
 .conversations-list,
 .chat-messages {
   &::-webkit-scrollbar {
@@ -606,7 +601,6 @@
   }
 }
 
-// Responsive Design
 @media (max-width: 1024px) {
   .chat {
     .conversations {

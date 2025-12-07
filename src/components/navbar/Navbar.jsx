@@ -7,7 +7,6 @@ function Navbar() {
   const [open, setOpen] = useState(false);
   const { currentUser } = useContext(AuthContext);
 
-  // Prevent body scroll when menu is open
   useEffect(() => {
     if (open) {
       document.body.style.overflow = 'hidden';
@@ -20,13 +19,11 @@ function Navbar() {
     };
   }, [open]);
 
-  // Close menu when clicking on a link
   const handleLinkClick = () => {
     setOpen(false);
   };
 
-  // Close menu when clicking outside
-  useEffect(() => {
+   useEffect(() => {
     const handleClickOutside = (event) => {
       if (open && !event.target.closest('.menu') && !event.target.closest('.menuIcon')) {
         setOpen(false);
@@ -112,8 +109,7 @@ function Navbar() {
             )}
           </div>
         </div>
-        {/* Overlay */}
-        {open && <div className="menu-overlay" onClick={() => setOpen(false)}></div>}
+       {open && <div className="menu-overlay" onClick={() => setOpen(false)}></div>}
       </div>
     </nav>
   );

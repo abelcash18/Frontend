@@ -152,7 +152,6 @@
   }
 }
 
-// Custom scrollbar for webkit browsers
 .listContainer .wrapper {
   &::-webkit-scrollbar {
     width: 6px;
@@ -172,8 +171,6 @@
     }
   }
 }
-
-// Add these styles to your existing listPage.scss
 
 .propertyTypeHeader {
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);

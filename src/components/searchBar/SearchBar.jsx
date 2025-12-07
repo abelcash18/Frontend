@@ -20,7 +20,6 @@ function SearchBar() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Handle search logic here
     console.log("Search query:", query);
   };
 

@@ -4,7 +4,6 @@ import "leaflet/dist/leaflet.css";
 import Pin from '../pin/Pin';
 import { useEffect, useState } from 'react';
 
-// Fix for default markers in React Leaflet
 import L from 'leaflet';
 import icon from 'leaflet/dist/images/marker-icon.png';
 import iconShadow from 'leaflet/dist/images/marker-shadow.png';
@@ -18,12 +17,11 @@ let DefaultIcon = L.divIcon({
 L.Marker.prototype.options.icon = DefaultIcon;
 
 function Map({ items }) {
-    const [mapCenter, setMapCenter] = useState([51.505, -0.09]); // Default center (London)
+    const [mapCenter, setMapCenter] = useState([51.505, -0.09]); 
     const [validItems, setValidItems] = useState([]);
 
     useEffect(() => {
-        // Filter items with valid coordinates
-        const itemsWithValidCoords = items.filter(item => {
+ const itemsWithValidCoords = items.filter(item => {
             const hasValidCoords = item.latitude && item.longitude && 
                                  !isNaN(parseFloat(item.latitude)) && 
                                  !isNaN(parseFloat(item.longitude));
@@ -42,8 +40,7 @@ function Map({ items }) {
 
         setValidItems(itemsWithValidCoords);
 
-        // Calculate center based on valid items
-        if (itemsWithValidCoords.length > 0) {
+       if (itemsWithValidCoords.length > 0) {
             const latitudes = itemsWithValidCoords.map(item => parseFloat(item.latitude));
             const longitudes = itemsWithValidCoords.map(item => parseFloat(item.longitude));
             

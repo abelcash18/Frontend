@@ -4,7 +4,7 @@ import "./card.scss";
 function Card({ item, onEdit, onDelete, showActions = false }) {
     const mainImage = item.images && item.images.length > 0 
         ? item.images[0] 
-        : "/no-image.jpg";
+        : "/noavatarr.jpg";
 
     return (
         <div className="card">

@@ -32,6 +32,8 @@ function Login() {
       });
 
       const payload = await res.json();
+      alert("Log in successful");
+      
 
       if (!res.ok) {
         const message = payload?.message || payload?.error || res.statusText || "Login failed";
@@ -62,7 +64,7 @@ function Login() {
     setForgotPasswordMessage("");
 
     try {
-      const res = await fetch("http://localhost:8800/auth/forgot-password", {
+      const res = await fetch("https://backend-dewgates-consults.onrender.com/auth/forgot-password", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email: forgotPasswordEmail }),
@@ -77,8 +79,7 @@ function Login() {
       setForgotPasswordMessage("Password reset instructions have been sent to your email.");
       setForgotPasswordEmail("");
       
-      // Auto-close after success
-      setTimeout(() => {
+     setTimeout(() => {
         setShowForgotPassword(false);
         setForgotPasswordMessage("");
       }, 3000);

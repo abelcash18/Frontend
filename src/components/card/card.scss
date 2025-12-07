@@ -329,18 +329,14 @@
     }
   }
 
-  // Mobile-specific improvements
-  @include md {
-    // Ensure proper spacing on mobile
-    margin-bottom: 16px;
+   @include md {
+      margin-bottom: 16px;
     
-    // Improve touch targets
     .imageContainer {
       cursor: pointer;
     }
     
-    // Better text hierarchy on mobile
-    .textContainer {
+      .textContainer {
       .title {
         margin-bottom: 4px;
       }
@@ -355,8 +351,7 @@
     }
   }
 
-  // Extra small screens
-  @include sm {
+   @include sm {
     padding: 10px;
     gap: 12px;
 
@@ -383,7 +378,6 @@
   }
 }
 
-// Additional mobile optimizations for the list container
 .list {
   display: flex;
   flex-direction: column;

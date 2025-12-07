@@ -19,8 +19,7 @@ function UpdatePostModal({ post, onClose, onPostUpdated }) {
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState("");
 
-    // Initialize form with post data
-    useEffect(() => {
+     useEffect(() => {
         if (post) {
             setFormData({
                 title: post.title || "",
@@ -57,9 +56,9 @@ function UpdatePostModal({ post, onClose, onPostUpdated }) {
         setIsLoading(true);
         setError("");
 
-        // Validate required fields including images
-        if (formData.images.length === 0) {
+           if (formData.images.length === 0) {
             setError("Please upload at least one property image");
+            alert("Please Upload");
             setIsLoading(false);
             return;
         }
@@ -187,8 +186,7 @@ function UpdatePostModal({ post, onClose, onPostUpdated }) {
                         </div>
                     </div>
 
-                    {/* Image Upload Section */}
-                    <div className="formGroup fullWidth">
+                     <div className="formGroup fullWidth">
                         <ImageUpload 
                             images={formData.images}
                             setImages={handleImagesChange}

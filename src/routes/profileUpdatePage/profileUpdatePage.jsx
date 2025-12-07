@@ -18,13 +18,11 @@ function ProfileUpdatePage() {
     setIsLoading(true);
     setError("");
     
-    // Show global loading
     window.dispatchEvent(new CustomEvent('globalLoading', { detail: { loading: true } }));
 
     const formData = new FormData(e.target);
     const { username, email, password } = Object.fromEntries(formData);
     
-    // Get user ID - handle different possible locations
     const userId = currentUser?.id || currentUser?._id || currentUser?.user?.id || currentUser?.data?.id;
 
     if (!userId) {
@@ -37,14 +35,12 @@ function ProfileUpdatePage() {
     }
 
     try {
-      // Only send fields that have values
       const updateData = {};
       if (username && username !== currentUser.username) updateData.username = username;
       if (email && email !== currentUser.email) updateData.email = email;
       if (password) updateData.password = password;
       if (avatar && avatar !== currentUser.avatar) updateData.avatar = avatar;
 
-      // Don't send empty update
       if (Object.keys(updateData).length === 0) {
         setError("No changes detected");
         return;
@@ -54,10 +50,9 @@ function ProfileUpdatePage() {
 
       const res = await apiRequest.put(`/users/${userId}`, updateData);
       
-      // Update user context - handle different response formats
-      const updatedUser = res.data?.user || res.data;
+    const updatedUser = res.data?.user || res.data;
       updateUser(updatedUser);
-      
+    alert("Profile updated successfully");  
       navigate("/profile");
     } catch (err) {
       console.error("Error updating user:", err);

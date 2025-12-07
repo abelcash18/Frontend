@@ -15,17 +15,15 @@
   .content {
     flex: 1;
     width: 100%;
-    overflow-x: hidden; // Prevent horizontal scroll
+    overflow-x: hidden; 
   }
 }
 
-// Ensure no horizontal overflow on mobile
 html, body {
   overflow-x: hidden;
   width: 100%;
 }
 
-// Fix for mobile viewport
 @include sm {
   body {
     position: relative;

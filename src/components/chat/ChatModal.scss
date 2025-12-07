@@ -326,7 +326,6 @@
   }
 }
 
-// Animations
 @keyframes messageSlide {
   from {
     opacity: 0;
@@ -343,7 +342,6 @@
   50% { opacity: 0.5; }
 }
 
-// Scrollbar Styling
 .chatMessages::-webkit-scrollbar {
   width: 6px;
 }
@@ -361,7 +359,6 @@
   background: #94a3b8;
 }
 
-// Responsive Design
 @media (max-width: 640px) {
   .chatModalOverlay {
     padding: 10px;

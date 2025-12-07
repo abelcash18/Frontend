@@ -20,22 +20,22 @@ function Footer() {
               technology and personalized service.
             </p>
             <div className="d-flex gap-3" >
-              <a href="https://bi-facebook.com/Joseph Abel Damilare" className="text-primary fs-3">
+              <a href="https://facebook.com/Joseph Abel Damilare" className="text-primary fs-3">
               <i className="bi bi-facebook"></i>
               </a>
-              <a href="https://bi-twitter.com/JosephAlfredca2" className="text-info fs-3">
+              <a href="https://twitter.com/JosephAlfredca2" className="text-info fs-3">
                  <i className="bi bi-twitter"></i>
               </a>
-              <a href="https://bi-instagram.com/abelcash.18" className="text-danger fs-3">
+              <a href="https://instagram.com/abelcash.18" className="text-danger fs-3">
                  <i className="bi bi-instagram"></i>
               </a>
-              <a href="https://bi-linkedin.com/Joseph Abel" className="text-primary fs-3">
+              <a href="https://linkedin.com/Joseph Abel" className="text-primary fs-3">
                 <i className="bi bi-linkedin"></i>
               </a>
               <a href="+2349056424816" className="text-success fs-3">
                 <i className="bi bi-whatsapp"></i>
               </a>
-              <a href="https://bi-github.com/abelcash18" className="text-lightdark fs-3">
+              <a href="https://github.com/abelcash18" className="text-lightdark fs-3">
                 <i className="bi bi-github"></i>
               </a>
             </div>

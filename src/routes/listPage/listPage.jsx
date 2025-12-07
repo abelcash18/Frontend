@@ -22,7 +22,6 @@ function ListPage() {
     bedroom: ""
   });
 
-  // Check for property type from footer click
   useEffect(() => {
     const selectedPropertyType = sessionStorage.getItem('selectedPropertyType');
     if (selectedPropertyType) {
@@ -30,12 +29,10 @@ function ListPage() {
         ...prev,
         property: selectedPropertyType
       }));
-      // Clear the stored property type after using it
-      sessionStorage.removeItem('selectedPropertyType');
+       sessionStorage.removeItem('selectedPropertyType');
     }
   }, []);
 
-  // Fetch all posts from database
   useEffect(() => {
     const fetchPosts = async () => {
       try {
@@ -44,8 +41,7 @@ function ListPage() {
         const response = await apiRequest.get("/posts");
         setPosts(response.data);
         
-        // Apply any existing filters (including property type from footer)
-        let results = response.data;
+         let results = response.data;
         if (filters.property) {
           results = results.filter(post => post.propertyType === filters.property);
         }
@@ -63,38 +59,32 @@ function ListPage() {
     fetchPosts();
   }, []);
 
-  // Apply filters when filters change
-  useEffect(() => {
+   useEffect(() => {
     let results = [...posts];
 
-    // Apply city filter
-    if (filters.city) {
+     if (filters.city) {
       results = results.filter(post => 
         post.city?.toLowerCase().includes(filters.city.toLowerCase()) ||
         post.address?.toLowerCase().includes(filters.city.toLowerCase())
       );
     }
 
-    // Apply type filter
-    if (filters.type) {
+     if (filters.type) {
       results = results.filter(post => post.type === filters.type);
     }
 
-    // Apply property type filter
-    if (filters.property) {
+     if (filters.property) {
       results = results.filter(post => post.propertyType === filters.property);
     }
 
-    // Apply price filters
-    if (filters.minPrice) {
+     if (filters.minPrice) {
       results = results.filter(post => post.price >= parseInt(filters.minPrice));
     }
     if (filters.maxPrice) {
       results = results.filter(post => post.price <= parseInt(filters.maxPrice));
     }
 
-    // Apply bedroom filter
-    if (filters.bedroom) {
+     if (filters.bedroom) {
       results = results.filter(post => post.bedroom >= parseInt(filters.bedroom));
     }
 
@@ -116,7 +106,6 @@ function ListPage() {
     });
   };
 
-  // Get display name for property type
   const getPropertyTypeDisplayName = (propertyType) => {
     const propertyTypeMap = {
       'apartment': 'Apartments',
@@ -157,8 +146,7 @@ function ListPage() {
             totalCount={posts.length}
           />
           
-          {/* Property Type Header */}
-          {filters.property && (
+       {filters.property && (
             <div className="propertyTypeHeader">
               <h2>
                 {getPropertyTypeDisplayName(filters.property)} 

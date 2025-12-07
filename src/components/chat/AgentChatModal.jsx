@@ -10,11 +10,8 @@ function AgentChatModal({ agent, clientId, onClose }) {
   const [chatId, setChatId] = useState(null);
   const [hasInitialized, setHasInitialized] = useState(false);
   const messagesEndRef = useRef(null);
-
-  // Use the socket hook
   const { socket, isConnected } = useSocket();
 
-  // Join client room and set up socket listeners
   useEffect(() => {
     if (socket && clientId && isConnected) {
       socket.emit('joinClientRoom', clientId);
@@ -31,8 +28,7 @@ function AgentChatModal({ agent, clientId, onClose }) {
     }
   }, [socket, clientId, chatId, isConnected]);
 
-  // Check localStorage for existing chat ID first
-  useEffect(() => {
+ useEffect(() => {
     const storedChatId = localStorage.getItem(`agent_chat_${agent._id}_${clientId}`);
     if (storedChatId) {
       setChatId(storedChatId);
@@ -41,8 +37,7 @@ function AgentChatModal({ agent, clientId, onClose }) {
     }
   }, [agent._id, clientId]);
 
-  // Start chat if no existing chat found
-  useEffect(() => {
+ useEffect(() => {
     const startChat = async () => {
       if (hasInitialized || !agent || !clientId || chatId) return;
 
@@ -50,8 +45,7 @@ function AgentChatModal({ agent, clientId, onClose }) {
         setIsLoading(true);
         setHasInitialized(true);
 
-        // For agent chats, we'll use a special endpoint or modify the existing one
-        const response = await apiRequest.post("/api/chat/client/start", {
+     const response = await apiRequest.post("/api/chat/client/start", {
           agentId: agent._id,
           clientId: clientId,
           clientName: "Guest",
@@ -61,7 +55,6 @@ function AgentChatModal({ agent, clientId, onClose }) {
         const newChatId = response.data.chatId;
         setChatId(newChatId);
         
-        // Store chat ID in localStorage for future sessions
         localStorage.setItem(`agent_chat_${agent._id}_${clientId}`, newChatId);
         
         loadChat(newChatId);

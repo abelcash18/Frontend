@@ -9,7 +9,6 @@ export const useSocket = () => {
   useEffect(() => {
     const socketUrl = import.meta.env.VITE_API_URL || "https://backend-dewgates-consults.onrender.com";
     
-    // Initialize socket connection
     const socketInstance = io(socketUrl, {
       transports: ['websocket', 'polling']
     });

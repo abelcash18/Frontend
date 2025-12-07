@@ -172,8 +172,7 @@ function Contact() {
   return (
     <div className="contact-page">
       <div className="contact-wrapper">
-        {/* Contact Information Section */}
-        <div className="contact-info">
+         <div className="contact-info">
           <h2>Get in Touch</h2>
           <p>
             Ready to find your dream property? Our expert team is here to help you 
@@ -266,8 +265,7 @@ function Contact() {
           </div>
         </div>
 
-        {/* Contact Form Section */}
-        <form className="contact-form" onSubmit={handleSubmit} noValidate>
+      <form className="contact-form" onSubmit={handleSubmit} noValidate>
           <div className="form-header">
             <h3>Send us a Message</h3>
             <p>Fill out the form below and we will get back to you as soon as possible.</p>
@@ -375,8 +373,7 @@ function Contact() {
         </form>
       </div>
 
-      {/* Success Modal */}
-      {showModal && (
+       {showModal && (
         <div className="contact-success-modal" role="dialog" aria-modal="true" aria-labelledby="success-modal-title">
           <div className="modal-body">
             <div className="success-icon" aria-hidden="true"></div>

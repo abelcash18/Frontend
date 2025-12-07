@@ -23,7 +23,7 @@ function Layout() {
       <Navbar />
         <Outlet />
           </div>
-              )};
+              )}
 
 function RequireAuth() {
   const { currentUser } = useContext(AuthContext);

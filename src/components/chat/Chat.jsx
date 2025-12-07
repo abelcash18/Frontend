@@ -3,6 +3,7 @@ import "./chat.scss";
 import apiRequest from "../../lib/apiRequest";
 import { AuthContext } from "../../context/AuthContext";
 import { useSocket } from "../../hooks/useSocket";
+import { Alert } from "bootstrap";
 
 function Chat() {
   const [activeConversation, setActiveConversation] = useState(null);
@@ -13,21 +14,18 @@ function Chat() {
   const messagesEndRef = useRef(null);
   const { currentUser } = useContext(AuthContext);
   
-  // Use the socket hook
   const { socket, isConnected } = useSocket();
 
-  // Join owner room and set up socket listeners
-  useEffect(() => {
+   useEffect(() => {
     if (socket && currentUser && isConnected) {
       const ownerId = currentUser.id || currentUser._id;
       socket.emit('joinOwnerRoom', ownerId);
       
-      // Listen for new messages
-      socket.on('newMessage', (data) => {
+       socket.on('newMessage', (data) => {
         console.log('New message received:', data);
+        alert("New message received");
         
-        // Update active conversation if it's the current one
-        if (activeConversation && activeConversation.id === data.chatId) {
+         if (activeConversation && activeConversation.id === data.chatId) {
           setActiveConversation(prev => ({
             ...prev,
             messages: [...prev.messages, {
@@ -39,11 +37,9 @@ function Chat() {
           }));
         }
         
-        // Refresh conversations list to update unread counts and last message
-        fetchOwnerChats();
+           fetchOwnerChats();
       });
 
-      // Listen for new chats
       socket.on('newChat', () => {
         console.log('New chat received');
         fetchOwnerChats();
@@ -58,8 +54,7 @@ function Chat() {
     };
   }, [socket, currentUser, activeConversation, isConnected]);
 
-  // Fetch owner chats
-  const fetchOwnerChats = async () => {
+   const fetchOwnerChats = async () => {
     try {
       setIsLoadingChats(true);
       const response = await apiRequest.get("/api/chat/owner/chats");
@@ -124,10 +119,8 @@ function Chat() {
 
       setActiveConversation(formattedChat);
       
-      // Mark messages as read
       await apiRequest.put(`/api/chat/owner/chat/${chatId}/read`);
       
-      // Update conversations to remove unread count
       setConversations(prev => 
         prev.map(conv => 
           conv.id === chatId ? { ...conv, unreadCount: 0 } : conv
@@ -145,7 +138,6 @@ function Chat() {
       setIsLoading(true);
       const messageText = newMessage;
 
-      // Optimistically add message
       const tempMessage = {
         id: Date.now().toString(),
         text: messageText,
@@ -161,15 +153,13 @@ function Chat() {
 
       setNewMessage("");
 
-      // Send to server
-      await apiRequest.post(`/api/chat/owner/chat/${activeConversation.id}/message`, {
+        await apiRequest.post(`/api/chat/owner/chat/${activeConversation.id}/message`, {
         text: messageText
       });
 
     } catch (err) {
       console.error("Failed to send message:", err);
-      // Remove optimistic message on error
-      setActiveConversation(prev => ({
+        setActiveConversation(prev => ({
         ...prev,
         messages: prev.messages.filter(msg => msg.id !== tempMessage.id)
       }));
@@ -196,7 +186,6 @@ function Chat() {
     scrollToBottom();
   }, [activeConversation?.messages]);
 
-  // Helper functions for formatting
   const formatTime = (timestamp) => {
     if (!timestamp) return "";
     const date = new Date(timestamp);
@@ -221,8 +210,7 @@ function Chat() {
 
   return (
     <div className="chat">
-      {/* Conversations List */}
-      <div className="conversations">
+        <div className="conversations">
         <div className="conversations-header">
           <div className="header-content">
             <h2>Messages</h2>
@@ -298,8 +286,7 @@ function Chat() {
         </div>
       </div>
 
-      {/* Active Chat */}
-      {activeConversation ? (
+        {activeConversation ? (
         <div className="active-chat">
           <div className="chat-header">
             <div className="chat-user">
@@ -386,7 +373,6 @@ function Chat() {
   );
 }
 
-// Icon components
 const RefreshIcon = () => <span>🔄</span>;
 const CloseIcon = () => <span>×</span>;
 const SendIcon = () => <span>➤</span>;

@@ -11,8 +11,7 @@ function HomePage() {
   
   return (
    <div className="homePage">
-      {/* Hero Section */}
-      <section className="heroSection">
+   <section className="heroSection">
         <div className="container">
           <div className="heroContent">
             <div className="textContainer">
@@ -66,8 +65,7 @@ function HomePage() {
         </div>
       </section>
 
-      {/* Features Section */}
-      <section className="featuresSection">
+     <section className="featuresSection">
         <div className="container">
           <div className="sectionHeader">
             <h2>Why Choose Dewgates Consults</h2>
@@ -106,8 +104,7 @@ function HomePage() {
         </div>
       </section>
 
-      {/* Property Types Section */}
-      <section className="propertyTypes">
+    <section className="propertyTypes">
         <div className="container">
           <div className="sectionHeader">
             <h2>Explore Property Types</h2>
@@ -138,8 +135,6 @@ function HomePage() {
           </div>
         </div>
       </section>
-
-      {/* CTA Section */}
       <section className="ctaSection">
         <div className="container">
           <div className="ctaContent">

@@ -190,7 +190,6 @@
       }
     }
 
-    // Add a subtle gradient background
     &::before {
       content: '';
       position: absolute;
@@ -226,8 +225,6 @@
     }
   }
 }
-
-// Add these styles to your existing profilePage.scss
 
 .loadingState {
   display: flex;
@@ -331,7 +328,6 @@
   }
 }
 
-// Update existing styles for better consistency
 .profileSection {
   background: white;
   border-radius: 16px;
@@ -380,10 +376,6 @@
   }
 }
 
-// Make sure the Loading component is styled properly
-// If you don't have a Loading component, here's a simple one:
-
-/* Loading component styles (if you need to create one) */
 .loading-spinner {
   width: 40px;
   height: 40px;

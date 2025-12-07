@@ -25,7 +25,7 @@ function Slider({ images }) {
       <div className="slider">
         <div className="fullSlider">
           <div className="noImage">
-            <img src="/no-image.jpg" alt="No image available" />
+            <img src="/noavatarr.jpg" alt="No image available" />
             <p>No images available</p>
           </div>
         </div>

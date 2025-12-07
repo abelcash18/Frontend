@@ -39,6 +39,7 @@ function ProfilePage() {
             
             const response = await apiRequest.get(`/posts/user/${userId}`);
             console.log("Posts fetched successfully:", response.data.length);
+            alert("post search successful.");
             setUserPosts(response.data);
         } catch (err) {
             console.error("Failed to fetch user posts:", err);
@@ -62,6 +63,7 @@ function ProfilePage() {
         try {
             await apiRequest.post("/auth/logout");
             updateUser(null);
+            alert("Logout successful.");
             navigate("/");
         } catch (err) {
             console.log(err);
@@ -73,10 +75,10 @@ function ProfilePage() {
 
     const handlePostCreated = (newPost) => {
         console.log("New post created:", newPost);
+        alert("Post  successful.");
         setUserPosts(prev => [newPost, ...prev]);
         setShowPostModal(false);
         
-        // Refetch to ensure data is consistent with database
         setTimeout(() => {
             fetchUserPosts();
         }, 1000);
@@ -84,6 +86,7 @@ function ProfilePage() {
 
     const handlePostUpdated = (updatedPost) => {
         console.log("Post updated:", updatedPost);
+        alert("Post update successful.");
         setUserPosts(prev => 
             prev.map(post => 
                 (post._id === updatedPost._id || post.id === updatedPost.id) ? updatedPost : post
@@ -92,8 +95,7 @@ function ProfilePage() {
         setShowUpdateModal(false);
         setSelectedPost(null);
         
-        // Refetch to ensure data is consistent
-        setTimeout(() => {
+       setTimeout(() => {
             fetchUserPosts();
         }, 500);
     };
@@ -117,6 +119,7 @@ function ProfilePage() {
             ));
             
             console.log("Post deleted successfully");
+            alert("Post deleted successful");
         } catch (err) {
             console.error("Failed to delete post:", err);
             alert("Failed to delete post. Please try again.");
@@ -133,8 +136,7 @@ function ProfilePage() {
         <div className="profilePage">
             <div className="details">
                 <div className="wrapper">
-                    {/* User Info Section */}
-                    <div className="profileSection">
+                 <div className="profileSection">
                         <div className="sectionHeader">
                             <h1>User Information</h1>
                             <Link to="/profile/update">
@@ -163,8 +165,7 @@ function ProfilePage() {
                         </div>
                     </div>
 
-                    {/* My Posts Section */}
-                    <div className="profileSection">
+                   <div className="profileSection">
                         <div className="sectionHeader">
                             <h1>My List</h1>
                             <button 
@@ -176,8 +177,7 @@ function ProfilePage() {
                             </button>
                         </div>
                         
-                        {/* Loading State */}
-                        {isFetchingPosts && (
+                       {isFetchingPosts && (
                             <div className="loadingState">
                                 <div className="loaderContainer">
                                     <Loading />
@@ -186,8 +186,7 @@ function ProfilePage() {
                             </div>
                         )}
                         
-                        {/* Error State */}
-                        {fetchError && !isFetchingPosts && (
+                 {fetchError && !isFetchingPosts && (
                             <div className="errorState">
                                 <div className="errorContent">
                                     <img src="/error.png" alt="Error" />
@@ -200,8 +199,7 @@ function ProfilePage() {
                             </div>
                         )}
                         
-                        {/* Success State - Posts Loaded */}
-                        {!isFetchingPosts && !fetchError && userPosts.length > 0 && (
+                  {!isFetchingPosts && !fetchError && userPosts.length > 0 && (
                             <List 
                                 posts={userPosts} 
                                 onEdit={handleEditPost}
@@ -210,8 +208,7 @@ function ProfilePage() {
                             />
                         )}
                         
-                        {/* Empty State - No Posts */}
-                        {!isFetchingPosts && !fetchError && userPosts.length === 0 && (
+                       {!isFetchingPosts && !fetchError && userPosts.length === 0 && (
                             <div className="emptyState">
                                 <img src="/error.png" alt="No posts" />
                                 <h3>No posts yet</h3>
@@ -220,7 +217,6 @@ function ProfilePage() {
                         )}
                     </div>
 
-                    {/* Saved Posts Section */}
                     <div className="profileSection">
                         <div className="sectionHeader">
                             <h1>Saved List</h1>
@@ -238,14 +234,12 @@ function ProfilePage() {
                 </div>
             </div>
 
-            {/* Chat Section */}
-            <div className="chatContainer">
+             <div className="chatContainer">
                 <div className="wrapper">
                     <Chat />
                 </div>
             </div>
 
-            {/* Post Creation Modal */}
             {showPostModal && (
                 <PostModal 
                     onClose={() => setShowPostModal(false)}
@@ -253,7 +247,6 @@ function ProfilePage() {
                 />
             )}
 
-            {/* Post Update Modal */}
             {showUpdateModal && selectedPost && (
                 <UpdatePostModal 
                     post={selectedPost}

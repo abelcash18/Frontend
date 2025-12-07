@@ -4,8 +4,7 @@ import "./imageUpload.scss";
 function ImageUpload({ images, setImages, maxImages = 6 }) {
     const [uploading, setUploading] = useState(false);
 
-    // Ensure images is always an array
-    const normalizedImages = Array.isArray(images) ? images : images ? [images] : [];
+  const normalizedImages = Array.isArray(images) ? images : images ? [images] : [];
 
     const uploadImage = async (file) => {
         const formData = new FormData();
@@ -48,7 +47,6 @@ function ImageUpload({ images, setImages, maxImages = 6 }) {
             const uploadPromises = files.map(file => uploadImage(file));
             const newImageUrls = await Promise.all(uploadPromises);
             
-            // Always set as array
             setImages([...normalizedImages, ...newImageUrls]);
         } catch (error) {
             alert("Failed to upload some images. Please try again.");
@@ -85,7 +83,6 @@ function ImageUpload({ images, setImages, maxImages = 6 }) {
             <label className="uploadLabel">Property Images *</label>
             <p className="uploadHint">Upload up to {maxImages} images. First image will be the main thumbnail.</p>
             
-            {/* Image Preview Grid */}
             <div className="imagePreviewGrid">
                 {normalizedImages.map((image, index) => (
                     <div key={index} className="imagePreviewItem">
@@ -101,8 +98,7 @@ function ImageUpload({ images, setImages, maxImages = 6 }) {
                     </div>
                 ))}
                 
-                {/* Upload Area */}
-                {normalizedImages.length < maxImages && (
+             {normalizedImages.length < maxImages && (
                     <div 
                         className={`uploadArea ${uploading ? 'uploading' : ''}`}
                         onDragOver={handleDragOver}
@@ -135,7 +131,6 @@ function ImageUpload({ images, setImages, maxImages = 6 }) {
                 )}
             </div>
 
-            {/* Image Count */}
             <div className="imageCount">
                 {normalizedImages.length} / {maxImages} images
             </div>

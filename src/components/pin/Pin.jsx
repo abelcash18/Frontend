@@ -3,13 +3,11 @@ import { Link } from 'react-router-dom';
 import "./pin.scss";
 
 function Pin({ item }) {
-    // Validate coordinates before rendering
-    const isValidLocation = item.latitude && item.longitude && 
+     const isValidLocation = item.latitude && item.longitude && 
                            !isNaN(parseFloat(item.latitude)) && 
                            !isNaN(parseFloat(item.longitude));
 
-    // If no valid coordinates, don't render the marker
-    if (!isValidLocation) {
+     if (!isValidLocation) {
         console.warn('Invalid coordinates for property:', item._id || item.id, item.latitude, item.longitude);
         return null;
     }

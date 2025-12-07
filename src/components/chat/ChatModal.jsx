@@ -12,11 +12,9 @@ function ChatModal({ property, owner, clientId, onClose }) {
   const [isNewChat, setIsNewChat] = useState(false);
   const messagesEndRef = useRef(null);
 
-  // Use the socket hook
-  const { socket, isConnected } = useSocket();
+   const { socket, isConnected } = useSocket();
 
-  // Join client room and set up socket listeners
-  useEffect(() => {
+   useEffect(() => {
     if (socket && clientId && isConnected) {
       socket.emit('joinClientRoom', clientId);
       
@@ -32,21 +30,18 @@ function ChatModal({ property, owner, clientId, onClose }) {
     }
   }, [socket, clientId, chatId, isConnected]);
 
-  // Check localStorage for existing chat ID first
   useEffect(() => {
     const storedChatId = localStorage.getItem(`chat_${property._id}_${clientId}`);
     if (storedChatId) {
       setChatId(storedChatId);
       loadChat(storedChatId);
       setHasInitialized(true);
-      setIsNewChat(false); // This is an existing chat
+      setIsNewChat(false);
     } else {
-      // No existing chat found, we need to create one
-      setIsNewChat(true);
+       setIsNewChat(true);
     }
   }, [property._id, clientId]);
 
-  // Start chat if no existing chat found
   useEffect(() => {
     const startChat = async () => {
       if (hasInitialized || !property || !clientId || chatId || !isNewChat) return;
@@ -65,8 +60,7 @@ function ChatModal({ property, owner, clientId, onClose }) {
         const newChatId = response.data.chatId;
         setChatId(newChatId);
         
-        // Store chat ID in localStorage for future sessions
-        localStorage.setItem(`chat_${property._id}_${clientId}`, newChatId);
+      localStorage.setItem(`chat_${property._id}_${clientId}`, newChatId);
         
         loadChat(newChatId);
         
@@ -88,11 +82,10 @@ function ChatModal({ property, owner, clientId, onClose }) {
       setMessages(response.data.messages || []);
     } catch (err) {
       console.error("Failed to load chat:", err);
-      // If loading fails, clear the stored chat ID
       localStorage.removeItem(`chat_${property._id}_${clientId}`);
       setChatId(null);
       setHasInitialized(false);
-      setIsNewChat(true); // Reset to new chat state
+      setIsNewChat(true); 
     }
   };
 

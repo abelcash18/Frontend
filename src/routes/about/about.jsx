@@ -4,8 +4,7 @@ import "./about.scss";
 function About() {
     return (
         <div className="aboutPage">
-            {/* Hero Section */}
-            <section className="hero">
+         <section className="hero">
                 <div className="container">
                     <div className="heroContent">
                         <h1 className="heroTitle">
@@ -46,8 +45,7 @@ function About() {
                 </div>
             </section>
 
-            {/* Mission Section */}
-            <section className="mission">
+          <section className="mission">
                 <div className="container">
                     <div className="sectionHeader">
                         <h2>Our Mission</h2>
@@ -73,8 +71,7 @@ function About() {
                 </div>
             </section>
 
-            {/* Values Section */}
-            <section className="values">
+        <section className="values">
                 <div className="container">
                     <div className="sectionHeader">
                         <h2>Our Core Values</h2>
@@ -105,8 +102,7 @@ function About() {
                 </div>
             </section>
 
-            {/* Team Section */}
-            <section className="team">
+           <section className="team">
                 <div className="container">
                     <div className="sectionHeader">
                         <h2>Meet Our Leadership</h2>
@@ -141,8 +137,7 @@ function About() {
                 </div>
             </section>
 
-            {/* CTA Section */}
-            <section className="cta">
+        <section className="cta">
                 <div className="container">
                     <div className="ctaContent">
                         <h2>Ready to Find Your Perfect Property?</h2>

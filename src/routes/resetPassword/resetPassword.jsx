@@ -11,7 +11,7 @@ function ResetPassword() {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [message, setMessage] = useState("");
-  const [isTokenValid, setIsTokenValid] = useState(null); // null = loading, true = valid, false = invalid
+  const [isTokenValid, setIsTokenValid] = useState(null);
   const [email, setEmail] = useState("");
 
   useEffect(() => {
@@ -27,13 +27,14 @@ function ResetPassword() {
   const verifyToken = async (token) => {
     try {
       setIsLoading(true);
-      const res = await fetch("http://localhost:8800/auth/verify-reset-token", {
+      const res = await fetch("https://backend-dewgates-consults.onrender.com/auth/verify-reset-token", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ token }),
       });
 
       const data = await res.json();
+      alert("reset successful");
 
       if (res.ok) {
         setIsTokenValid(true);
@@ -67,7 +68,7 @@ function ResetPassword() {
     setMessage("");
 
     try {
-      const res = await fetch("http://localhost:8800/auth/reset-password", {
+      const res = await fetch("https://backend-dewgates-consults.onrender.com/auth/reset-password", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ token, newPassword }),
@@ -90,8 +91,7 @@ function ResetPassword() {
     }
   };
 
-  // Show loading while checking token
-  if (isTokenValid === null) {
+   if (isTokenValid === null) {
     return (
       <div className="resetPassword">
         <div className="formContainer">
@@ -105,8 +105,7 @@ function ResetPassword() {
     );
   }
 
-  // Show error if no token or invalid token
-  if (!token || !isTokenValid) {
+   if (!token || !isTokenValid) {
     return (
       <div className="resetPassword">
         <div className="formContainer">

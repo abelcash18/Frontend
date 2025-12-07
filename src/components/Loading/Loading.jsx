@@ -5,7 +5,7 @@ const Loading = ({ src, className, size = 24 }) => {
   const style = {
     width: typeof size === 'number' ? `${size}px` : size,
     height: typeof size === 'number' ? `${size}px` : size,
-    animation: 'spin 1s linear infinite', // Slow down the animation
+    animation: 'spin 1s linear infinite', 
   };
 
   return (
