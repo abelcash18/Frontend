@@ -52,10 +52,8 @@ function ProfileUpdatePage() {
       
     const updatedUser = res.data?.user || res.data;
       updateUser(updatedUser);
-       <div style={{backgroundColor:"whitesmoke", padding: "10px", border: "1px solid grey", borderRadius:"5px"}}>
-    alert(`Profile updated successfully`);  
-    </div>
-      navigate("/profile");
+           alert("Profile updated successfully");  
+     navigate("/profile");
     } catch (err) {
       console.error("Error updating user:", err);
       const message = err?.response?.data?.message || err?.message || "Update failed";
