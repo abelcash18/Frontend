@@ -10,7 +10,7 @@ function Footer() {
         <div className="footerContent">
           <div className="footerSection">
             <div className="logo">
-              <Link to="/"><img src="/logo 2.jpg" alt="Dewgates Consults" /></Link>
+              <Link to="/contact"><img src="/logo 2.jpg" alt="Dewgates Consults" /></Link>
             </div>
             <p className="footerDescription">
               Your trusted partner in finding the perfect property. 
