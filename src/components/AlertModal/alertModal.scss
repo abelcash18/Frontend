@@ -1,0 +1,107 @@
+.alertModal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.alertModal-container {
+  perspective: 1000px;
+}
+
+.alertModal-content {
+  background: white;
+  border-radius: 12px;
+  padding: 30px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  text-align: center;
+  min-width: 300px;
+  max-width: 400px;
+  animation: slideUp 0.3s ease-out;
+
+  &.success {
+    border-left: 5px solid #28a745;
+  }
+
+  &.error {
+    border-left: 5px solid #dc3545;
+  }
+
+  &.info {
+    border-left: 5px solid #17a2b8;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(30px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.alertModal-icon {
+  font-size: 40px;
+  margin-bottom: 12px;
+  font-weight: bold;
+
+  .alertModal-content.success & {
+    color: #28a745;
+  }
+
+  .alertModal-content.error & {
+    color: #dc3545;
+  }
+
+  .alertModal-content.info & {
+    color: #17a2b8;
+  }
+}
+
+.alertModal-message {
+  font-size: 16px;
+  color: #333;
+  margin: 16px 0;
+  line-height: 1.5;
+}
+
+.alertModal-btn {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+  padding: 10px 24px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  margin-top: 12px;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+}

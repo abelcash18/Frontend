@@ -8,10 +8,12 @@ import { AuthContext } from "../../context/AuthContext";
 import PostModal from "../../components/PostModal/PostModal";
 import UpdatePostModal from "../../components/UpdatePostModal/UpdatePostModal";
 import Loading from "../../components/Loading/Loading";
+import AlertModal from "../../components/AlertModal/AlertModal";
 
 function ProfilePage() {
     const { updateUser, currentUser } = useContext(AuthContext);
     const navigate = useNavigate();
+    const [showAlert, setShowAlert] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
     const [isFetchingPosts, setIsFetchingPosts] = useState(false);
     const [showPostModal, setShowPostModal] = useState(false);
@@ -62,10 +64,8 @@ function ProfilePage() {
         try {
             await apiRequest.post("/auth/logout");
             updateUser(null);
-            <div style={{backgroundColor:"whitesmoke", padding: "10px", border: "1px solid grey", borderRadius:"5px"}}>
-            alert(`Logout successful.`); 
-            </div>
-            navigate("/");
+            setShowAlert(true);
+            setTimeout(() => navigate("/"), 2000);
         } catch (err) {
             console.log(err);
         } finally {
@@ -76,9 +76,7 @@ function ProfilePage() {
 
     const handlePostCreated = (newPost) => {
         console.log("New post created:", newPost);
-         <div style={{backgroundColor:"whitesmoke", padding: "10px", border: "1px solid grey", borderRadius:"5px"}}>
-        alert(`Post  successful`)
-        </div>
+        alert("Post created successfully");
         setUserPosts(prev => [newPost, ...prev]);
         setShowPostModal(false);
         
@@ -89,9 +87,7 @@ function ProfilePage() {
 
     const handlePostUpdated = (updatedPost) => {
         console.log("Post updated:", updatedPost);
-         <div style={{backgroundColor:"whitesmoke", padding: "10px", border: "1px solid grey", borderRadius:"5px"}}>
-        alert(`Post update successful`)
-        </div>
+        alert("Post update successful");
         setUserPosts(prev => 
             prev.map(post => 
                 (post._id === updatedPost._id || post.id === updatedPost.id) ? updatedPost : post
@@ -124,15 +120,11 @@ function ProfilePage() {
             ));
             
             console.log("Post deleted successfully");
-             <div style={{backgroundColor:"whitesmoke", padding: "10px", border: "1px solid grey", borderRadius:"5px"}}>
-            alert(`Post deleted successful`)
-            </div>
+            alert("Post deleted successfully");
         } catch (err) {
             console.error("Failed to delete post:", err);
-             <div style={{backgroundColor:"whitesmoke", padding: "10px", border: "1px solid grey", borderRadius:"5px"}}>
-            alert(`Failed to delete post. Please try again`)
-            </div>
-        } finally {
+             alert("Failed to delete post. Please try again")
+                } finally {
             setIsLoading(false);
         }
     };
@@ -242,6 +234,14 @@ function ProfilePage() {
                     </div>
                 </div>
             </div>
+
+
+             <AlertModal 
+        message="Logout successful! Redirecting to homepage..." 
+        isOpen={showAlert} 
+        type="success"
+        onClose={() => setShowAlert(false)}
+      />
 
              <div className="chatContainer">
                 <div className="wrapper">

@@ -2,10 +2,12 @@ import "./login.scss";
 import { Link, useNavigate } from "react-router-dom";
 import { useContext, useState } from "react";
 import Loading from "../../components/Loading/Loading";
+import AlertModal from "../../components/AlertModal/AlertModal";
 import { AuthContext } from "../../context/AuthContext";
 
 function Login() {
   const [error, setError] = useState("");
+  const [showAlert, setShowAlert] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [showForgotPassword, setShowForgotPassword] = useState(false);
   const [forgotPasswordEmail, setForgotPasswordEmail] = useState("");
@@ -32,10 +34,6 @@ function Login() {
       });
 
       const payload = await res.json();
-       <div style={{backgroundColor:"whitesmoke", padding: "10px", border: "1px solid grey", borderRadius:"5px"}}>
-      alert(`Log in successful`);
-      </div>
-      
 
       if (!res.ok) {
         const message = payload?.message || payload?.error || res.statusText || "Login failed";
@@ -44,7 +42,8 @@ function Login() {
 
       const newUser = payload?.user || payload;
       updateUser(newUser);
-      navigate("/");
+      setShowAlert(true);
+      setTimeout(() => navigate("/"), 2000);
     } catch (err) {
       const message = err?.message || "Something went wrong";
       setError(message);
@@ -205,6 +204,13 @@ function Login() {
           )}
         </div>
       </div>
+
+      <AlertModal 
+        message="Log in successful! Redirecting to dashboard..." 
+        isOpen={showAlert} 
+        type="success"
+        onClose={() => setShowAlert(false)}
+      />
       
       <div className="imgContainer">
         <div className="imageContent">

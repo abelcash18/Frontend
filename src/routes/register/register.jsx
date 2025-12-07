@@ -3,9 +3,11 @@ import { Link, useNavigate } from "react-router-dom";
 import "./register.scss";
 import Loading from "../../components/Loading/Loading";
 import apiRequest from "../../lib/apiRequest";
+import AlertModal from "../../components/AlertModal/AlertModal";
 
 const Register = () => {
   const [error, setError] = useState("");
+  const [showAlert, setShowAlert] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
@@ -25,10 +27,8 @@ const Register = () => {
       console.log(res?.data ?? res);
       
       if (res.status === 201) {
-         <div style={{backgroundColor:"whitesmoke", padding: "10px", border: "1px solid grey", borderRadius:"5px"}}>
-        alert(`Registration successful Please log in.`);
-        </div>
-        navigate("/login");
+        setShowAlert(true);
+        setTimeout(() => navigate("/login"), 2000);
       }
     } catch (err) {
       const message = err?.response?.data?.message || err?.message || "Something went wrong";
@@ -108,6 +108,13 @@ const Register = () => {
           </form>
         </div>
       </div>
+
+      <AlertModal 
+        message="Register successful! Redirecting to login ..." 
+        isOpen={showAlert} 
+        type="success"
+        onClose={() => setShowAlert(false)}
+      />
       
       <div className="imgContainer">
         <div className="imageContent">
