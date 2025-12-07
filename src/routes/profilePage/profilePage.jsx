@@ -39,7 +39,6 @@ function ProfilePage() {
             
             const response = await apiRequest.get(`/posts/user/${userId}`);
             console.log("Posts fetched successfully:", response.data.length);
-            alert("post search successful.");
             setUserPosts(response.data);
         } catch (err) {
             console.error("Failed to fetch user posts:", err);
@@ -63,7 +62,9 @@ function ProfilePage() {
         try {
             await apiRequest.post("/auth/logout");
             updateUser(null);
-            alert("Logout successful.");
+            <div style={{backgroundColor:"whitesmoke", padding: "10px", border: "1px solid grey", borderRadius:"5px"}}>
+            alert(`Logout successful.`); 
+            </div>
             navigate("/");
         } catch (err) {
             console.log(err);
@@ -75,7 +76,9 @@ function ProfilePage() {
 
     const handlePostCreated = (newPost) => {
         console.log("New post created:", newPost);
-        alert("Post  successful.");
+         <div style={{backgroundColor:"whitesmoke", padding: "10px", border: "1px solid grey", borderRadius:"5px"}}>
+        alert(`Post  successful`)
+        </div>
         setUserPosts(prev => [newPost, ...prev]);
         setShowPostModal(false);
         
@@ -86,7 +89,9 @@ function ProfilePage() {
 
     const handlePostUpdated = (updatedPost) => {
         console.log("Post updated:", updatedPost);
-        alert("Post update successful.");
+         <div style={{backgroundColor:"whitesmoke", padding: "10px", border: "1px solid grey", borderRadius:"5px"}}>
+        alert(`Post update successful`)
+        </div>
         setUserPosts(prev => 
             prev.map(post => 
                 (post._id === updatedPost._id || post.id === updatedPost.id) ? updatedPost : post
@@ -119,10 +124,14 @@ function ProfilePage() {
             ));
             
             console.log("Post deleted successfully");
-            alert("Post deleted successful");
+             <div style={{backgroundColor:"whitesmoke", padding: "10px", border: "1px solid grey", borderRadius:"5px"}}>
+            alert(`Post deleted successful`)
+            </div>
         } catch (err) {
             console.error("Failed to delete post:", err);
-            alert("Failed to delete post. Please try again.");
+             <div style={{backgroundColor:"whitesmoke", padding: "10px", border: "1px solid grey", borderRadius:"5px"}}>
+            alert(`Failed to delete post. Please try again`)
+            </div>
         } finally {
             setIsLoading(false);
         }

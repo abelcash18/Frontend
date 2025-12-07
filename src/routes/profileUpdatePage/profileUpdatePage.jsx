@@ -52,7 +52,9 @@ function ProfileUpdatePage() {
       
     const updatedUser = res.data?.user || res.data;
       updateUser(updatedUser);
-    alert("Profile updated successfully");  
+       <div style={{backgroundColor:"whitesmoke", padding: "10px", border: "1px solid grey", borderRadius:"5px"}}>
+    alert(`Profile updated successfully`);  
+    </div>
       navigate("/profile");
     } catch (err) {
       console.error("Error updating user:", err);

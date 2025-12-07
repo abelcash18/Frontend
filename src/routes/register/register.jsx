@@ -25,7 +25,9 @@ const Register = () => {
       console.log(res?.data ?? res);
       
       if (res.status === 201) {
-        alert("Registration successful! Please log in.");
+         <div style={{backgroundColor:"whitesmoke", padding: "10px", border: "1px solid grey", borderRadius:"5px"}}>
+        alert(`Registration successful Please log in.`);
+        </div>
         navigate("/login");
       }
     } catch (err) {

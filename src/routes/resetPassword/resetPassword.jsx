@@ -34,7 +34,9 @@ function ResetPassword() {
       });
 
       const data = await res.json();
-      alert("reset successful");
+       <div style={{backgroundColor:"whitesmoke", padding: "10px", border: "1px solid grey", borderRadius:"5px"}}>
+      alert(`reset successful`);
+      </div>
 
       if (res.ok) {
         setIsTokenValid(true);

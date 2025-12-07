@@ -32,7 +32,9 @@ function Login() {
       });
 
       const payload = await res.json();
-      alert("Log in successful");
+       <div style={{backgroundColor:"whitesmoke", padding: "10px", border: "1px solid grey", borderRadius:"5px"}}>
+      alert(`Log in successful`);
+      </div>
       
 
       if (!res.ok) {
