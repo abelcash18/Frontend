@@ -48,6 +48,7 @@ function Login() {
       const message = err?.message || "Something went wrong";
       setError(message);
       console.error(err);
+      alert("Invalid Credentials. Please try again.");
     } finally {
       setIsLoading(false);
       window.dispatchEvent(new CustomEvent('globalLoading', { detail: { loading: false } }));

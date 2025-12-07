@@ -23,15 +23,31 @@ function ListPage() {
   });
 
   useEffect(() => {
-    const selectedPropertyType = sessionStorage.getItem('selectedPropertyType');
-    if (selectedPropertyType) {
-      setFilters(prev => ({
-        ...prev,
-        property: selectedPropertyType
-      }));
-       sessionStorage.removeItem('selectedPropertyType');
+    // Initialize filters from URL query params (react-router location preferred)
+    try {
+      const params = new URLSearchParams(location.search || window.location.search);
+      const city = params.get("city") || "";
+      const type = params.get("type") || "";
+      const property = params.get("property") || "";
+      const minPrice = params.get("minPrice") || "";
+      const maxPrice = params.get("maxPrice") || "";
+      const bedroom = params.get("bedroom") || "";
+
+      if (city || type || property || minPrice || maxPrice || bedroom) {
+        setFilters((prev) => ({
+          ...prev,
+          city,
+          type,
+          property,
+          minPrice,
+          maxPrice,
+          bedroom,
+        }));
+      }
+    } catch (e) {
+      console.warn("Failed to initialize filters from URL params", e);
     }
-  }, []);
+  }, [location.search]);
 
   useEffect(() => {
     const fetchPosts = async () => {

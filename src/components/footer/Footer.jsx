@@ -2,9 +2,7 @@ import { Link } from "react-router-dom";
 import "./footer.scss";
 import "bootstrap/dist/css/bootstrap.min.css";
 function Footer() {
-  const handlePropertyTypeClick = (propertyType) => {
-    sessionStorage.setItem('selectedPropertyType', propertyType);
-  };
+  // Property type links now use URL query params (no sessionStorage)
 
   return (
     <footer className="footer">
@@ -12,8 +10,8 @@ function Footer() {
         <div className="footerContent">
           <div className="footerSection">
             <div className="logo">
-            <a href="#"><img src="/logo 2.jpg" alt="Dewgates Consults" /></a>
-              </div>
+              <Link to="/"><img src="/logo 2.jpg" alt="Dewgates Consults" /></Link>
+            </div>
             <p className="footerDescription">
               Your trusted partner in finding the perfect property. 
               We connect you with your dream home through innovative 
@@ -56,44 +54,19 @@ function Footer() {
             <h4>Property Types</h4>
             <ul>
               <li>
-                <Link 
-                  to="/list" 
-                  onClick={() => handlePropertyTypeClick('apartment')}
-                >
-                  Apartments
-                </Link>
+                <Link to="/list?property=apartment">Apartments</Link>
               </li>
               <li>
-                <Link 
-                  to="/list" 
-                  onClick={() => handlePropertyTypeClick('house')}
-                >
-                  Houses
-                </Link>
+                <Link to="/list?property=house">Houses</Link>
               </li>
               <li>
-                <Link 
-                  to="/list" 
-                  onClick={() => handlePropertyTypeClick('condo')}
-                >
-                  Condos
-                </Link>
+                <Link to="/list?property=condo">Condos</Link>
               </li>
               <li>
-                <Link 
-                  to="/list" 
-                  onClick={() => handlePropertyTypeClick('land')}
-                >
-                  Land
-                </Link>
+                <Link to="/list?property=land">Land</Link>
               </li>
               <li>
-                <Link 
-                  to="/list" 
-                  onClick={() => handlePropertyTypeClick('commercial')}
-                >
-                  Commercial
-                </Link>
+                <Link to="/list?property=commercial">Commercial</Link>
               </li>
             </ul>
           </div>

@@ -1,5 +1,6 @@
 import "./contact.scss";
 import { useState, useEffect, useRef } from "react";
+import { Link } from "react-router-dom";
 import apiRequest from "../../lib/apiRequest";
 import axios from "axios";
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
@@ -203,9 +204,9 @@ function Contact() {
             <div className="contact-item">
               <div className="content">
                 <h3>Visit Us</h3>
-                 <a href="/" className="text-info fs-3">
+                 <Link to="/" className="text-info fs-3">
                  <i className="bi bi-map">   Benin City, Edo State, Nigeria</i>
-              </a>
+              </Link>
                  </div>
             </div>
           </div>

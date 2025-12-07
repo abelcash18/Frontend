@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "./searchBar.scss";
 
 const types = ["buy", "rent"];
@@ -7,12 +8,13 @@ function SearchBar() {
   const [query, setQuery] = useState({
     type: "buy",
     location: "",
-    minPrice: 0,
-    maxPrice: 0,
-    propertyType: ""
+    minPrice: "",
+    maxPrice: "",
+    propertyType: "any"
   });
 
   const [isExpanded, setIsExpanded] = useState(false);
+  const navigate = useNavigate();
 
   const switchType = (val) => {
     setQuery((prev) => ({ ...prev, type: val }));
@@ -21,6 +23,20 @@ function SearchBar() {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log("Search query:", query);
+  };
+
+  // When user submits search, pass filters to ListPage via sessionStorage and navigate
+  const handleSearch = (e) => {
+    e.preventDefault();
+    const params = new URLSearchParams();
+    if (query.location) params.set("city", query.location);
+    if (query.type) params.set("type", query.type);
+    if (query.propertyType && query.propertyType !== "any") params.set("property", query.propertyType);
+    if (query.minPrice !== "") params.set("minPrice", String(query.minPrice));
+    if (query.maxPrice !== "") params.set("maxPrice", String(query.maxPrice));
+    // navigate to /list with query params
+    const search = params.toString();
+    navigate({ pathname: "/list", search: search ? `?${search}` : "" });
   };
 
   const propertyTypes = ["Any", "Apartment", "Villa", "Townhouse", "Condominium", "Commercial"];
@@ -47,7 +63,7 @@ function SearchBar() {
         </button>
       </div>
 
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSearch}>
         <div className="formGrid">
           <div className="inputGroup locationGroup">
            <input
