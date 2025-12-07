@@ -159,7 +159,7 @@ function SinglePage() {
                 </div>
               </div>
               <div className="detailItem">
-                <img src="/building.png" alt="Property Type" />
+                <img src="/building.webp" alt="Property Type" />
                 <div className="detailText">
                   <span>Property Type</span>
                   <p className="capitalize">{post.propertyType}</p>
@@ -180,15 +180,15 @@ function SinglePage() {
                 <span>Pets Allowed</span>
               </div>
               <div className="amenityItem">
-                <img src="/wifi.png" alt="WiFi" />
+                <img src="/wifi.svg" alt="WiFi" />
                 <span>High-Speed WiFi</span>
               </div>
               <div className="amenityItem">
-                <img src="/parking.png" alt="Parking" />
+                <img src="/parking.jpg" alt="Parking" />
                 <span>Parking Available</span>
               </div>
               <div className="amenityItem">
-                <img src="/laundry.png" alt="Laundry" />
+                <img src="/laundry.webp" alt="Laundry" />
                 <span>Laundry Facilities</span>
               </div>
               <div className="amenityItem">
@@ -219,7 +219,7 @@ function SinglePage() {
                 </div>
               </div>
               <div className="locationItem">
-                <img src="/shopping.png" alt="Shopping" />
+                <img src="/shopping-cart.jpg" alt="Shopping" />
                 <div className="locationText">
                   <span>Shopping</span>
                   <p>Supermarket 500m away</p>

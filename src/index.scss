@@ -1,4 +1,3 @@
-// index.scss - Updated with professional real estate styling
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap');
 
 * {
@@ -8,12 +7,11 @@
 }
 
 :root {
-  // Primary Colors
-  --primary-color: #2563eb;
+   --primary-color: #2563eb;
   --primary-dark: #1d4ed8;
   --primary-light: #dbeafe;
   
-  // Neutral Colors
+ 
   --text-dark: #1e293b;
   --text-light: #64748b;
   --background-light: #f8fafc;
@@ -22,18 +20,15 @@
   --gray-100: #f1f5f9;
   --gray-200: #e2e8f0;
   
-  // Accent Colors
   --accent-color: #f59e0b;
   --success-color: #10b981;
   --error-color: #ef4444;
   
-  // Effects
-  --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+ --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
   --shadow-lg: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
   --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
   
-  // Layout
-  --border-radius: 8px;
+ --border-radius: 8px;
   --border-radius-lg: 12px;
   --border-radius-xl: 16px;
 }
@@ -51,7 +46,6 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-// Typography Scale
 h1, h2, h3, h4, h5, h6 {
   font-family: 'Playfair Display', serif;
   font-weight: 600;
@@ -88,7 +82,6 @@ p {
   margin-bottom: 1rem;
 }
 
-// Links
 a {
   text-decoration: none;
   color: inherit;
@@ -99,7 +92,6 @@ a {
   }
 }
 
-// Utility Classes
 .container {
   max-width: 1200px;
   margin: 0 auto;
@@ -166,7 +158,6 @@ a {
   }
 }
 
-// Form Elements
 input, textarea, select {
   font-family: 'Inter', sans-serif;
   font-size: 1rem;
@@ -182,7 +173,6 @@ input, textarea, select {
   }
 }
 
-// Responsive Typography
 @media (max-width: 768px) {
   h1 {
     font-size: 2.5rem;
@@ -201,7 +191,6 @@ input, textarea, select {
   }
 }
 
-// Accessibility
 @media (prefers-reduced-motion: reduce) {
   * {
     animation-duration: 0.01ms !important;
@@ -210,7 +199,6 @@ input, textarea, select {
   }
 }
 
-// Focus styles for accessibility
 button:focus-visible,
 a:focus-visible,
 input:focus-visible {
