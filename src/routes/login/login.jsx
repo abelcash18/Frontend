@@ -40,7 +40,29 @@ function Login() {
         throw new Error(message);
       }
 
-      const newUser = payload?.user || payload;
+      // Normalize and ensure token is persisted under a predictable key
+      let newUser = payload?.user || payload;
+      try {
+        const candidates = [
+          payload?.accessToken,
+          payload?.token,
+          payload?.authToken,
+          payload?.data?.token,
+          payload?.data?.accessToken,
+          payload?.user?.accessToken,
+          payload?.user?.token,
+        ];
+        const found = candidates.find((v) => typeof v === "string" && v.length > 0);
+        if (found) {
+          if (typeof newUser !== "object" || newUser === null) newUser = {};
+          // store as accessToken and token for compatibility
+          newUser.accessToken = newUser.accessToken || found;
+          newUser.token = newUser.token || found;
+        }
+      } catch (e) {
+        // ignore
+      }
+
       updateUser(newUser);
       setShowAlert(true);
       setTimeout(() => navigate("/"), 2000);
