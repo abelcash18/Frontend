@@ -43,7 +43,7 @@ function ProfilePage() {
             setIsFetchingPosts(true);
             setFetchError("");
 
-            const response = await apiRequest.get(`https://backend-dewgates-consults.onrender.com/posts/user/${userId}`);
+            const response = await apiRequest.get(`/posts/user/${userId}`);
             setUserPosts(response.data || []);
         } catch (err) {
             console.error("Failed to fetch user posts:", err);
