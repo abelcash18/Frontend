@@ -48,7 +48,7 @@ function ProfileUpdatePage() {
 
       console.log("Updating user with data:", updateData);
 
-      const res = await apiRequest.put(`/users/${userId}`, updateData);
+      const res = await apiRequest.put(`https://backend-dewgates-consults.onrender.com/users/${userId}`, updateData);
       
     const updatedUser = res.data?.user || res.data;
       updateUser(updatedUser);
