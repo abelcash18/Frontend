@@ -18,6 +18,12 @@ export const AuthContextProvider = ({children})=>{
             if (user.data) user = user.data;
             if (user.user) user = user.user;
 
+            // Preserve token and accessToken from current state if not present in new data
+            if (currentUser && !user.token && !user.accessToken) {
+              user.token = currentUser.token || currentUser.accessToken;
+              user.accessToken = currentUser.accessToken || currentUser.token;
+            }
+
             console.debug("AuthContext.updateUser normalized to:", user);
             setCurrentUser(user);
           };

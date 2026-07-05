@@ -12,6 +12,8 @@ function PostModal({ onClose, onPostCreated }) {
         city: "",
         bedroom: "",
         bathroom: "",
+        latitude: "",
+        longitude: "",
         type: "rent",
         propertyType: "apartment",
         images: []
@@ -46,12 +48,27 @@ function PostModal({ onClose, onPostCreated }) {
         }
 
         try {
-            const response = await apiRequest.post("/posts", {
+            const postData = {
                 ...formData,
                 price: Number(formData.price),
                 bedroom: Number(formData.bedroom),
                 bathroom: Number(formData.bathroom)
-            });
+            };
+
+            // Parse coordinates to numbers if provided; otherwise, exclude them so the backend can generate mocks
+            if (formData.latitude && formData.latitude.trim() !== "") {
+                postData.latitude = Number(formData.latitude);
+            } else {
+                delete postData.latitude;
+            }
+
+            if (formData.longitude && formData.longitude.trim() !== "") {
+                postData.longitude = Number(formData.longitude);
+            } else {
+                delete postData.longitude;
+            }
+
+            const response = await apiRequest.post("/posts", postData);
             
             onPostCreated(response.data);
         } catch (err) {
