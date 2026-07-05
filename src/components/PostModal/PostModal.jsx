@@ -69,7 +69,7 @@ function PostModal({ onClose, onPostCreated }) {
             }
 
             const response = await apiRequest.post("/posts", postData);
-            
+
             onPostCreated(response.data);
         } catch (err) {
             setError(err.response?.data?.message || "Failed to create post");
@@ -85,10 +85,10 @@ function PostModal({ onClose, onPostCreated }) {
                     <h2>Create New Post</h2>
                     <button className="closeBtn" onClick={onClose}>×</button>
                 </div>
-                
+
                 <form onSubmit={handleSubmit} className="postForm">
                     {error && <div className="errorMessage">{error}</div>}
-                    
+
                     <div className="formGrid">
                         <div className="formGroup">
                             <label>Title *</label>
@@ -207,8 +207,8 @@ function PostModal({ onClose, onPostCreated }) {
                         </div>
                     </div>
 
-                  <div className="formGroup fullWidth">
-                        <ImageUpload 
+                    <div className="formGroup fullWidth">
+                        <ImageUpload
                             images={formData.images}
                             setImages={handleImagesChange}
                             maxImages={6}
@@ -230,8 +230,8 @@ function PostModal({ onClose, onPostCreated }) {
                         <button type="button" onClick={onClose} className="cancelBtn">
                             Cancel
                         </button>
-                        <button 
-                            type="submit" 
+                        <button
+                            type="submit"
                             disabled={isLoading || formData.images.length === 0}
                             className="submitBtn"
                         >
