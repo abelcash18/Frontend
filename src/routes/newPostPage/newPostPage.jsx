@@ -1,5 +1,5 @@
 import { useState } from "react";
-import axios from "axios";
+import apiRequest from "../../lib/apiRequest";
 import { useNavigate } from "react-router-dom";
 import "./newPostPage.scss";
 
@@ -47,10 +47,9 @@ function NewPostPage() {
 
     try {
       // Trying the standard flat object structure first
-      const res = await axios.post(
-        "https://backend-dewgates-consults.onrender.com/posts", 
-        finalPayload, 
-        { withCredentials: true }
+      const res = await apiRequest.post(
+        "/posts", 
+        finalPayload
       ); 
       
       navigate("/profile"); 
@@ -86,10 +85,9 @@ function NewPostPage() {
             restaurant: finalPayload.restaurant
           }
         };
-        const res = await axios.post(
-          "https://backend-dewgates-consults.onrender.com/posts", 
-          nestedPayload, 
-          { withCredentials: true }
+        const res = await apiRequest.post(
+          "/posts", 
+          nestedPayload
         );
         navigate("/profile");
       } catch (nestedErr) {
