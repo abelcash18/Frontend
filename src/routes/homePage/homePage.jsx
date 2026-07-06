@@ -46,7 +46,7 @@ function HomePage() {
             <div className="imgContainer">
               <div className="imageWrapper">
                 <img 
-                  src="/modern-home.jpg" 
+                  src="/Modern home.avif" 
                   alt="Modern Luxury Home" 
                   onError={(e) => {
                     e.target.src = 'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2075&q=80';
@@ -112,7 +112,7 @@ function HomePage() {
           </div>
           <div className="propertyGrid">
             <div className="propertyCard">
-              <img src="https://images.unsplash.com/photo-1568605114967-8130f3a36994?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Apartments" />
+              <img src="/Modern home.avif" alt="Apartments" />
               <div className="propertyInfo">
                 <h4>Apartments</h4>
                 <p>500+ Listings</p>
